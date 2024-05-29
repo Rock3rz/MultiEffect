@@ -22,6 +22,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 {
     setSize(WindowWidth, WindowHeight);
     setResizable(false, false);
+    setLookAndFeel(nullptr);
 
 
     //-----------------------------------------------DISTORTION--------------------------------------------------------------------
@@ -29,6 +30,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     toggleActiveDistotion.setButtonText("Inactive");
 
     //Gain
+    distortionGainSlider.setLookAndFeel(&myLookAndFeel1);
     distortionGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     distortionGainLabel.setText("Gain", juce::dontSendNotification);
