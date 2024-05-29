@@ -6,10 +6,10 @@
     <GROUP id="{AF019E2B-C7E3-9610-9DEA-506827C9EAA9}" name="Source">
       <FILE id="baIyOv" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
+      <FILE id="EGggVO" name="Sfondo PlugIn5.png" compile="0" resource="1"
+            file="Sfondo PlugIn5.png"/>
       <FILE id="U2dzXX" name="SpectrumAnalyzer.cpp" compile="1" resource="0"
             file="Source/SpectrumAnalyzer.cpp"/>
-      <FILE id="Jb2mKv" name="Sfondo PlugIn5.png" compile="0" resource="1"
-            file="../Sfondo PlugIn5.png"/>
       <FILE id="IxbzwD" name="SpectrumAnalyzer.h" compile="0" resource="0"
             file="Source/SpectrumAnalyzer.h"/>
       <FILE id="Ea6Hhw" name="PluginProcessor.h" compile="0" resource="0"

@@ -6245,7 +6245,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Sfondo PlugIn5.png">
+    <None Include="..\..\Sfondo PlugIn5.png">
       <Filter>MultiEffect\Source</Filter>
     </None>
     <None Include="..\..\..\..\..\..\..\JUCE\modules\juce_audio_devices\native\oboe\src\common\README.md">
