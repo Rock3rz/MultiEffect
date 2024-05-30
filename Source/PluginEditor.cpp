@@ -251,17 +251,27 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqHighSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     eqHighLabel.setText("High", juce::dontSendNotification);
 
+    eqMasterOutSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqMasterOutSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqMasterOutLabel.setText("Gain", juce::dontSendNotification);
+
     //sliders
     addAndMakeVisible(eqLowSlider);
     addAndMakeVisible(eqMidSlider);
     addAndMakeVisible(eqHighSlider);
+    addAndMakeVisible(eqMasterOutSlider);
 
     //Labels
     addAndMakeVisible(eqLowLabel);
     addAndMakeVisible(eqMidLabel);
     addAndMakeVisible(eqHighLabel);
+    addAndMakeVisible(eqMasterOutLabel);
 
-
+    //attachment
+    eqLowSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqLOW", eqLowSlider);
+    eqMidSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqMID", eqMidSlider);
+    eqHighSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqHIGH", eqHighSlider);
+    eqMasterOutSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqMASTEROUTGAIN", eqMasterOutSlider);
 
     //--------------------------------------------------VIEWER----------------------------------------------------------------------------------
     addAndMakeVisible(audioProcessor.waveViewer);
@@ -384,12 +394,15 @@ void MultiEffectAudioProcessorEditor::resized()
     audioProcessor.spectrum.setBounds(730, 360, 450, 300);
 
     //-----------------------------------------------EQ---------------------------------------
-    eqLowSlider.setBounds(410, 430, 50, 200);
-    eqMidSlider.setBounds(510, 430, 50, 200);
-    eqHighSlider.setBounds(610, 430, 50, 200);
+    eqLowSlider.setBounds(390, 430, 50, 200);
+    eqMidSlider.setBounds(470, 430, 50, 200);
+    eqHighSlider.setBounds(550, 430, 50, 200);
+    eqMasterOutSlider.setBounds(630, 430, 50, 200);
 
-    eqLowLabel.setBounds(415, 360, 100, 100);
-    eqMidLabel.setBounds(515, 360, 100, 100);
-    eqHighLabel.setBounds(615, 360, 100, 100);
+    eqLowLabel.setBounds(395, 360, 100, 100);
+    eqMidLabel.setBounds(475, 360, 100, 100);
+    eqHighLabel.setBounds(555, 360, 100, 100);
+    eqMasterOutLabel.setBounds(635, 360, 100, 100);
+    
 
 }

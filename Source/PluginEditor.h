@@ -13,6 +13,7 @@
 #include "SpectrumAnalyzer.h"
 #include "MySlider.h"
 
+
 //==============================================================================
 /**
 */
@@ -104,17 +105,19 @@ private:
     juce::Slider eqLowSlider;
     juce::Slider eqMidSlider;
     juce::Slider eqHighSlider;
+    juce::Slider eqMasterOutSlider;
 
     //Labels
     juce::Label eqLowLabel;
     juce::Label eqMidLabel;
     juce::Label eqHighLabel;
+    juce::Label eqMasterOutLabel;
 
     //Attachments
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqLowSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqMidSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqHighSliderAttachment;
-
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqMasterOutSliderAttachment;
 
     //AnalyserComponent spectrum;
 
