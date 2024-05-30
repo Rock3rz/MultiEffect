@@ -19,6 +19,10 @@ MySlider::MySlider()
 
 }
 
+void MySlider::SetValueArcColour(juce::Colour MyColour) {
+    ChosenColour = MyColour;
+}
+
 void MySlider::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle,
     float rotaryEndAngle, juce::Slider& slider) {
 
@@ -36,16 +40,17 @@ void MySlider::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int 
     g.setColour(juce::Colours::darkgrey.darker(0.3f));
     g.drawEllipse(rx, ry, rw, rw, 1.0f);
 
-    //pointer
+    //----------------------------------------------------------POINTER---------------------------------------------------------
     juce::Path p;
     auto pointerLength = radius * 0.45f;
     auto pointerThickness = 2.7f;
     p.addRectangle(-pointerThickness * 0.6, -radius -2.5, pointerThickness, pointerLength);
     p.applyTransform(juce::AffineTransform::rotation(angle).translated(centreX, centreY));
-    g.setColour(juce::Colours::mediumaquamarine);
+    g.setColour(ChosenColour);
     g.fillPath(p);
 
-    //dashed arc
+
+    //----------------------------------------------------------DASHED ARC------------------------------------------------------
     juce::Path dashedArc;
     dashedArc.addCentredArc(centreX, centreY, radius + 6, radius + 6, 0.0f, rotaryStartAngle, rotaryEndAngle, true);
 
@@ -55,11 +60,12 @@ void MySlider::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int 
     g.setColour(juce::Colours::darkgrey);
     g.strokePath(dashedArc, dashedStroke);  
 
-    // Arc
+    //------------------------------------------------------------ARC-------------------------------------------------------------
     juce::Path valueArc;
     juce::PathStrokeType stroke(4.0f);
     stroke.setEndStyle(juce::PathStrokeType::EndCapStyle::butt);
     valueArc.addCentredArc(centreX, centreY, radius + 6, radius + 6, 0.0f, rotaryStartAngle, angle, true);
-    g.setColour(juce::Colours::mediumaquamarine);
+    g.setColour(ChosenColour);
     g.strokePath(valueArc, stroke);
+    
 }

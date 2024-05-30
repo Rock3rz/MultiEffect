@@ -86,7 +86,7 @@ void SpectrumAnalyzer::drawFrame(juce::Graphics& g) {
 
     for (int i = 1; i < scopeSize; ++i)
     {
-        g.setColour(juce::Colours::green);
+        g.setColour(juce::Colours::blue);
         g.drawLine({ (float)juce::jmap(i - 1, 0, scopeSize - 1, 0, width),
             juce::jmap(scopeData[i - 1], 0.0f, 1.0f, (float)height, 0.0f),
             (float)juce::jmap(i, 0, scopeSize - 1, 0, width),

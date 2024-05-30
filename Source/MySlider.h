@@ -22,7 +22,12 @@ public:
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
         float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override;
 
+    void SetValueArcColour(juce::Colour MyColour);
+
 private:
+
+    juce::Colour ChosenColour = juce::Colours::mediumaquamarine; //colore di default
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MySlider)
 };
 

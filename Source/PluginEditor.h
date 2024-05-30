@@ -29,7 +29,10 @@ public:
 private:
 
     //-------------------------------------LOOK&FEEL-----------------------------------------------------------------------
-    MySlider myLookAndFeel1;
+    MySlider myLookAndFeelDistortion;
+    MySlider myLookAndFeelDelayLine;
+    MySlider myLookAndFeelReverb;
+    MySlider myLookAndFeelEQ;
     
     //--------------------------------------DISTORTION------------------------------------------------------------------------
 

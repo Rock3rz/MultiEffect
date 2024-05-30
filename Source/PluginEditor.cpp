@@ -24,25 +24,33 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     setResizable(false, false);
     setLookAndFeel(nullptr);
 
+    //-----------------------------------------------MY LOOK&FEEL COLOURS----------------------------------------------------------
+    myLookAndFeelDistortion.SetValueArcColour(juce::Colours::mediumaquamarine);
+    myLookAndFeelDelayLine.SetValueArcColour(juce::Colours::turquoise);
+    myLookAndFeelReverb.SetValueArcColour(juce::Colours::deepskyblue);
+    myLookAndFeelEQ.SetValueArcColour(juce::Colours::azure);
+
 
     //-----------------------------------------------DISTORTION--------------------------------------------------------------------
     //toggle aactive
     toggleActiveDistotion.setButtonText("Inactive");
 
     //Gain
-    distortionGainSlider.setLookAndFeel(&myLookAndFeel1);
+    distortionGainSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     distortionGainSlider.setPaintingIsUnclipped(true);
     distortionGainLabel.setText("Gain", juce::dontSendNotification);
 
     //Offset
+    distortionOffsetSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionOffsetSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionOffsetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     distortionOffsetLabel.setText("Offset", juce::dontSendNotification);
 
 
     //Treshold
+    distortionThresholdSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionThresholdSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionThresholdSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     distortionThresholdLabel.setText("Treshold", juce::dontSendNotification);
@@ -80,7 +88,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //-----------------------------------------------DELAY------------------------------------------------------------------------
 
-        //Delay activate
+    //Delay activate
     toggleActiveDelay.setButtonText("Inactive");
 
     //Toggle LowPass Filter
@@ -91,6 +99,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     isFeedForward.setButtonText("FeedForward");
 
     //Delay slider Setup
+    delayGainSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     delayGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     delayGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     delayGainSlider.setDoubleClickReturnValue(true, .5f);
@@ -98,11 +107,13 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //delayGainSlider.setSize(200.f, 200.f);
 
     //Time delay slider Setup
+    delayTimeSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     delayTimeSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     delayTimeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     delayTimeLabel.setText("Time", juce::dontSendNotification);
 
     //lowPass Filter Slider Setup
+    delayLowPassFilter.setLookAndFeel(&myLookAndFeelDelayLine);
     delayLowPassFilter.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     delayLowPassFilter.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     delayLowPassLabel.setText("Filter", juce::dontSendNotification);
@@ -195,6 +206,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbRoomSizeLabel.setText("Room size", juce::dontSendNotification);
 
     //Damping
+    reverbDampingSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbDampingSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     reverbDampingSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     reverbDampingLabel.setText("Damping", juce::dontSendNotification);
@@ -205,6 +217,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbDryWetLevelLabel.setText("Dry / Wet", juce::dontSendNotification);
 
     //width
+    reverbWidthSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbWidthSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     reverbWidthSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     reverbWidthLabel.setText("Width", juce::dontSendNotification);
@@ -345,7 +358,7 @@ void MultiEffectAudioProcessorEditor::resized()
     toggleActiveDelayLowPass.setBounds(235 + DelayPositionOffSet, 165, 100, 100);
 
     //--------------------------------------------------------------REVERB------------------------------------------------------
-        //Toggle
+    //Toggle
     toggleActiveReverb.setBounds(10, 325, 100, 100);
 
     //Sliders
@@ -359,7 +372,8 @@ void MultiEffectAudioProcessorEditor::resized()
     reverbRoomSizeLabel.setBounds(210, 360, 100, 100);
     reverbDampingLabel.setBounds(67, 490, 100, 100);
     reverbWidthLabel.setBounds(226, 490, 100, 100);
+
     //-------------------------------------------------------------VIEWER-------------------------------------------------------
-    audioProcessor.waveViewer.setBounds(730, 20, 450,300);
-    audioProcessor.spectrum.setBounds(730, 360, 450, 300);
+    audioProcessor.spectrum.setBounds(727, 70, 450, 200);
+    audioProcessor.waveViewer.setBounds(727, 420, 450,200);    
 }
