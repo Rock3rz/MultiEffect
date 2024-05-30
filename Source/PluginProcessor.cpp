@@ -425,6 +425,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RevDRYWET", "revDryWet", 0.0f, 1.0f, 0.33f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RevWIDTH", "revWidth", 0.0f, 1.0f, 1.0f));
 
+    //-----------------------------------------------EQ-------------------------------------------------------
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqLOW", "LowCutFreq", -24.f, -24.f, 0.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMID", "MidCutFreq", -24.f, -24.f, 0.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqHIGH", "HighCutFreq", -24.f, -24.f, 0.f));
+
 
     //ritorno il vettore da inizio a fine
     return { params.begin(), params.end() };
