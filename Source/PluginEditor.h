@@ -98,11 +98,28 @@ private:
     //toggle
     juce::ToggleButton toggleActiveReverb;
 
+   //--------------------------------------------EQ---------------------------------
+    
+    //sliders
+    juce::Slider eqLowSlider;
+    juce::Slider eqMidSlider;
+    juce::Slider eqHighSlider;
+
+    //Labels
+    juce::Label eqLowLabel;
+    juce::Label eqMidLabel;
+    juce::Label eqHighLabel;
+
+    //Attachments
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqLowSliderAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqMidSliderAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqHighSliderAttachment;
+
+
     //AnalyserComponent spectrum;
 
     MultiEffectAudioProcessor& audioProcessor;
 
     juce::Image Background;
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MultiEffectAudioProcessorEditor)
 };

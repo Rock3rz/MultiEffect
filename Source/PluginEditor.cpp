@@ -180,9 +180,6 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         };
 
 
-
-
-
     //--------------------------------------------------REVERB----------------------------------------------------------------------------------
         //toggle active
     toggleActiveReverb.setButtonText("Inactive");
@@ -239,6 +236,31 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
             audioProcessor.isReverbActive = false;
         }
         };
+
+    //-------------------------------------------------EQ---------------------------------
+
+    eqLowSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqLowLabel.setText("Low", juce::dontSendNotification);
+
+    eqMidSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqMidSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqMidLabel.setText("Mid", juce::dontSendNotification);
+
+    eqHighSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqHighSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqHighLabel.setText("High", juce::dontSendNotification);
+
+    //sliders
+    addAndMakeVisible(eqLowSlider);
+    addAndMakeVisible(eqMidSlider);
+    addAndMakeVisible(eqHighSlider);
+
+    //Labels
+    addAndMakeVisible(eqLowLabel);
+    addAndMakeVisible(eqMidLabel);
+    addAndMakeVisible(eqHighLabel);
+
 
 
     //--------------------------------------------------VIEWER----------------------------------------------------------------------------------
@@ -360,4 +382,14 @@ void MultiEffectAudioProcessorEditor::resized()
     //-------------------------------------------------------------VIEWER-------------------------------------------------------
     audioProcessor.waveViewer.setBounds(730, 20, 450,300);
     audioProcessor.spectrum.setBounds(730, 360, 450, 300);
+
+    //-----------------------------------------------EQ---------------------------------------
+    eqLowSlider.setBounds(410, 430, 50, 200);
+    eqMidSlider.setBounds(510, 430, 50, 200);
+    eqHighSlider.setBounds(610, 430, 50, 200);
+
+    eqLowLabel.setBounds(415, 360, 100, 100);
+    eqMidLabel.setBounds(515, 360, 100, 100);
+    eqHighLabel.setBounds(615, 360, 100, 100);
+
 }
