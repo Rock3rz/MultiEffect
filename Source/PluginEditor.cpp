@@ -297,7 +297,7 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawText("Riverbero", 132, 360, 90, 15, juce::Justification::centredTop, true);
     g.drawText("Master EQ", 490, 360, 90, 15, juce::Justification::centredTop, true);
     g.drawText("Grafici", RightHalf, juce::Justification::centred);
-
+    g.drawText("Wave viewer", RightHalf, juce::Justification::centredTop);
 }
 
 void MultiEffectAudioProcessorEditor::resized()
@@ -310,9 +310,9 @@ void MultiEffectAudioProcessorEditor::resized()
     distortionThresholdSlider.setBounds(225, 225, 100, 100);
 
     //Labels
-    distortionGainLabel.setBounds(50, 165, 100, 100);
-    distortionOffsetLabel.setBounds(150, 165, 100, 100);
-    distortionThresholdLabel.setBounds(250, 165, 100, 100);
+    distortionGainLabel.setBounds(55, 165, 100, 100);
+    distortionOffsetLabel.setBounds(152, 165, 100, 100);
+    distortionThresholdLabel.setBounds(244, 165, 100, 100);
 
     //Toggle
     toggleActiveDistotion.setBounds(10, -30, 100, 100);
@@ -324,23 +324,23 @@ void MultiEffectAudioProcessorEditor::resized()
     toggleActiveDelay.setBounds(10 + DelayPositionOffSet, -30, 100, 100);
 
     //Bounds slider delay
-    delayDryWetSlider.setBounds(80 + DelayPositionOffSet, 90, 200, 100);
+    delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 90, 200, 100);
     delayGainSlider.setBounds(25 + DelayPositionOffSet, 225, 100, 100);
-    delayTimeSlider.setBounds(125 + DelayPositionOffSet, 225, 100, 100);
+    delayTimeSlider.setBounds(127 + DelayPositionOffSet, 225, 100, 100);
     delayLowPassFilter.setBounds(225 + DelayPositionOffSet, 225, 100, 100);
 
     //Bounds label delay
-    delayGainLabel.setBounds(50 + DelayPositionOffSet, 165, 100, 100);
-    delayTimeLabel.setBounds(150 + DelayPositionOffSet, 165, 100, 100);
-    delayLowPassLabel.setBounds(250 + DelayPositionOffSet, 165, 100, 100);
-    delayDryWetLabel.setBounds(150 + DelayPositionOffSet, 50, 100, 100);
+    delayGainLabel.setBounds(55 + DelayPositionOffSet, 165, 100, 100);
+    delayTimeLabel.setBounds(155 + DelayPositionOffSet, 165, 100, 100);
+    delayLowPassLabel.setBounds(240 + DelayPositionOffSet, 165, 100, 100);
+    delayDryWetLabel.setBounds(140 + DelayPositionOffSet, 50, 100, 100);
 
     //toggle fD/FW
-    isFeedback.setBounds(60 + DelayPositionOffSet, 30, 200, 50);
-    isFeedForward.setBounds(160 + DelayPositionOffSet, 30, 200, 50);
+    isFeedback.setBounds(80 + DelayPositionOffSet, 30, 200, 50);
+    isFeedForward.setBounds(180 + DelayPositionOffSet, 30, 200, 50);
 
     //Toggle
-    toggleActiveDelayLowPass.setBounds(245 + DelayPositionOffSet, 165, 100, 100);
+    toggleActiveDelayLowPass.setBounds(235 + DelayPositionOffSet, 165, 100, 100);
 
     //--------------------------------------------------------------REVEBR------------------------------------------------------
         //Toggle
@@ -353,11 +353,11 @@ void MultiEffectAudioProcessorEditor::resized()
     reverbWidthSlider.setBounds(200, 550, 100, 100);
 
     //Labels
-    reverbDryWetLevelLabel.setBounds(70, 360, 100, 100);
-    reverbRoomSizeLabel.setBounds(220, 360, 100, 100);
-    reverbDampingLabel.setBounds(75, 490, 100, 100);
-    reverbWidthLabel.setBounds(225, 490, 100, 100);
+    reverbDryWetLevelLabel.setBounds(65, 360, 100, 100);
+    reverbRoomSizeLabel.setBounds(210, 360, 100, 100);
+    reverbDampingLabel.setBounds(67, 490, 100, 100);
+    reverbWidthLabel.setBounds(226, 490, 100, 100);
     //-------------------------------------------------------------VIEWER-------------------------------------------------------
-    audioProcessor.waveViewer.setBounds(730, 70, 450, 250);
-    audioProcessor.spectrum.setBounds(730, 350, 450, 450);
+    audioProcessor.waveViewer.setBounds(730, 20, 450,300);
+    audioProcessor.spectrum.setBounds(730, 360, 450, 300);
 }
