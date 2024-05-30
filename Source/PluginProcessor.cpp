@@ -111,6 +111,18 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
         filter.prepare(spec);
         *filter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, dCutOffLowPass);
     }
+
+   
+    juce::dsp::ProcessSpec eQSpec{ sampleRate, static_cast<juce::uint32>(samplesPerBlock), 2 };
+
+    lowShelf.prepare(eQSpec);
+    peak.prepare(eQSpec);
+    highShelf.prepare(eQSpec);
+
+    updateFilters();
+   
+   
+    
 }
 
 void MultiEffectAudioProcessor::releaseResources()
@@ -265,15 +277,18 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         auto* channelData = buffer.getWritePointer(1);
 
         reverb.processStereo(channelData, channelData1, buffer.getNumSamples());
-        /*
-                for (int channel = 0; channel < totalNumInputChannels; ++channel)
-                {
-                    auto* channelData = buffer.getWritePointer(channel);
-                    reverb.processMono(channelData, buffer.getNumSamples());
-
-                }
-                */
+        
     }
+
+   
+
+    juce::dsp::AudioBlock<float> block(buffer);
+    juce::dsp::ProcessContextReplacing<float> context(block);
+    lowShelf.process(context);
+    peak.process(context);
+    highShelf.process(context);
+
+    updateFilters();
     
 }
 
@@ -368,6 +383,18 @@ void MultiEffectAudioProcessor::updateBufferPosition(juce::AudioBuffer<float>& b
     mWritePosition %= delayBufferSize;
 }
 
+void MultiEffectAudioProcessor::updateFilters() {
+
+    auto lowGain = apvt.getRawParameterValue("EqLOW")->load();
+    auto midGain = apvt.getRawParameterValue("EqMID")->load();
+    auto highGain = apvt.getRawParameterValue("EqHIGH")->load();
+
+    *lowShelf.state = *juce::dsp::IIR::Coefficients<float>::makeLowShelf(getSampleRate(), 200.0f, 0.707f, lowGain);
+    *peak.state = *juce::dsp::IIR::Coefficients<float>::makePeakFilter(getSampleRate(), 1000.0f, 0.707f, midGain);
+    *highShelf.state = *juce::dsp::IIR::Coefficients<float>::makeHighShelf(getSampleRate(), 5000.0f, 0.707f, highGain);
+}
+
+
 
 //==============================================================================
 bool MultiEffectAudioProcessor::hasEditor() const
@@ -426,9 +453,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RevWIDTH", "revWidth", 0.0f, 1.0f, 1.0f));
 
     //-----------------------------------------------EQ-------------------------------------------------------
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqLOW", "LowCutFreq", -24.f, -24.f, 0.f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMID", "MidCutFreq", -24.f, -24.f, 0.f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqHIGH", "HighCutFreq", -24.f, -24.f, 0.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqLOW", "LowCutFreq", 0.f, 5.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMID", "MidCutFreq", 0.f, 5.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqHIGH", "HighCutFreq", 0.f, 5.f, 1.f));
 
 
     //ritorno il vettore da inizio a fine

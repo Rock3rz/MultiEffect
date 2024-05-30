@@ -58,6 +58,7 @@ public:
     void fillBuffer(juce::AudioBuffer<float>& buffer, int channel, float g);
     void readFromBuffer(int channel, juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer, float g, float t, float dryWet);
     void updateBufferPosition(juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer);
+    void updateFilters();
 
     juce::AudioProcessorValueTreeState apvt;
     bool isFeedbackActive = false;
@@ -79,6 +80,11 @@ private:
 
     //riverbero
     juce::Reverb reverb;
+
+    //juce::dsp::ProcessorChain<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Filter<float>> eq;
+    juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> lowShelf;
+    juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> peak;
+    juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> highShelf;
 
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
