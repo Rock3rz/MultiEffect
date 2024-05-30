@@ -193,9 +193,6 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         };
 
 
-
-
-
     //--------------------------------------------------REVERB----------------------------------------------------------------------------------
         //toggle active
     toggleActiveReverb.setButtonText("Inactive");
@@ -255,6 +252,41 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         }
         };
 
+    //-------------------------------------------------EQ---------------------------------
+
+    eqLowSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqLowLabel.setText("Low", juce::dontSendNotification);
+
+    eqMidSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqMidSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqMidLabel.setText("Mid", juce::dontSendNotification);
+
+    eqHighSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqHighSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqHighLabel.setText("High", juce::dontSendNotification);
+
+    eqMasterOutSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqMasterOutSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqMasterOutLabel.setText("Gain", juce::dontSendNotification);
+
+    //sliders
+    addAndMakeVisible(eqLowSlider);
+    addAndMakeVisible(eqMidSlider);
+    addAndMakeVisible(eqHighSlider);
+    addAndMakeVisible(eqMasterOutSlider);
+
+    //Labels
+    addAndMakeVisible(eqLowLabel);
+    addAndMakeVisible(eqMidLabel);
+    addAndMakeVisible(eqHighLabel);
+    addAndMakeVisible(eqMasterOutLabel);
+
+    //attachment
+    eqLowSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqLOW", eqLowSlider);
+    eqMidSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqMID", eqMidSlider);
+    eqHighSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqHIGH", eqHighSlider);
+    eqMasterOutSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqMASTEROUTGAIN", eqMasterOutSlider);
 
     //--------------------------------------------------VIEWER----------------------------------------------------------------------------------
     addAndMakeVisible(audioProcessor.waveViewer);
@@ -374,6 +406,19 @@ void MultiEffectAudioProcessorEditor::resized()
     reverbWidthLabel.setBounds(226, 490, 100, 100);
 
     //-------------------------------------------------------------VIEWER-------------------------------------------------------
-    audioProcessor.spectrum.setBounds(727, 70, 450, 200);
-    audioProcessor.waveViewer.setBounds(727, 420, 450,200);    
+    audioProcessor.waveViewer.setBounds(730, 20, 450,300);
+    audioProcessor.spectrum.setBounds(730, 360, 450, 300);
+
+    //-----------------------------------------------EQ---------------------------------------
+    eqLowSlider.setBounds(390, 430, 50, 200);
+    eqMidSlider.setBounds(470, 430, 50, 200);
+    eqHighSlider.setBounds(550, 430, 50, 200);
+    eqMasterOutSlider.setBounds(630, 430, 50, 200);
+
+    eqLowLabel.setBounds(395, 360, 100, 100);
+    eqMidLabel.setBounds(475, 360, 100, 100);
+    eqHighLabel.setBounds(555, 360, 100, 100);
+    eqMasterOutLabel.setBounds(635, 360, 100, 100);
+    
+
 }

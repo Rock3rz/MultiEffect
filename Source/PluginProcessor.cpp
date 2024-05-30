@@ -6,8 +6,10 @@
   ==============================================================================
 */
 
+#include <cmath>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+
 
 //==============================================================================
 MultiEffectAudioProcessor::MultiEffectAudioProcessor()
@@ -111,6 +113,18 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
         filter.prepare(spec);
         *filter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, dCutOffLowPass);
     }
+
+   
+    juce::dsp::ProcessSpec eQSpec{ sampleRate, static_cast<juce::uint32>(samplesPerBlock), 2 };
+
+    lowShelf.prepare(eQSpec);
+    peak.prepare(eQSpec);
+    highShelf.prepare(eQSpec);
+
+    updateFilters();
+   
+   
+    
 }
 
 void MultiEffectAudioProcessor::releaseResources()
@@ -175,6 +189,9 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     auto revDryLevel = apvt.getRawParameterValue("RevDRYWET")->load();
     auto revWidth = apvt.getRawParameterValue("RevWIDTH")->load();
 
+    //MasterOut
+    auto eqMasterOut = apvt.getRawParameterValue("EqMASTEROUTGAIN")->load();
+
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
@@ -232,19 +249,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
             lowPassFilters[channel].process(context);
         }
     }
-
-
-    waveViewer.pushBuffer(buffer);
-    DBG(dCutOffLowPass * 1000);
-
-    //---------------------------------------SPECTRUM ANALYZER---------------------------------------------------------------------------
-
-    for (int channel = 0; channel < getTotalNumOutputChannels(); ++channel) {
-        auto* spectrumReadPointer = buffer.getReadPointer(channel);
-        for (int samples = 0; samples < buffer.getNumSamples(); ++samples) {
-            spectrum.pushNextSampleIntoFifo(spectrumReadPointer[samples]);
-        }
-    }
+   
 
     //----------------------------------------------------RIVERBERO------------------------------------------------------------------
     if (isReverbActive) {
@@ -265,14 +270,34 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         auto* channelData = buffer.getWritePointer(1);
 
         reverb.processStereo(channelData, channelData1, buffer.getNumSamples());
-        /*
-                for (int channel = 0; channel < totalNumInputChannels; ++channel)
-                {
-                    auto* channelData = buffer.getWritePointer(channel);
-                    reverb.processMono(channelData, buffer.getNumSamples());
+        
+    }
 
-                }
-                */
+   
+
+    juce::dsp::AudioBlock<float> block(buffer);
+    juce::dsp::ProcessContextReplacing<float> context(block);
+    lowShelf.process(context);
+    peak.process(context);
+    highShelf.process(context);
+
+    updateFilters();
+
+    
+
+    //----------------------------------------VIEWER-----------------------------------------
+   
+    waveViewer.pushBuffer(buffer);
+
+    //---------------------------------------SPECTRUM ANALYZER---------------------------------------------------------------------------
+
+    for (int channel = 0; channel < getTotalNumOutputChannels(); ++channel) {
+        auto* spectrumReadPointer = buffer.getReadPointer(channel);
+        auto* channelData = buffer.getWritePointer(channel);
+        for (int samples = 0; samples < buffer.getNumSamples(); ++samples) {
+            spectrum.pushNextSampleIntoFifo(spectrumReadPointer[samples]);
+            channelData[samples] *= eqMasterOut;
+        }
     }
     
 }
@@ -368,6 +393,18 @@ void MultiEffectAudioProcessor::updateBufferPosition(juce::AudioBuffer<float>& b
     mWritePosition %= delayBufferSize;
 }
 
+void MultiEffectAudioProcessor::updateFilters() {
+
+    auto lowGain = apvt.getRawParameterValue("EqLOW")->load();
+    auto midGain = apvt.getRawParameterValue("EqMID")->load();
+    auto highGain = apvt.getRawParameterValue("EqHIGH")->load();
+
+    *lowShelf.state = *juce::dsp::IIR::Coefficients<float>::makeLowShelf(getSampleRate(), 200.0f, 2, lowGain);
+    *peak.state = *juce::dsp::IIR::Coefficients<float>::makePeakFilter(getSampleRate(), 1000.0f, 2, midGain);
+    *highShelf.state = *juce::dsp::IIR::Coefficients<float>::makeHighShelf(getSampleRate(), 5000.0f, 2, highGain);
+}
+
+
 
 //==============================================================================
 bool MultiEffectAudioProcessor::hasEditor() const
@@ -383,15 +420,12 @@ juce::AudioProcessorEditor* MultiEffectAudioProcessor::createEditor()
 //==============================================================================
 void MultiEffectAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+   
 }
 
 void MultiEffectAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    
 }
 
 //==============================================================================
@@ -409,12 +443,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     //assegnazione dei parametri al vettore creato
 
 //-------------------------------------------------DISTORTION--------------------------------------
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DisGAIN", "disGain", .0f, 5.0f, .5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DisGAIN", "disGain", 0.f, 2.f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DisOFFSET", "disOffset", -.5f, .5f, 0.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DisTRESHOLD", "disTreshold", .0f, 1.0f, .5f));
 
     //-------------------------------------------------DELAY---------------------------------------------------------
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DGAIN", "dGain", 0.0f, 1.0f, 0.5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DGAIN", "dGain", 0.f, 2.f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DTIME", "dTime", .1f, 2.0f, .5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DDRYWET", "dDryWet", .0f, 1.0f, .5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DLOWFILTER", "dLowFilter", .1f, 20.f, 5.f));
@@ -422,10 +456,19 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     //-----------------------------------------------REVERB-------------------------------------------------
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RevROOMSIZE", "revRoomSize", 0.0f, 1.0f, 0.5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RevDAMPING", "revDamping", 0.0f, 1.0f, 0.5f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("RevDRYWET", "revDryWet", 0.0f, 1.0f, 0.33f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("RevWIDTH", "revWidth", 0.0f, 1.0f, 1.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("RevDRYWET", "revDryWet", 0.0f, 1.0f, 0.5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("RevWIDTH", "revWidth", 0.0f, 1.0f, 0.5f));
 
+    //-----------------------------------------------EQ-------------------------------------------------------
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqLOW", "LowCutFreq", 0.f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMID", "MidCutFreq", 0.f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqHIGH", "HighCutFreq", 0.f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMASTEROUTGAIN", "MasterOutGain", 0.f, 2.f, 1.f));
 
     //ritorno il vettore da inizio a fine
     return { params.begin(), params.end() };
+}
+
+float MultiEffectAudioProcessor::linearToDb(float linear) {
+    return 20.f * std::log10(linear);
 }
