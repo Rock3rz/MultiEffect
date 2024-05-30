@@ -14,8 +14,6 @@
 //==============================================================================
 MySlider::MySlider()
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
 
 }
 
@@ -30,7 +28,7 @@ void MySlider::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int 
     auto rw = radius * 2.0f;
     auto angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
 
-    g.setColour(juce::Colour::fromRGB(52, 52, 52).brighter(0.1f).withAlpha(0.7f)); //grigio scuro
+    g.setColour(juce::Colour::fromRGB(52, 52, 52).brighter(0.1f)); //grigio scuro
     g.fillEllipse(rx, ry, rw, rw);
 
     g.setColour(juce::Colours::darkgrey.darker(0.3f));
@@ -55,16 +53,12 @@ void MySlider::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int 
     g.setColour(juce::Colours::darkgrey);
     g.strokePath(dashedArc, dashedStroke);
 
-
     // Arc
     juce::Path valueArc;
     juce::PathStrokeType stroke(4.0f);
     stroke.setEndStyle(juce::PathStrokeType::EndCapStyle::butt);
     valueArc.addCentredArc(centreX, centreY, radius+6, radius+6, 0.0f, rotaryStartAngle, angle, true);
-
     g.setColour(juce::Colours::mediumaquamarine);
-    g.strokePath(valueArc, stroke);
-
-   
+    g.strokePath(valueArc, stroke);   
 
 }

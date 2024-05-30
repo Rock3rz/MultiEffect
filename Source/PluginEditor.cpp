@@ -33,12 +33,14 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionGainSlider.setLookAndFeel(&myLookAndFeel1);
     distortionGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    distortionGainSlider.setPaintingIsUnclipped(true);
     distortionGainLabel.setText("Gain", juce::dontSendNotification);
 
     //Offset
     distortionOffsetSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionOffsetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     distortionOffsetLabel.setText("Offset", juce::dontSendNotification);
+
 
     //Treshold
     distortionThresholdSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
@@ -305,12 +307,12 @@ void MultiEffectAudioProcessorEditor::resized()
     //----------------------------------------------------DISTORTION---------------------------------------------------------------------
 
     //Sliders
-    distortionGainSlider.setBounds(25, 225, 90, 90); //x y h w
+    distortionGainSlider.setBounds(30, 230, 85, 85); //x y h w
     distortionOffsetSlider.setBounds(125, 225, 100, 100);
     distortionThresholdSlider.setBounds(225, 225, 100, 100);
 
     //Labels
-    distortionGainLabel.setBounds(55, 165, 100, 100);
+    distortionGainLabel.setBounds(55, 160, 100, 100);
     distortionOffsetLabel.setBounds(152, 165, 100, 100);
     distortionThresholdLabel.setBounds(244, 165, 100, 100);
 
