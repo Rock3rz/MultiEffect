@@ -305,7 +305,7 @@ void MultiEffectAudioProcessorEditor::resized()
     //----------------------------------------------------DISTORTION---------------------------------------------------------------------
 
     //Sliders
-    distortionGainSlider.setBounds(25, 225, 100, 100); //x y h w
+    distortionGainSlider.setBounds(25, 225, 90, 90); //x y h w
     distortionOffsetSlider.setBounds(125, 225, 100, 100);
     distortionThresholdSlider.setBounds(225, 225, 100, 100);
 
@@ -342,7 +342,7 @@ void MultiEffectAudioProcessorEditor::resized()
     //Toggle
     toggleActiveDelayLowPass.setBounds(245 + DelayPositionOffSet, 165, 100, 100);
 
-    //--------------------------------------------------------------REVEBR------------------------------------------------------
+    //--------------------------------------------------------------REVERB------------------------------------------------------
         //Toggle
     toggleActiveReverb.setBounds(10, 325, 100, 100);
 
