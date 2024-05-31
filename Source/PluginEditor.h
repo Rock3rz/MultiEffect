@@ -47,6 +47,11 @@ private:
     juce::Label distortionOffsetLabel;
     juce::Label distortionThresholdLabel;
 
+    //Utility
+    juce::GroupComponent borderDistortionGain;
+    juce::GroupComponent borderDistortionOffset;
+    juce::GroupComponent borderDistortionTreshold;
+
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionGainSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionOffsetSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionTresholdAttachment;
@@ -61,11 +66,14 @@ private:
     juce::Slider delayDryWetSlider;
     juce::Slider delayLowPassFilter;
 
-    //delay Labels
-    juce::Label delayGainLabel;
-    juce::Label delayTimeLabel;
-    juce::Label delayLowPassLabel;
+    //Delay Labels
     juce::Label delayDryWetLabel;
+
+    //Utilities
+    juce::GroupComponent borderDelayGain;
+    juce::GroupComponent borderDelayTime;
+    juce::GroupComponent borderDelayLowPassFilter;
+
 
     //delayAttachments
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayGainSliderAttachment;
@@ -89,9 +97,12 @@ private:
 
     //Reverb Labels
     juce::Label reverbRoomSizeLabel;
-    juce::Label reverbDampingLabel;
     juce::Label reverbDryWetLevelLabel;
-    juce::Label reverbWidthLabel;
+
+    //Utilities
+    juce::GroupComponent borderReverbWidth;
+    juce::GroupComponent borderReverbDamping;
+    
 
     //ReverbAttachments
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> reverbRoomSizeSliderAttachment;

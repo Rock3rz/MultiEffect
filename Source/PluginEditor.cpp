@@ -66,10 +66,19 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(distortionOffsetSlider);
     addAndMakeVisible(distortionThresholdSlider);
 
-    //Labels
-    addAndMakeVisible(distortionGainLabel);
-    addAndMakeVisible(distortionOffsetLabel);
-    addAndMakeVisible(distortionThresholdLabel);
+    //Utilities
+    addAndMakeVisible(borderDistortionGain);
+    borderDistortionGain.setText("Gain");
+    borderDistortionGain.setTextLabelPosition(juce::Justification::centredTop);
+    
+    addAndMakeVisible(borderDistortionOffset);
+    borderDistortionOffset.setText("Offset");
+    borderDistortionOffset.setTextLabelPosition(juce::Justification::centredTop);
+
+    addAndMakeVisible(borderDistortionTreshold);
+    borderDistortionTreshold.setText("Treshold");
+    borderDistortionTreshold.setTextLabelPosition(juce::Justification::centredTop);
+
 
     //Distortion attachments
     distortionGainSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "DisGAIN", distortionGainSlider);
@@ -106,20 +115,20 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     delayGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     delayGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     delayGainSlider.setDoubleClickReturnValue(true, .5f);
-    delayGainLabel.setText("Gain", juce::dontSendNotification);
+    
     //delayGainSlider.setSize(200.f, 200.f);
 
     //Time delay slider Setup
     delayTimeSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     delayTimeSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     delayTimeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
-    delayTimeLabel.setText("Time", juce::dontSendNotification);
+    
 
     //lowPass Filter Slider Setup
     delayLowPassFilter.setLookAndFeel(&myLookAndFeelDelayLine);
     delayLowPassFilter.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     delayLowPassFilter.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
-    delayLowPassLabel.setText("Filter", juce::dontSendNotification);
+    
 
     //dryWet slider Setup
     delayDryWetSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
@@ -139,11 +148,24 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(delayLowPassFilter);
     addAndMakeVisible(delayDryWetSlider);
 
-    //DelayLabels
-    addAndMakeVisible(delayGainLabel);
-    addAndMakeVisible(delayTimeLabel);
+    
+    
     //addAndMakeVisible(delayLowPassLabel);
     addAndMakeVisible(delayDryWetLabel);
+
+    //Delay Utilites
+    addAndMakeVisible(borderDelayGain);
+    borderDelayGain.setText("Gain");
+    borderDelayGain.setTextLabelPosition(juce::Justification::centredTop);
+    
+    addAndMakeVisible(borderDelayTime);
+    borderDelayTime.setText("Time");
+    borderDelayTime.setTextLabelPosition(juce::Justification::centredTop);
+    
+    addAndMakeVisible(borderDelayLowPassFilter);
+    borderDelayLowPassFilter.setText("           ");
+    borderDelayLowPassFilter.setTextLabelPosition(juce::Justification::centredTop);
+    
 
     //DelayAttachment
     delayGainSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "DGAIN", delayGainSlider);
@@ -209,7 +231,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbDampingSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbDampingSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     reverbDampingSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
-    reverbDampingLabel.setText("Damping", juce::dontSendNotification);
+   
 
     //dry wet
     reverbDryWetLevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
@@ -220,7 +242,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbWidthSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbWidthSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     reverbWidthSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
-    reverbWidthLabel.setText("Width", juce::dontSendNotification);
+    
 
     //Toggle active 
     addAndMakeVisible(toggleActiveReverb);
@@ -233,9 +255,19 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Labels
     addAndMakeVisible(reverbRoomSizeLabel);
-    addAndMakeVisible(reverbDampingLabel);
     addAndMakeVisible(reverbDryWetLevelLabel);
-    addAndMakeVisible(reverbWidthLabel);
+
+    //Utilities
+    addAndMakeVisible(borderReverbDamping);
+    borderReverbDamping.setText("Damping");
+    borderReverbDamping.setTextLabelPosition(juce::Justification::centredTop);
+
+
+    addAndMakeVisible(borderReverbWidth);
+    borderReverbWidth.setText("Width");
+    borderReverbWidth.setTextLabelPosition(juce::Justification::centredTop);
+
+
 
     //attachments reverb
     reverbRoomSizeSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "RevROOMSIZE", reverbRoomSizeSlider);
@@ -359,10 +391,12 @@ void MultiEffectAudioProcessorEditor::resized()
     distortionOffsetSlider.setBounds(UpRotarySlidersPosX + 100, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
     distortionThresholdSlider.setBounds(UpRotarySlidersPosX + 200, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
 
-    //Labels
-    distortionGainLabel.setBounds(55, 160, 100, 100);
-    distortionOffsetLabel.setBounds(152, 165, 100, 100);
-    distortionThresholdLabel.setBounds(244, 165, 100, 100);
+    
+
+    //Utilities
+    borderDistortionGain.setBounds(30, 205, 85, 120);
+    borderDistortionOffset.setBounds(130, 205, 85, 120);
+    borderDistortionTreshold.setBounds(230, 205, 85, 120);
 
     //Toggle
     toggleActiveDistotion.setBounds(10, -30, 100, 100);
@@ -380,17 +414,20 @@ void MultiEffectAudioProcessorEditor::resized()
     delayLowPassFilter.setBounds(225 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
 
     //Bounds label delay
-    delayGainLabel.setBounds(55 + DelayPositionOffSet, 165, 100, 100);
-    delayTimeLabel.setBounds(155 + DelayPositionOffSet, 165, 100, 100);
-    delayLowPassLabel.setBounds(240 + DelayPositionOffSet, 165, 100, 100);
+   
     delayDryWetLabel.setBounds(140 + DelayPositionOffSet, 50, 100, 100);
+
+    //Utilities
+    borderDelayGain.setBounds(385, 205, 85, 120);
+    borderDelayTime.setBounds(487, 205, 85, 120);
+    borderDelayLowPassFilter.setBounds(585, 205, 85, 120);
 
     //toggle fD/FW
     isFeedback.setBounds(80 + DelayPositionOffSet, 30, 200, 50);
     isFeedForward.setBounds(180 + DelayPositionOffSet, 30, 200, 50);
 
     //Toggle
-    toggleActiveDelayLowPass.setBounds(235 + DelayPositionOffSet, 165, 100, 100);
+    toggleActiveDelayLowPass.setBounds(237 + DelayPositionOffSet, 165, 100, 100);
 
     //--------------------------------------------------------------REVERB------------------------------------------------------
     //Toggle
@@ -405,8 +442,10 @@ void MultiEffectAudioProcessorEditor::resized()
     //Labels
     reverbDryWetLevelLabel.setBounds(65, 360, 100, 100);
     reverbRoomSizeLabel.setBounds(210, 360, 100, 100);
-    reverbDampingLabel.setBounds(67, 490, 100, 100);
-    reverbWidthLabel.setBounds(226, 490, 100, 100);
+
+    //Utilities
+    borderReverbDamping.setBounds(50, 525, 85, 120);
+    borderReverbWidth.setBounds(200, 525, 85, 120);
 
     //-------------------------------------------------------------VIEWER-------------------------------------------------------
     audioProcessor.waveViewer.setBounds(730, 20, 450,300);
