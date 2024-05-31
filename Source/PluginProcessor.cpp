@@ -202,22 +202,44 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         if (isDistortionActive) {
             auto* channelData = buffer.getWritePointer(channel);
 
-
+            
             for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-                channelData[sample] *= disGainLevel;
-                channelData[sample] += disOffsetLevel;
+                switch (distortionType)
+                {
+                case 0:
+                    channelData[sample] *= disGainLevel;
+                    channelData[sample] += disOffsetLevel;
+                    channelData[sample] = tanh(channelData[sample]); //tanH
+                    channelData[sample] -= disOffsetLevel;
+                    break;
 
-                if (channelData[sample] > disTresholdLevel) {
-                    channelData[sample] = disTresholdLevel;
+                case 1:
+                    channelData[sample] *= disGainLevel;
+                    channelData[sample] += disOffsetLevel;
+                    channelData[sample] = ((channelData[sample] > 0.f) - (channelData[sample] < 0.f)) * (1.f-std::exp(-std::abs(channelData[sample]))); //sign(x)*(1-e^-|x|);
+                    channelData[sample] -= disOffsetLevel;
+                    break;
+
+                case 2:
+                    
+                    channelData[sample] *= disGainLevel;                     // 1 se > 1
+                    channelData[sample] += disOffsetLevel;                  // -1 se < 1
+                                                                            // x altrimenti
+                    if (channelData[sample] > disTresholdLevel) {
+                        channelData[sample] = disTresholdLevel;
+                    }
+                    else if (channelData[sample] < -disTresholdLevel) {
+                        channelData[sample] = -disTresholdLevel;
+                    }
+
+                    channelData[sample] -= disOffsetLevel;
+
+                    break;
+                default:
+                    break;
                 }
-                else if (channelData[sample] < -disTresholdLevel) {
-                    channelData[sample] = -disTresholdLevel;
-                }
-
-                channelData[sample] -= disOffsetLevel;
-
-                channelData[sample] = channelData[sample] - ((channelData[sample] * channelData[sample] * channelData[sample]) / 3.f);
             }
+          
         }
 
 
@@ -337,8 +359,6 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
     {
         readPosition += delayBufferSize;
     }
-
-
 
 
     if ((readPosition + bufferSize) < delayBufferSize)
