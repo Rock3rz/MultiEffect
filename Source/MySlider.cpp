@@ -72,7 +72,58 @@ void MySlider::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int 
     
 }
 
-/*void drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int height, float	sliderPos, float minSliderPos,
-    float maxSliderPos, juce::Slider::SliderStyle, juce::Slider& slider) {
+void MySlider:: drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int height, float	sliderPos, float minSliderPos,
+    float maxSliderPos, juce::Slider::SliderStyle style, juce::Slider& slider) {
 
-}*/
+    juce::Colour sliderBackgroundColour = juce::Colours::darkgrey;
+    // Colore della traccia del slider
+    juce::Colour sliderTrackColour = juce::Colours::blue;
+
+    if (style == juce::Slider::SliderStyle::LinearHorizontal) {
+        g.setColour(sliderBackgroundColour);
+        g.fillRect(x, y, width, height);
+
+        g.setColour(juce::Colours::lightcyan);
+        g.drawLine(x, y + height / 2.0f, x + width, y + height / 2.0f);
+        
+        // Calcola la posizione della traccia
+        float trackWidth = width * 0.3f;
+        float trackHeight = height * 0.5f;
+        float trackY = y + (height - trackHeight) / 2.0f;
+        float trackX = x + (width / 2.0f);        
+
+        // Disegna la traccia del slider
+        g.setColour(sliderTrackColour);
+        if (sliderPos <= 0.5) {
+            float trackStart = juce::jmin(sliderPos, 0.5f);
+            float trackEnd = juce::jmax(sliderPos, 0.0f);
+            g.fillRect(trackX, trackY, trackX - (trackEnd - trackStart), trackHeight);
+        }else if(sliderPos > 0.5){
+            float trackStart = juce::jmin(sliderPos, 1.0f);
+            float trackEnd = juce::jmax(sliderPos, 0.5f);
+            g.fillRect(trackX, trackY, trackX - (trackEnd - trackStart), trackHeight);
+        }
+
+
+    }
+    else if (style == juce::Slider::SliderStyle::LinearVertical)
+    {
+        g.setColour(sliderBackgroundColour);
+        g.fillRect(x, y, width, height);
+
+        g.setColour(juce::Colours::lightcyan);
+        g.drawLine(x + width / 2.0f, y, x + width / 2.0f, y + height);
+
+        // Calcola la posizione della traccia
+        float trackWidth = width * 0.3f;
+        float trackX = x + (width - trackWidth) / 2.0f;
+        float trackStart = juce::jmin(sliderPos, maxSliderPos);
+        float trackEnd = juce::jmax(sliderPos, minSliderPos);
+
+        // Disegna la traccia del slider
+        g.setColour(sliderTrackColour);
+        g.fillRect(trackX, trackStart, trackWidth, trackEnd - trackStart);
+    }
+    
+}
+
