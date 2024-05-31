@@ -68,6 +68,16 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(distortionOffsetLabel);
     addAndMakeVisible(distortionThresholdLabel);
 
+    //Utility
+    addAndMakeVisible(borderDistortion);
+    addAndMakeVisible(borderDelay);
+    addAndMakeVisible(borderReverb);
+    addAndMakeVisible(borderEQ);
+    //Utilities Distortion 
+    borderDistortion.setText("Gain");
+    borderDistortion.setTextLabelPosition(juce::Justification::centredTop);
+
+
     //Distortion attachments
     distortionGainSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "DisGAIN", distortionGainSlider);
     distortionOffsetSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "DisOFFSET", distortionOffsetSlider);
@@ -357,9 +367,12 @@ void MultiEffectAudioProcessorEditor::resized()
     distortionThresholdSlider.setBounds(225, 225, 100, 100);
 
     //Labels
-    distortionGainLabel.setBounds(55, 160, 100, 100);
+    
     distortionOffsetLabel.setBounds(152, 165, 100, 100);
     distortionThresholdLabel.setBounds(244, 165, 100, 100);
+
+    //Utility Distortion
+    borderDistortion.setBounds(30, 205, 85, 120);
 
     //Toggle
     toggleActiveDistotion.setBounds(10, -30, 100, 100);
@@ -415,8 +428,8 @@ void MultiEffectAudioProcessorEditor::resized()
     eqHighSlider.setBounds(550, 430, 50, 200);
     eqMasterOutSlider.setBounds(630, 430, 50, 200);
 
-    eqLowLabel.setBounds(395, 360, 100, 100);
-    eqMidLabel.setBounds(475, 360, 100, 100);
+    eqLowLabel.setBounds(398, 360, 100, 100);
+    eqMidLabel.setBounds(478, 360, 100, 100);
     eqHighLabel.setBounds(555, 360, 100, 100);
     eqMasterOutLabel.setBounds(635, 360, 100, 100);
     
