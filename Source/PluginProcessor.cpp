@@ -443,12 +443,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     //assegnazione dei parametri al vettore creato
 
 //-------------------------------------------------DISTORTION--------------------------------------
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DisGAIN", "disGain", 0.f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DisGAIN", "disGain", 0.001f, 2.f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DisOFFSET", "disOffset", -.5f, .5f, 0.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DisTRESHOLD", "disTreshold", .0f, 1.0f, .5f));
 
     //-------------------------------------------------DELAY---------------------------------------------------------
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DGAIN", "dGain", 0.f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DGAIN", "dGain", 0.001f, 2.f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DTIME", "dTime", .1f, 2.0f, .5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DDRYWET", "dDryWet", .0f, 1.0f, .5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DLOWFILTER", "dLowFilter", .1f, 20.f, 5.f));
@@ -460,10 +460,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RevWIDTH", "revWidth", 0.0f, 1.0f, 0.5f));
 
     //-----------------------------------------------EQ-------------------------------------------------------
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqLOW", "LowCutFreq", 0.f, 2.f, 1.f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMID", "MidCutFreq", 0.f, 2.f, 1.f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqHIGH", "HighCutFreq", 0.f, 2.f, 1.f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMASTEROUTGAIN", "MasterOutGain", 0.f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqLOW", "LowCutFreq", 0.001f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMID", "MidCutFreq", 0.001f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqHIGH", "HighCutFreq", 0.001f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMASTEROUTGAIN", "MasterOutGain", 0.001f, 2.f, 1.f));
 
     //ritorno il vettore da inizio a fine
     return { params.begin(), params.end() };
