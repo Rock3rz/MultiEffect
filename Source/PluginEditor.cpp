@@ -14,6 +14,9 @@
 #define RectBoundThickness 2
 #define DelayRotaryLine 100
 #define DelayPositionOffSet 360
+#define RotarySliderDimHW 85
+#define UpRotarySlidersPosY 230
+#define UpRotarySlidersPosX 30
 
 
 //==============================================================================
@@ -32,7 +35,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
 
     //-----------------------------------------------DISTORTION--------------------------------------------------------------------
-    //toggle aactive
+    //toggle active
     toggleActiveDistotion.setButtonText("Inactive");
 
     //Gain
@@ -352,9 +355,9 @@ void MultiEffectAudioProcessorEditor::resized()
     //----------------------------------------------------DISTORTION---------------------------------------------------------------------
 
     //Sliders
-    distortionGainSlider.setBounds(30, 230, 85, 85); //x y h w
-    distortionOffsetSlider.setBounds(125, 225, 100, 100);
-    distortionThresholdSlider.setBounds(225, 225, 100, 100);
+    distortionGainSlider.setBounds(UpRotarySlidersPosX, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW); //x y w h
+    distortionOffsetSlider.setBounds(UpRotarySlidersPosX + 100, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    distortionThresholdSlider.setBounds(UpRotarySlidersPosX + 200, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
 
     //Labels
     distortionGainLabel.setBounds(55, 160, 100, 100);
@@ -372,9 +375,9 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //Bounds slider delay
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 90, 200, 100);
-    delayGainSlider.setBounds(25 + DelayPositionOffSet, 225, 100, 100);
-    delayTimeSlider.setBounds(127 + DelayPositionOffSet, 225, 100, 100);
-    delayLowPassFilter.setBounds(225 + DelayPositionOffSet, 225, 100, 100);
+    delayGainSlider.setBounds(25 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayTimeSlider.setBounds(127 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayLowPassFilter.setBounds(225 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
 
     //Bounds label delay
     delayGainLabel.setBounds(55 + DelayPositionOffSet, 165, 100, 100);
@@ -396,8 +399,8 @@ void MultiEffectAudioProcessorEditor::resized()
     //Sliders
     reverbDryWetLevelSlider.setBounds(25, 400, 150, 100);
     reverbRoomSizeSlider.setBounds(175, 400, 150, 100);
-    reverbDampingSlider.setBounds(50, 550, 100, 100);
-    reverbWidthSlider.setBounds(200, 550, 100, 100);
+    reverbDampingSlider.setBounds(50, 550, RotarySliderDimHW, RotarySliderDimHW);
+    reverbWidthSlider.setBounds(200, 550, RotarySliderDimHW, RotarySliderDimHW);
 
     //Labels
     reverbDryWetLevelLabel.setBounds(65, 360, 100, 100);

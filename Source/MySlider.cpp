@@ -12,6 +12,8 @@
 #include "MySlider.h"
 
 #define MARGIN 9.0f
+#define VerticalSliderWidht 50
+#define VerticalSliderHeight 200
 
 //==============================================================================
 MySlider::MySlider()
@@ -69,3 +71,8 @@ void MySlider::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int 
     g.strokePath(valueArc, stroke);
     
 }
+
+/*void drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int height, float	sliderPos, float minSliderPos,
+    float maxSliderPos, juce::Slider::SliderStyle, juce::Slider& slider) {
+
+}*/
