@@ -58,8 +58,23 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionThresholdSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     distortionThresholdLabel.setText("Treshold", juce::dontSendNotification);
 
+    //Distortion
+    softDistortionLabel.setText("f(x) = tanH(x)", juce::dontSendNotification);
+    midDistortionLabel.setText("f(x) = sign (x)(e^-|x|)", juce::dontSendNotification);
+    hardDistortionLabel.setText("f(x) = 1 -> x>1, -1 -> x<-1, x", juce::dontSendNotification);
+
     //Toggle active delay
     addAndMakeVisible(toggleActiveDistotion);
+
+    //Toggle distortionType
+    addAndMakeVisible(softDistortion);
+    addAndMakeVisible(midDistortion);
+    addAndMakeVisible(hardDistortion);
+
+    //Labels
+    addAndMakeVisible(softDistortionLabel);
+    addAndMakeVisible(midDistortionLabel);
+    addAndMakeVisible(hardDistortionLabel);
 
     //Sliders
     addAndMakeVisible(distortionGainSlider);
@@ -87,6 +102,30 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
             audioProcessor.isDistortionActive = false;
         }
         };
+
+    //creo lo stato di default
+    softDistortion.setToggleState(true, true);
+
+    //condizioni di selezione tipo distorsione
+    softDistortion.onClick = [this]() {
+        audioProcessor.distortionType = 0;
+        midDistortion.setToggleState(false, false);
+        hardDistortion.setToggleState(false, false);
+
+        };
+
+    midDistortion.onClick = [this]() {
+        audioProcessor.distortionType = 1;
+        softDistortion.setToggleState(false, false);
+        hardDistortion.setToggleState(false, false);
+        };
+
+    hardDistortion.onClick = [this]() {
+        audioProcessor.distortionType = 2;
+        softDistortion.setToggleState(false, false);
+        midDistortion.setToggleState(false, false);
+        };
+
 
 
     //-----------------------------------------------DELAY------------------------------------------------------------------------
@@ -366,8 +405,21 @@ void MultiEffectAudioProcessorEditor::resized()
     distortionOffsetLabel.setBounds(152, 165, 100, 100);
     distortionThresholdLabel.setBounds(244, 165, 100, 100);
 
-    //Toggle
+    //Toggle Active Distortion
     toggleActiveDistotion.setBounds(10, -30, 100, 100);
+
+    //Toggle DistortionType
+    softDistortion.setBounds(30, 20, 100, 100);
+    midDistortion.setBounds(140, 20, 100, 100);
+    hardDistortion.setBounds(250, 20, 100, 100);
+
+    softDistortionLabel.setBounds(30, 90, 100, 100);
+    midDistortionLabel.setBounds(140, 90, 100, 100);
+    hardDistortionLabel.setBounds(250, 90, 100, 100);
+
+
+
+
 
 
     //-----------------------------------------------------DELAY---------------------------------------------------------------------

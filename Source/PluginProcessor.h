@@ -67,6 +67,7 @@ public:
     bool isDistortionActive = false;
     bool isDelayLowPassActive = false;
     bool isReverbActive = false;
+    int distortionType = 0;
 
 
     juce::AudioVisualiserComponent waveViewer; //oggetto viewer

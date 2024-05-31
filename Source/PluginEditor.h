@@ -47,12 +47,21 @@ private:
     juce::Label distortionOffsetLabel;
     juce::Label distortionThresholdLabel;
 
+    juce::Label softDistortionLabel;
+    juce::Label midDistortionLabel;
+    juce::Label hardDistortionLabel;
+
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionGainSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionOffsetSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionTresholdAttachment;
 
-    //toggle
+    //toggle activation
     juce::ToggleButton toggleActiveDistotion;
+
+    //toggle distortionType
+    juce::ToggleButton softDistortion;
+    juce::ToggleButton midDistortion;
+    juce::ToggleButton hardDistortion;
 
     //--------------------------------------DELAY---------------------------------------------------------------------
         //delay Commands

@@ -399,9 +399,9 @@ void MultiEffectAudioProcessor::updateFilters() {
     auto midGain = apvt.getRawParameterValue("EqMID")->load();
     auto highGain = apvt.getRawParameterValue("EqHIGH")->load();
 
-    *lowShelf.state = *juce::dsp::IIR::Coefficients<float>::makeLowShelf(getSampleRate(), 200.0f, 2, lowGain);
-    *peak.state = *juce::dsp::IIR::Coefficients<float>::makePeakFilter(getSampleRate(), 1000.0f, 2, midGain);
-    *highShelf.state = *juce::dsp::IIR::Coefficients<float>::makeHighShelf(getSampleRate(), 5000.0f, 2, highGain);
+    *lowShelf.state = *juce::dsp::IIR::Coefficients<float>::makeLowShelf(getSampleRate(), 200.0f, 2.5f, lowGain);
+    *peak.state = *juce::dsp::IIR::Coefficients<float>::makePeakFilter(getSampleRate(), 1000.0f, 1.5f, midGain);
+    *highShelf.state = *juce::dsp::IIR::Coefficients<float>::makeHighShelf(getSampleRate(), 5000.0f, 2.5f, highGain);
 }
 
 
