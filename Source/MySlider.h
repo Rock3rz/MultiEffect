@@ -27,6 +27,8 @@ public:
 
     void SetValueArcColour(juce::Colour MyColour);
 
+    float normalizeValue(float value, float minValue, float maxValue);
+
 private:
 
     juce::Colour ChosenColour = juce::Colours::mediumaquamarine; //colore di default

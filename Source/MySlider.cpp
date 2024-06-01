@@ -72,7 +72,7 @@ void MySlider::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int 
     
 }
 
-void MySlider:: drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int height, float	sliderPos, float minSliderPos,
+void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int height, float	sliderPos, float minSliderPos,
     float maxSliderPos, juce::Slider::SliderStyle style, juce::Slider& slider) {
 
     juce::Colour sliderBackgroundColour = juce::Colours::darkgrey;
@@ -84,35 +84,39 @@ void MySlider:: drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int
         g.fillRect(x, y, width, height);
 
         g.setColour(juce::Colours::lightcyan);
-        g.drawLine(x, y + height / 2.0f, x + width, y + height / 2.0f);
-        
+        //g.drawLine(x, y + height / 2.0f, x + width, y + height / 2.0f);
+        g.drawLine(x, y + height, x + width, y + height);
+
+
         // Calcola la posizione della traccia
         float trackWidth = width * 0.3f;
         float trackHeight = height * 0.5f;
         float trackY = y + (height - trackHeight) / 2.0f;
-        float trackX = x + (width / 2.0f);        
+        float trackX = x + (width / 2.0f);
 
+
+        sliderPos = normalizeValue(sliderPos, 12.f, 188.f); //non so per quale motivo il valore dello slider non è normalizzato
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
-        if (sliderPos <= 0.5) {
-            float trackStart = juce::jmin(sliderPos, 0.5f);
-            float trackEnd = juce::jmax(sliderPos, 0.0f);
-            g.fillRect(trackX, trackY, trackX - (trackEnd - trackStart), trackHeight);
-        }else if(sliderPos > 0.5){
-            float trackStart = juce::jmin(sliderPos, 1.0f);
-            float trackEnd = juce::jmax(sliderPos, 0.5f);
-            g.fillRect(trackX, trackY, trackX - (trackEnd - trackStart), trackHeight);
+        if (sliderPos <= 0.5) {       
+            g.fillRect(trackX- ((.5f - sliderPos) * width), trackY, ((.5f - sliderPos)*width), trackHeight);
         }
-
-
+        else if (sliderPos > 0.5) {    
+            g.fillRect(trackX, trackY, ((sliderPos-.5f)*width), trackHeight);
+        }
+      
     }
+
     else if (style == juce::Slider::SliderStyle::LinearVertical)
     {
+        //la parte verticale non l'ho toccata
+
         g.setColour(sliderBackgroundColour);
         g.fillRect(x, y, width, height);
 
         g.setColour(juce::Colours::lightcyan);
-        g.drawLine(x + width / 2.0f, y, x + width / 2.0f, y + height);
+        //g.drawLine(x + width, y, x + width, y + height);
+
 
         // Calcola la posizione della traccia
         float trackWidth = width * 0.3f;
@@ -124,6 +128,10 @@ void MySlider:: drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int
         g.setColour(sliderTrackColour);
         g.fillRect(trackX, trackStart, trackWidth, trackEnd - trackStart);
     }
-    
+
+}//funzione di normalizzazione
+    float MySlider::normalizeValue(float value, float minValue, float maxValue) {
+        return (value - minValue) / (maxValue - minValue);
 }
+
 
