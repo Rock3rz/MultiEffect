@@ -195,7 +195,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     borderDelayTime.setText("Time");
     borderDelayTime.setTextLabelPosition(juce::Justification::centredTop);
     addAndMakeVisible(borderDelayLowPass);
-    borderDelayLowPass.setText("               ");
+    borderDelayLowPass.setText("            ");
     borderDelayLowPass.setTextLabelPosition(juce::Justification::centredTop);
 
     
@@ -454,7 +454,7 @@ void MultiEffectAudioProcessorEditor::resized()
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 90, 200, 30);
     delayGainSlider.setBounds(25 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
     delayTimeSlider.setBounds(127 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    delayLowPassFilter.setBounds(225 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayLowPassFilter.setBounds(229 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
 
     //Bounds label delay
     delayDryWetLabel.setBounds(140 + DelayPositionOffSet, 50, 100, 100);
@@ -464,12 +464,12 @@ void MultiEffectAudioProcessorEditor::resized()
     isFeedForward.setBounds(180 + DelayPositionOffSet, 30, 200, 50);
 
     //Toggle
-    toggleActiveDelayLowPass.setBounds(237 + DelayPositionOffSet, 165, 100, 100);
+    toggleActiveDelayLowPass.setBounds(240 + DelayPositionOffSet, 165, 100, 100);
 
     //Delay Utilities
     borderDelayGain.setBounds(385, 205, 85, 120);
     borderDelayTime.setBounds(487, 205, 85, 120);
-    borderDelayLowPass.setBounds(585, 205, 85, 120);
+    borderDelayLowPass.setBounds(589, 205, 85, 120);
 
     //--------------------------------------------------------------REVERB------------------------------------------------------
     //Toggle
