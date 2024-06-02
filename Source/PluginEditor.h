@@ -52,6 +52,7 @@ private:
     juce::GroupComponent borderDistortionOffset;
     juce::GroupComponent borderDistortionTreshold;
 
+    //Distortion Attachment
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionGainSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionOffsetSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionTresholdAttachment;
@@ -137,8 +138,7 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqHighSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqMasterOutSliderAttachment;
 
-    //AnalyserComponent spectrum;
-
+   
     MultiEffectAudioProcessor& audioProcessor;
 
     juce::Image Background;

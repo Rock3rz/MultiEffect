@@ -84,8 +84,8 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.fillRect(x, y, width, height);
 
         g.setColour(juce::Colours::lightcyan);
-        //g.drawLine(x, y + height / 2.0f, x + width, y + height / 2.0f);
-        g.drawLine(x, y + height, x + width, y + height);
+        g.drawLine(x, y + height / 2.0f, x + width, y + height / 2.0f);
+        //g.drawLine(x, y + height, x + width, y + height);
 
 
         // Calcola la posizione della traccia
