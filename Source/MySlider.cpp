@@ -132,8 +132,8 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
        
 
-        /*      !!!WORK IN PROGRESS!!! NON TOCCARE!! HO SONNO!! N
-
+        /*      !!!WORK IN PROGRESS!!! NON TOCCARE!! HO SONNO!! N */
+        /*
          g.setColour(triangleColour);
 
         // Primo triangolo (sinistra)
@@ -141,6 +141,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         leftTriangle.addTriangle(trackX - 10, sliderPos, // Punto in basso a sinistra
             trackX - 20, sliderPos - 5, // Punto in alto
             trackX - 10, sliderPos - 10); // Punto in basso a destra
+        
 
         // Secondo triangolo (destra)
         juce::Path rightTriangle;
