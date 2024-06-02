@@ -78,6 +78,8 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
     juce::Colour sliderBackgroundColour = juce::Colours::darkgrey;
     // Colore della traccia del slider
     juce::Colour sliderTrackColour = juce::Colours::blue;
+    //juce::Colour triangleColour = juce::Colours::red; // Colore per i triangoli
+
 
     if (style == juce::Slider::SliderStyle::LinearHorizontal) {
         g.setColour(sliderBackgroundColour);
@@ -127,6 +129,28 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
         g.fillRect(trackX, trackStart, trackWidth, trackEnd - trackStart);
+
+       
+
+        /*      !!!WORK IN PROGRESS!!! NON TOCCARE!! HO SONNO!! N
+
+         g.setColour(triangleColour);
+
+        // Primo triangolo (sinistra)
+        juce::Path leftTriangle;
+        leftTriangle.addTriangle(trackX - 10, sliderPos, // Punto in basso a sinistra
+            trackX - 20, sliderPos - 5, // Punto in alto
+            trackX - 10, sliderPos - 10); // Punto in basso a destra
+
+        // Secondo triangolo (destra)
+        juce::Path rightTriangle;
+        rightTriangle.addTriangle(trackX + trackWidth + 10, sliderPos, // Punto in basso a destra
+            trackX + trackWidth + 20, sliderPos - 5, // Punto in alto
+            trackX + trackWidth + 10, sliderPos - 10); // Punto in basso a sinistra
+
+        g.fillPath(leftTriangle);
+        g.fillPath(rightTriangle);
+        */
     }
 
 }//funzione di normalizzazione
