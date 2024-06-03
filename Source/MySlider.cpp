@@ -147,8 +147,8 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
             trackX + trackWidth + triangleOffsetX3, sliderPos - triangleOffsetY3); 
          
         g.setColour(juce::Colours::lightcyan);    //colore dei tratti 
-        g.drawLine(trackX + trackWidth + 4, y, trackX + trackWidth + 4, y + height);
-        g.drawLine(trackX - 4, y, trackX - 4, y + height);
+        g.drawLine(trackX + trackWidth + 3, y+1, trackX + trackWidth + 3, y + height);
+        g.drawLine(trackX - 3, y+1, trackX - 3, y + height);
 
         
         /*
@@ -175,28 +175,31 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.drawLine(trackX + trackWidth + 4, y + height, trackX + trackWidth + 16, y + height);
 
       */
+
+        g.setColour(juce::Colours::grey); // colore dei segni
       //disegno i trattini
         for (int i = 0; i <= 8; ++i) {
             if (i % 2 == 0) {
-                g.drawLine(trackX - 4, y + (i * (height / 8)), trackX - 16, y + (i * (height / 8)));
-                g.drawLine(trackX + trackWidth + 4, y + (i * (height / 8)), trackX + trackWidth + 16, y + (i * (height / 8)));
+                g.drawLine(trackX - 4, y + (i * (height / 8)+2), trackX - 16, y + (i * (height / 8)+ 2),2);
+                g.drawLine(trackX + trackWidth + 4, y + (i * (height / 8) + 2), trackX + trackWidth + 16, y + (i * (height / 8) + 2), 2);
             }
             else {
-                g.drawLine(trackX - 4, y + (i * (height / 8)), trackX - 12, y + (i * (height / 8)));
-                g.drawLine(trackX + trackWidth + 4, y + (i * (height / 8)), trackX + trackWidth + 12, y + (i * (height / 8)));
+                g.drawLine(trackX - 4, y + (i * (height / 8)+2), trackX - 12, y + (i * (height / 8)+2), 2);
+                g.drawLine(trackX + trackWidth + 4, y + (i * (height / 8) + 2), trackX + trackWidth + 12, y + (i * (height / 8) + 2), 2);
             }
         }
+        
 
-
-        g.setColour(triangleColours); // disegno i triangoli
+        g.setColour(triangleColours); // colore dei triangoli
         g.fillPath(leftTriangle);
         g.fillPath(rightTriangle);
 
+        /*
         // Disegna la sfera
         float sphereRadius = 15.0f;
         g.setColour(juce::Colours::lightblue);
         g.fillEllipse(trackX + (trackWidth / 2.0f) - sphereRadius / 2.0f, sliderPos - sphereRadius / 2.0f, sphereRadius, sphereRadius);
-        
+        */
     }
 
 }//funzione di normalizzazione
