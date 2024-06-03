@@ -27,7 +27,9 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     float linearToDb(float value);
-
+    void drawTanhFunction(juce::Graphics& g, int startX, int startY, int width, int height);
+    void drawHardClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height);
+    void MultiEffectAudioProcessorEditor::drawMidClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height);
 private:
 
     //-------------------------------------LOOK&FEEL-----------------------------------------------------------------------

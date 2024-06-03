@@ -60,8 +60,8 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Distortion
     //softDistortionLabel.setText("f(x) = tanH(x)", juce::dontSendNotification);
-    midDistortionLabel.setText("f(x) = sign (x)(e^-|x|)", juce::dontSendNotification);
-    hardDistortionLabel.setText("f(x) = 1 -> x>1, -1 -> x<-1, x", juce::dontSendNotification);
+    //midDistortionLabel.setText("f(x) = sign (x)(e^-|x|)", juce::dontSendNotification);
+    //hardDistortionLabel.setText("f(x) = 1 -> x>1, -1 -> x<-1, x", juce::dontSendNotification);
 
     //Toggle active delay
     addAndMakeVisible(toggleActiveDistotion);
@@ -463,32 +463,19 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     //------------------------------------------------------Hard------------------------------------------------------------------------
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(25, 90, 95, 95,4);
-    juce::Path xAxis;
-    juce::Path yAxis;
-    juce::Line<float> xLength = juce::Line<float>(37.0f, 175.0f, 37.0f, 97.0f); 
-    juce::Line<float> yLength = juce::Line<float>(37.0f, 174.0f, 115.0f, 174.0f);
-    xAxis.addArrow(xLength, 2.0f, 8.0f, 6.0f);
-    yAxis.addArrow(yLength, 2.0f, 8.0f, 6.0f);
-
-    g.setColour(juce::Colours::whitesmoke);
-    g.drawLine(37.0f, 160.0f, 56.5f, 160.0f, 1.0f);
-    g.drawLine(93.0f, 115.0f, 112.5f, 115.0f, 1.0f);
-    g.drawLine(56.5f, 160.0f, 93.0f, 115.0f);
-
-    g.setColour(juce::Colours::lightcyan);
-    g.fillPath(xAxis);
-    g.fillPath(yAxis);
+    g.fillRoundedRectangle(25, 90, 95, 95, 4);
+    drawTanhFunction(g, 25, 90, 95, 95);
 
     //---------------------------------//
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(135, 90, 95, 95,4);
+    drawMidClippingFunction(g, 135, 90, 95, 95);
+    
    
-
-
     //---------------------------------//
+   
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(245, 90, 95, 95,4);
+    g.fillRoundedRectangle(245, 90, 95, 95, 4);
+    drawHardClippingFunction(g, 245, 90, 95, 95);
   
 
 }
@@ -596,3 +583,118 @@ void MultiEffectAudioProcessorEditor::resized()
 float MultiEffectAudioProcessorEditor::linearToDb(float value) {
     return 20 * std::log10(value);
 }
+
+//funzione che disegna il soft clip (tanh)
+void MultiEffectAudioProcessorEditor::drawTanhFunction(juce::Graphics& g, int startX, int startY, int width, int height)
+{
+    // Draw background rectangle
+    g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
+    g.fillRoundedRectangle(startX, startY, width, height, 4);
+
+    // Set up the axes
+    juce::Path xAxis;
+    juce::Path yAxis;
+    juce::Line<float> xLength = juce::Line<float>(startX + 10.0f, startY + height - 10.0f, startX + 10.0f, startY + 10.0f);
+    juce::Line<float> yLength = juce::Line<float>(startX + 10.0f, startY + height - 10.0f, startX + width - 10.0f, startY + height - 10.0f);
+    xAxis.addArrow(xLength, 2.0f, 8.0f, 6.0f);
+    yAxis.addArrow(yLength, 2.0f, 8.0f, 6.0f);
+
+    g.setColour(juce::Colours::lightcyan);
+    g.fillPath(xAxis);
+    g.fillPath(yAxis);
+
+    // Draw the tanh function
+    juce::Path tanhPath;
+    g.setColour(juce::Colours::whitesmoke);
+
+    float scaleX = (width - 20.0f) / 4.0f; // Scale factor for the x axis
+    float scaleY = (height - 20.0f) / 2.0f; // Scale factor for the y axis
+    float offsetX = startX + width / 2.0f; // Center of the rectangle on the x axis
+    float offsetY = startY + height / 2.0f; // Center of the rectangle on the y axis
+
+    for (float x = -2.0f; x <= 2.0f; x += 0.01f)
+    {
+        float y = std::tanh(x);
+        float screenX = offsetX + x * scaleX;
+        float screenY = offsetY - y * scaleY;
+
+        if (x == -2.0f)
+        {
+            tanhPath.startNewSubPath(screenX, screenY);
+        }
+        else
+        {
+            tanhPath.lineTo(screenX, screenY);
+        }
+    }
+
+    g.strokePath(tanhPath, juce::PathStrokeType(1.0f));
+}
+
+//funzione che disegna l'hard clip
+void MultiEffectAudioProcessorEditor::drawHardClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height)
+{
+    juce::Path xAxis;
+    juce::Path yAxis;
+    juce::Line<float> xLength = juce::Line<float>(startX + 12.0f, startY + height - 10.0f, startX + 12.0f, startY + 10.0f);
+    juce::Line<float> yLength = juce::Line<float>(startX + 12.0f, startY + height - 11.0f, startX + width - 10.0f, startY + height - 11.0f);
+    xAxis.addArrow(xLength, 2.0f, 8.0f, 6.0f);
+    yAxis.addArrow(yLength, 2.0f, 8.0f, 6.0f);
+
+    g.setColour(juce::Colours::white);
+    g.drawLine(startX + 12.0f, startY + height - 30.0f, startX + 30.0f, startY + height - 30.0f, 1.0f);
+    g.drawLine(startX + 67.0f, startY + 25.0f, startX + width - 12.5f, startY + 25.0f, 1.0f);
+    g.drawLine(startX + 30.0f, startY + height - 30.0f, startX + 67.0f, startY + 25.0f);
+
+    g.setColour(juce::Colours::white);
+    g.fillPath(xAxis);
+    g.fillPath(yAxis);
+
+}
+
+void MultiEffectAudioProcessorEditor::drawMidClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height)
+{
+    // Disegna il rettangolo di sfondo
+    g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
+    g.fillRoundedRectangle(startX, startY, width, height, 4);
+
+    // Configura gli assi
+    juce::Path xAxis;
+    juce::Path yAxis;
+    juce::Line<float> xLength = juce::Line<float>(startX + 10.0f, startY + height - 10.0f, startX + 10.0f, startY + 10.0f);
+    juce::Line<float> yLength = juce::Line<float>(startX + 10.0f, startY + height - 10.0f, startX + width - 10.0f, startY + height - 10.0f);
+    xAxis.addArrow(xLength, 2.0f, 8.0f, 6.0f);
+    yAxis.addArrow(yLength, 2.0f, 8.0f, 6.0f);
+
+    g.setColour(juce::Colours::lightcyan);
+    g.fillPath(xAxis);
+    g.fillPath(yAxis);
+
+    // Disegna la funzione di clipping intermedia
+    juce::Path midClippingPath;
+    g.setColour(juce::Colours::whitesmoke);
+
+    float scaleX = (width - 20.0f) / 4.0f; // Fattore di scala per l'asse x
+    float scaleY = (height - 20.0f) / 2.0f; // Fattore di scala per l'asse y
+    float offsetX = startX + width / 2.0f; // Centro del rettangolo sull'asse x
+    float offsetY = startY + height / 2.0f; // Centro del rettangolo sull'asse y
+
+    for (float x = -2.0f; x <= 2.0f; x += 0.01f)
+    {
+        float y = std::copysign(1.0f - std::exp(-std::abs(x)), x);
+        float screenX = offsetX + x * scaleX;
+        float screenY = offsetY - y * scaleY;
+
+        if (x == -2.0f)
+        {
+            midClippingPath.startNewSubPath(screenX, screenY);
+        }
+        else
+        {
+            midClippingPath.lineTo(screenX, screenY);
+        }
+    }
+
+    g.strokePath(midClippingPath, juce::PathStrokeType(1.0f));
+}
+   
