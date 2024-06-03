@@ -328,14 +328,17 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqLowLabel.setText("Low", juce::dontSendNotification);
 
     eqMidSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqMidSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqMidSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     eqMidLabel.setText("Mid", juce::dontSendNotification);
 
     eqHighSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqHighSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqHighSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     eqHighLabel.setText("High", juce::dontSendNotification);
 
     eqMasterOutSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    eqMasterOutSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqMasterOutSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     eqMasterOutLabel.setText("Gain", juce::dontSendNotification);
 
@@ -495,10 +498,10 @@ void MultiEffectAudioProcessorEditor::resized()
     audioProcessor.spectrum.setBounds(730, 360, 450, 300);
 
     //-----------------------------------------------EQ---------------------------------------
-    eqLowSlider.setBounds(390, 430, 50, 200);
-    eqMidSlider.setBounds(470, 430, 50, 200);
-    eqHighSlider.setBounds(550, 430, 50, 200);
-    eqMasterOutSlider.setBounds(630, 430, 50, 200);
+    eqLowSlider.setBounds(390, 430, 40, 200);
+    eqMidSlider.setBounds(470, 430, 40, 200);
+    eqHighSlider.setBounds(550, 430, 40, 200);
+    eqMasterOutSlider.setBounds(630, 430, 40, 200);
 
     eqLowLabel.setBounds(395, 360, 100, 100);
     eqMidLabel.setBounds(475, 360, 100, 100);

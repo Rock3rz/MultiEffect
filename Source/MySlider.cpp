@@ -14,6 +14,12 @@
 #define MARGIN 9.0f
 #define VerticalSliderWidht 50
 #define VerticalSliderHeight 200
+#define triangleOffsetX1 20
+#define triangleOffsetY1 6
+#define triangleOffsetX2 8
+#define triangleOffsetY2 0 
+#define triangleOffsetX3 20
+#define triangleOffsetY3 6
 
 //==============================================================================
 MySlider::MySlider()
@@ -77,7 +83,8 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
     juce::Colour sliderBackgroundColour = juce::Colours::darkgrey;
     // Colore della traccia del slider
-    juce::Colour sliderTrackColour = juce::Colours::blue;
+    juce::Colour sliderTrackColour = juce::Colours::azure;
+    juce::Colour triangleColours = juce::Colours::white;
     //juce::Colour triangleColour = juce::Colours::red; // Colore per i triangoli
 
 
@@ -112,7 +119,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
     else if (style == juce::Slider::SliderStyle::LinearVertical)
     {
 
-        g.setColour(juce::Colours::black.withAlpha(0.5f).brighter(0.3f));
+        g.setColour(juce::Colours::lightblue.withAlpha(0.5f).brighter(0.3f));  //colore per la barra
         //g.fillRect(x + (width/4) + 3, y, width * 0.4, height);
 
         // Calcola la posizione della traccia
@@ -122,27 +129,29 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         float trackEnd = juce::jmax(sliderPos, minSliderPos);
 
         // Disegna la traccia del slider
-        g.setColour(sliderTrackColour);
+        
         g.fillRect(trackX, trackStart, trackWidth, trackEnd - trackStart);       
 
-
+        
         // Primo triangolo (sinistra)
         juce::Path leftTriangle;
-        leftTriangle.addTriangle(trackX - 16, sliderPos + 4, // Punto in basso a sinistra
-            trackX - 8, sliderPos, // Punto in alto
-            trackX - 16, sliderPos - 4); // Punto in basso a destra
+        leftTriangle.addTriangle(trackX - triangleOffsetX1, sliderPos + triangleOffsetY1, 
+            trackX - triangleOffsetX2, sliderPos + triangleOffsetY2,
+            trackX - triangleOffsetX3, sliderPos - triangleOffsetY3); 
         
 
         // Secondo triangolo (destra)
         juce::Path rightTriangle;
-        rightTriangle.addTriangle(trackX + trackWidth + 16, sliderPos + 4, // Punto in basso a destra
-            trackX + trackWidth + 8, sliderPos, // Punto in alto
-            trackX + trackWidth + 16, sliderPos - 4); // Punto in basso a sinistra
-
-        g.setColour(juce::Colours::lightcyan);
+        rightTriangle.addTriangle(trackX + trackWidth + triangleOffsetX1, sliderPos + triangleOffsetY1, 
+            trackX + trackWidth + triangleOffsetX2, sliderPos + triangleOffsetY2, 
+            trackX + trackWidth + triangleOffsetX3, sliderPos - triangleOffsetY3); 
+         
+        g.setColour(juce::Colours::lightcyan);    //colore dei tratti 
         g.drawLine(trackX + trackWidth + 4, y, trackX + trackWidth + 4, y + height);
         g.drawLine(trackX - 4, y, trackX - 4, y + height);
 
+        
+        /*
         //disegno i trattini, non l'ho fatto con lo strokePath dashed perché non veniva preciso a metà e perché volevo lunghezze diverse
 
         g.drawLine(trackX - 4, y, trackX - 16, y);
@@ -165,22 +174,28 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.drawLine(trackX + trackWidth + 4, y + 7 * (height / 8), trackX + trackWidth + 12, y + 7 * (height / 8));
         g.drawLine(trackX + trackWidth + 4, y + height, trackX + trackWidth + 16, y + height);
 
-        /*int i;
-        * int j;
-        for (i = 1; i <= 7; i+2)
-        {
-            g.drawLine(trackX - 4, y + i*(height / 8), trackX - 12, y + i*(height / 8));
+      */
+      //disegno i trattini
+        for (int i = 0; i <= 8; ++i) {
+            if (i % 2 == 0) {
+                g.drawLine(trackX - 4, y + (i * (height / 8)), trackX - 16, y + (i * (height / 8)));
+                g.drawLine(trackX + trackWidth + 4, y + (i * (height / 8)), trackX + trackWidth + 16, y + (i * (height / 8)));
+            }
+            else {
+                g.drawLine(trackX - 4, y + (i * (height / 8)), trackX - 12, y + (i * (height / 8)));
+                g.drawLine(trackX + trackWidth + 4, y + (i * (height / 8)), trackX + trackWidth + 12, y + (i * (height / 8)));
+            }
         }
-        
-        for (j = 2; j <= 6; i + 2){
 
-            g.drawLine(trackX - 4, y + 2*(height / 8), trackX - 16, y + 2*(height / 8));
-        }     
-        */
-        g.setColour(sliderTrackColour);
+
+        g.setColour(triangleColours); // disegno i triangoli
         g.fillPath(leftTriangle);
         g.fillPath(rightTriangle);
 
+        // Disegna la sfera
+        float sphereRadius = 15.0f;
+        g.setColour(juce::Colours::lightblue);
+        g.fillEllipse(trackX + (trackWidth / 2.0f) - sphereRadius / 2.0f, sliderPos - sphereRadius / 2.0f, sphereRadius, sphereRadius);
         
     }
 
