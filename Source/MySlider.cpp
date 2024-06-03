@@ -90,7 +90,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
     if (style == juce::Slider::SliderStyle::LinearHorizontal) {
         g.setColour(sliderBackgroundColour);
-        g.fillRect(x, y, width, height);
+        g.drawRoundedRectangle(x, y, width, height, 4, 2);
 
         g.setColour(juce::Colours::lightcyan);
         g.drawLine(x, y + height / 2.0f, x + width, y + height / 2.0f);
@@ -113,7 +113,12 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         else if (sliderPos > 0.5) {    
             g.fillRect(trackX, trackY, ((sliderPos-.5f)*width), trackHeight);
         }
-      
+
+        // Disegna la sfera
+        float sphereRadius = 15.0f;
+        g.setColour(juce::Colours::lightblue);
+        g.fillEllipse(sliderPos * width, sliderPos , sphereRadius, sphereRadius);
+        DBG(sliderPos);
     }
 
     else if (style == juce::Slider::SliderStyle::LinearVertical)
@@ -130,7 +135,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
         // Disegna la traccia del slider
         
-        g.fillRect(trackX, trackStart, trackWidth, trackEnd - trackStart);       
+        g.fillRoundedRectangle(trackX, trackStart, trackWidth, trackEnd - trackStart,3);       
 
         
         // Primo triangolo (sinistra)
