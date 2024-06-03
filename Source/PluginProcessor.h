@@ -59,7 +59,7 @@ public:
     void readFromBuffer(int channel, juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer, float g, float t, float dryWet);
     void updateBufferPosition(juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer);
     void updateFilters();
-    float linearToDb(float linear);
+    
 
     juce::AudioProcessorValueTreeState apvt;
     bool isFeedbackActive = false;

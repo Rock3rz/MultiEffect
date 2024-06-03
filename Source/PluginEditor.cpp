@@ -329,21 +329,53 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqLowSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0); // a zero per non sballare le misure
     eqLowLabel.setText("Low", juce::dontSendNotification);
+    eqLowValue.setText(juce::String(linearToDb(eqLowSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+
+    //Converto i valori in decibel per Low
+    eqLowSlider.onValueChange = [this]() {
+        eqLowValue.setText(juce::String(linearToDb(eqLowSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        };
+
+
 
     eqMidSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqMidSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqMidSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
     eqMidLabel.setText("Mid", juce::dontSendNotification);
+    eqMidValue.setText("Prova", juce::dontSendNotification);
+
+    //Converto i valori in decibel per mid
+    eqMidSlider.onValueChange = [this]() {
+        eqMidValue.setText(juce::String(linearToDb(eqMidSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        };
+
+
 
     eqHighSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqHighSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqHighSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
     eqHighLabel.setText("High", juce::dontSendNotification);
+    eqHighValue.setText("Prova", juce::dontSendNotification);
+
+    //Converto i valori in decibel per High
+    eqHighSlider.onValueChange = [this]() {
+        eqHighValue.setText(juce::String(linearToDb(eqHighSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        };
+
+
 
     eqMasterOutSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqMasterOutSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqMasterOutSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
     eqMasterOutLabel.setText("Gain", juce::dontSendNotification);
+    eqMasterOutValue.setText("Prova", juce::dontSendNotification);
+
+    //Converto i valori in decibel per masterOut
+    eqMasterOutSlider.onValueChange = [this]() {
+        eqMasterOutValue.setText(juce::String(linearToDb(eqMasterOutSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        };
+
+
 
     //sliders
     addAndMakeVisible(eqLowSlider);
@@ -356,6 +388,12 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(eqMidLabel);
     addAndMakeVisible(eqHighLabel);
     addAndMakeVisible(eqMasterOutLabel);
+
+    //ValueLabel
+    addAndMakeVisible(eqLowValue);
+    addAndMakeVisible(eqMidValue);
+    addAndMakeVisible(eqHighValue);
+    addAndMakeVisible(eqMasterOutValue);
 
     //attachment
     eqLowSliderAttachment = std::make_unique < juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvt, "EqLOW", eqLowSlider);
@@ -422,8 +460,10 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawText("Wave viewer", RightHalf, juce::Justification::centredTop);
 
     //------------------------------------------------------HARD, MID, SOFT CLIPPING DISEGNO--------------------------------------------
+
+    //------------------------------------------------------Hard------------------------------------------------------------------------
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRect(25, 90, 95, 95);
+    g.fillRoundedRectangle(25, 90, 95, 95,4);
     juce::Path xAxis;
     juce::Path yAxis;
     juce::Line<float> xLength = juce::Line<float>(37.0f, 175.0f, 37.0f, 97.0f); 
@@ -442,24 +482,13 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     //---------------------------------//
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRect(135, 90, 95, 95);
+    g.fillRoundedRectangle(135, 90, 95, 95,4);
    
-
-
-
-
-
-
-
-
-
-
-
 
 
     //---------------------------------//
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRect(245, 90, 95, 95);
+    g.fillRoundedRectangle(245, 90, 95, 95,4);
   
 
 }
@@ -552,6 +581,18 @@ void MultiEffectAudioProcessorEditor::resized()
     eqMidLabel.setBounds(473, 360, 100, 100);
     eqHighLabel.setBounds(550, 360, 100, 100);
     eqMasterOutLabel.setBounds(630, 360, 100, 100);
+
+    eqLowValue.setBounds(392, 560, 100, 100);
+    eqMidValue.setBounds(473, 560, 100, 100);
+    eqHighValue.setBounds(550, 560, 100, 100);
+    eqMasterOutValue.setBounds(630, 560, 100, 100);
+
+
+
     
 
+}
+
+float MultiEffectAudioProcessorEditor::linearToDb(float value) {
+    return 20 * std::log10(value);
 }

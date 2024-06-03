@@ -489,6 +489,4 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     return { params.begin(), params.end() };
 }
 
-float MultiEffectAudioProcessor::linearToDb(float linear) {
-    return 20.f * std::log10(linear);
-}
+

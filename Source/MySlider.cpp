@@ -108,10 +108,10 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
         if (sliderPos <= 0.5) {       
-            g.fillRect(trackX- ((.5f - sliderPos) * width), trackY, ((.5f - sliderPos)*width), trackHeight);
+            g.fillRoundedRectangle(trackX- ((.5f - sliderPos) * width), trackY, ((.5f - sliderPos)*width), trackHeight,4);
         }
         else if (sliderPos > 0.5) {    
-            g.fillRect(trackX, trackY, ((sliderPos-.5f)*width), trackHeight);
+            g.fillRoundedRectangle(trackX, trackY, ((sliderPos-.5f)*width), trackHeight,4);
         }
 
         // Disegna la sfera
