@@ -79,6 +79,7 @@ private:
     juce::GroupComponent borderDelayGain;
     juce::GroupComponent borderDelayTime;
     juce::GroupComponent borderDelayLowPass;
+    juce::GroupComponent borderDelayDryWet;
 
 
     //delayAttachments

@@ -197,7 +197,10 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(borderDelayLowPass);
     borderDelayLowPass.setText("            ");
     borderDelayLowPass.setTextLabelPosition(juce::Justification::centredTop);
-
+    addAndMakeVisible(borderDelayDryWet);
+    borderDelayDryWet.setText("Dry/Wet");
+    borderDelayDryWet.setTextLabelPosition(juce::Justification::centredTop);
+    borderDelayDryWet.setAlpha(0.7f);
     
    
     //addAndMakeVisible(delayLowPassLabel);
@@ -476,26 +479,26 @@ void MultiEffectAudioProcessorEditor::resized()
     toggleActiveDelay.setBounds(10 + DelayPositionOffSet, -30, 100, 100);
 
     //Bounds slider delay
-    delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 90, 200, 30);
-    delayGainSlider.setBounds(25 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    delayTimeSlider.setBounds(127 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    delayLowPassFilter.setBounds(229 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 30);
+    delayGainSlider.setBounds(33 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayTimeSlider.setBounds(135 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayLowPassFilter.setBounds(237 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
 
     //Bounds label delay
     delayDryWetLabel.setBounds(140 + DelayPositionOffSet, 50, 100, 100);
 
     //toggle fD/FW
-    isFeedback.setBounds(80 + DelayPositionOffSet, 30, 200, 50);
-    isFeedForward.setBounds(180 + DelayPositionOffSet, 30, 200, 50);
+    isFeedback.setBounds(80 + DelayPositionOffSet, 45, 200, 50);
+    isFeedForward.setBounds(180 + DelayPositionOffSet, 45, 200, 50);
 
     //Toggle
-    toggleActiveDelayLowPass.setBounds(240 + DelayPositionOffSet, 165, 100, 100);
+    toggleActiveDelayLowPass.setBounds(250 + DelayPositionOffSet, 165, 100, 100);
 
     //Delay Utilities
-    borderDelayGain.setBounds(385, 205, 85, 120);
-    borderDelayTime.setBounds(487, 205, 85, 120);
-    borderDelayLowPass.setBounds(589, 205, 85, 120);
-
+    borderDelayGain.setBounds(393, 205, 85, 120);
+    borderDelayTime.setBounds(495, 205, 85, 120);
+    borderDelayLowPass.setBounds(597, 205, 85, 120);
+    borderDelayDryWet.setBounds(435, 90, 200, 70);
     //--------------------------------------------------------------REVERB------------------------------------------------------
     //Toggle
     toggleActiveReverb.setBounds(10, 325, 100, 100);
@@ -524,10 +527,10 @@ void MultiEffectAudioProcessorEditor::resized()
     eqHighSlider.setBounds(550, 430, 40, 200);
     eqMasterOutSlider.setBounds(630, 430, 40, 200);
 
-    eqLowLabel.setBounds(395, 360, 100, 100);
-    eqMidLabel.setBounds(475, 360, 100, 100);
-    eqHighLabel.setBounds(555, 360, 100, 100);
-    eqMasterOutLabel.setBounds(635, 360, 100, 100);
+    eqLowLabel.setBounds(392, 360, 100, 100);
+    eqMidLabel.setBounds(473, 360, 100, 100);
+    eqHighLabel.setBounds(550, 360, 100, 100);
+    eqMasterOutLabel.setBounds(630, 360, 100, 100);
     
 
 }
