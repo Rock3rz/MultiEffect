@@ -32,6 +32,11 @@ public:
     void MultiEffectAudioProcessorEditor::drawMidClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height);
 private:
 
+    bool isSoftDistortionSelected;
+    bool isMidDistortionSelected;
+    bool isHardDistortionSelected;
+    
+
     //-------------------------------------LOOK&FEEL-----------------------------------------------------------------------
     MySlider myLookAndFeelDistortion;
     MySlider myLookAndFeelDelayLine;

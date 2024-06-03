@@ -4,8 +4,6 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="EZW0iH" name="MultiEffect">
     <GROUP id="{AF019E2B-C7E3-9610-9DEA-506827C9EAA9}" name="Source">
-      <FILE id="S56D3P" name="Sfondo PlugIn_Tavola disegno 1.png" compile="0"
-            resource="1" file="../../../../../Desktop/Sfondo PlugIn_Tavola disegno 1.png"/>
       <FILE id="qshU4E" name="MySlider.cpp" compile="1" resource="0" file="Source/MySlider.cpp"/>
       <FILE id="TvfnU7" name="MySlider.h" compile="0" resource="0" file="Source/MySlider.h"/>
       <FILE id="baIyOv" name="PluginProcessor.cpp" compile="1" resource="0"

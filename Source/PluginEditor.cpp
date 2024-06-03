@@ -63,6 +63,12 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //midDistortionLabel.setText("f(x) = sign (x)(e^-|x|)", juce::dontSendNotification);
     //hardDistortionLabel.setText("f(x) = 1 -> x>1, -1 -> x<-1, x", juce::dontSendNotification);
 
+    //ToggleDistortinButtons
+    softDistortion.setButtonText("Soft");
+    midDistortion.setButtonText("Mid");
+    hardDistortion.setButtonText("Hard");
+
+
     //Toggle active delay
     addAndMakeVisible(toggleActiveDistotion);
 
@@ -111,6 +117,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //creo lo stato di default
     softDistortion.setToggleState(true, true);
+    isMidDistortionSelected = true;
 
     //condizioni di selezione tipo distorsione
     softDistortion.onClick = [this]() {
@@ -118,18 +125,35 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         midDistortion.setToggleState(false, false);
         hardDistortion.setToggleState(false, false);
 
+        //condizioni per cambiare il contorno immagine
+        isSoftDistortionSelected = true;
+        isMidDistortionSelected = false;
+        isHardDistortionSelected = false;
+        repaint();
         };
 
     midDistortion.onClick = [this]() {
         audioProcessor.distortionType = 1;
         softDistortion.setToggleState(false, false);
         hardDistortion.setToggleState(false, false);
+
+        //condizioni per cambiare il contorno immagine
+        isSoftDistortionSelected = false;
+        isMidDistortionSelected = true;
+        isHardDistortionSelected = false;
+        repaint();
         };
 
     hardDistortion.onClick = [this]() {
         audioProcessor.distortionType = 2;
         softDistortion.setToggleState(false, false);
         midDistortion.setToggleState(false, false);
+
+        //condizioni per cambiare il contorno immagine
+        isSoftDistortionSelected = false;
+        isMidDistortionSelected = false;
+        isHardDistortionSelected = true;
+        repaint();
         };
 
 
@@ -461,22 +485,42 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     //------------------------------------------------------HARD, MID, SOFT CLIPPING DISEGNO--------------------------------------------
 
-    //------------------------------------------------------Hard------------------------------------------------------------------------
+    //------------------------------------------------------SOFT------------------------------------------------------------------------
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
     g.fillRoundedRectangle(25, 90, 95, 95, 4);
     drawTanhFunction(g, 25, 90, 95, 95);
 
-    //---------------------------------//
+    //-----------------------------------------MID-----------------------------------------------------//
+
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
+    g.fillRoundedRectangle(135, 90, 95, 95, 4);
     drawMidClippingFunction(g, 135, 90, 95, 95);
     
    
-    //---------------------------------//
+    //-------------------------------HARD---------------------------------------------------------------//
    
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
     g.fillRoundedRectangle(245, 90, 95, 95, 4);
     drawHardClippingFunction(g, 245, 90, 95, 95);
+   
   
+    //--------------------------------DISEGNO I CONTORNI IMMAGINE-----------------------
+    g.setColour(juce::Colours::white);
+    if (isSoftDistortionSelected) {
+        g.drawRoundedRectangle(25, 90, 95, 95, 4, 3);
+        g.drawRoundedRectangle(135, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(245, 90, 95, 95, 4, 0);
+    }
+    else if (isMidDistortionSelected) {
+        g.drawRoundedRectangle(25, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(135, 90, 95, 95, 4, 3);
+        g.drawRoundedRectangle(245, 90, 95, 95, 4, 0);
+    }
+    else if (isHardDistortionSelected) {
+        g.drawRoundedRectangle(25, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(135, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(245, 90, 95, 95, 4, 3);
+    }
 
 }
 
@@ -655,8 +699,7 @@ void MultiEffectAudioProcessorEditor::drawHardClippingFunction(juce::Graphics& g
 void MultiEffectAudioProcessorEditor::drawMidClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height)
 {
     // Disegna il rettangolo di sfondo
-    g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(startX, startY, width, height, 4);
+   
 
     // Configura gli assi
     juce::Path xAxis;
