@@ -635,17 +635,7 @@ void MultiEffectAudioProcessorEditor::drawTanhFunction(juce::Graphics& g, int st
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
     g.fillRoundedRectangle(startX, startY, width, height, 4);
 
-    // Set up the axes
-    juce::Path xAxis;
-    juce::Path yAxis;
-    juce::Line<float> xLength = juce::Line<float>(startX + 10.0f, startY + height - 10.0f, startX + 10.0f, startY + 10.0f);
-    juce::Line<float> yLength = juce::Line<float>(startX + 10.0f, startY + height - 10.0f, startX + width - 10.0f, startY + height - 10.0f);
-    xAxis.addArrow(xLength, 2.0f, 8.0f, 6.0f);
-    yAxis.addArrow(yLength, 2.0f, 8.0f, 6.0f);
-
-    g.setColour(juce::Colours::lightcyan);
-    g.fillPath(xAxis);
-    g.fillPath(yAxis);
+    drawAxis(g, startX, startY, width, height);
 
     // Draw the tanh function
     juce::Path tanhPath;
@@ -678,40 +668,20 @@ void MultiEffectAudioProcessorEditor::drawTanhFunction(juce::Graphics& g, int st
 //funzione che disegna l'hard clip
 void MultiEffectAudioProcessorEditor::drawHardClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height)
 {
-    juce::Path xAxis;
-    juce::Path yAxis;
-    juce::Line<float> xLength = juce::Line<float>(startX + 12.0f, startY + height - 10.0f, startX + 12.0f, startY + 10.0f);
-    juce::Line<float> yLength = juce::Line<float>(startX + 12.0f, startY + height - 11.0f, startX + width - 10.0f, startY + height - 11.0f);
-    xAxis.addArrow(xLength, 2.0f, 8.0f, 6.0f);
-    yAxis.addArrow(yLength, 2.0f, 8.0f, 6.0f);
-
+    drawAxis(g, startX, startY, width, height);
     g.setColour(juce::Colours::white);
-    g.drawLine(startX + 12.0f, startY + height - 30.0f, startX + 30.0f, startY + height - 30.0f, 1.0f);
-    g.drawLine(startX + 67.0f, startY + 25.0f, startX + width - 12.5f, startY + 25.0f, 1.0f);
-    g.drawLine(startX + 30.0f, startY + height - 30.0f, startX + 67.0f, startY + 25.0f);
+    g.drawLine(startX + 12.0f, startY + height - 25.0f, startX + 35.0f, startY + height - 25.0f, 1.0f);
+    g.drawLine(startX + 60.0f, startY + 25.0f, startX + width - 12.5f, startY + 25.0f, 1.0f);
+    g.drawLine(startX + 35.0f, startY + height - 25.0f, startX + 60.0f, startY + 25.0f);
 
-    g.setColour(juce::Colours::white);
-    g.fillPath(xAxis);
-    g.fillPath(yAxis);
-
-}
+   }
 
 void MultiEffectAudioProcessorEditor::drawMidClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height)
 {
     // Disegna il rettangolo di sfondo
    
 
-    // Configura gli assi
-    juce::Path xAxis;
-    juce::Path yAxis;
-    juce::Line<float> xLength = juce::Line<float>(startX + 10.0f, startY + height - 10.0f, startX + 10.0f, startY + 10.0f);
-    juce::Line<float> yLength = juce::Line<float>(startX + 10.0f, startY + height - 10.0f, startX + width - 10.0f, startY + height - 10.0f);
-    xAxis.addArrow(xLength, 2.0f, 8.0f, 6.0f);
-    yAxis.addArrow(yLength, 2.0f, 8.0f, 6.0f);
-
-    g.setColour(juce::Colours::lightcyan);
-    g.fillPath(xAxis);
-    g.fillPath(yAxis);
+    drawAxis(g, startX, startY, width, height);
 
     // Disegna la funzione di clipping intermedia
     juce::Path midClippingPath;
@@ -740,4 +710,20 @@ void MultiEffectAudioProcessorEditor::drawMidClippingFunction(juce::Graphics& g,
 
     g.strokePath(midClippingPath, juce::PathStrokeType(1.0f));
 }
+
+void MultiEffectAudioProcessorEditor::drawAxis(juce::Graphics& g,int startX, int startY, int width, int height) {
+    //disegno Gli assi
+    juce::Path xAxis;
+    juce::Path yAxis;
+    juce::Line<float> xLength = juce::Line<float>(startX, startY + height / 2, startX + width, startY + height / 2);
+    juce::Line<float> yLength = juce::Line<float>(startX + width / 2, startY + height, startX + width / 2, startY);
+    xAxis.addArrow(xLength, .5f, 8.0f, 4.0f);
+    yAxis.addArrow(yLength, .5f, 8.0f, 4.0f);
+
+    g.setColour(juce::Colours::white);
+    g.fillPath(xAxis);
+    g.fillPath(yAxis);
+}
+
+
    
