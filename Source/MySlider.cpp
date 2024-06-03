@@ -174,7 +174,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         
         for (j = 2; j <= 6; i + 2){
 
-            g.drawLine(trackX - 4, y + 2*(height / 8), trackX - 16, y + 2*(height / 8));
+            g.drawLine(trackX - 4, y + j*(height / 8), trackX - 16, y + j*(height / 8));
         }     
         */
         g.setColour(sliderTrackColour);

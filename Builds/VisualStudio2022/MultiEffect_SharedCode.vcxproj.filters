@@ -6251,6 +6251,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\..\..\Desktop\Sfondo PlugIn_Tavola disegno 1.png">
+      <Filter>MultiEffect\Source</Filter>
+    </None>
     <None Include="..\..\Sfondo PlugIn5.png">
       <Filter>MultiEffect\Source</Filter>
     </None>
