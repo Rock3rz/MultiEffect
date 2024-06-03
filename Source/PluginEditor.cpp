@@ -323,7 +323,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //-------------------------------------------------EQ---------------------------------
     eqLowSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-    //eqLowSlider.setLookAndFeel(&myLookAndFeelDelayLine);
+    eqLowSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
     eqLowLabel.setText("Low", juce::dontSendNotification);
 

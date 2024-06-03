@@ -97,7 +97,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         float trackX = x + (width / 2.0f);
 
 
-        sliderPos = normalizeValue(sliderPos, 12.f, 188.f); //non so per quale motivo il valore dello slider non � normalizzato
+        sliderPos = normalizeValue(sliderPos, 12.f, 188.f); //non so per quale motivo il valore dello slider non è normalizzato
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
         if (sliderPos <= 0.5) {       
@@ -111,47 +111,77 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
     else if (style == juce::Slider::SliderStyle::LinearVertical)
     {
-        //la parte verticale non l'ho toccata
 
-        g.setColour(sliderBackgroundColour);
-        g.fillRect(x, y, width, height);
-
-        g.setColour(juce::Colours::lightcyan);
-        //g.drawLine(x + width, y, x + width, y + height);
-
+        g.setColour(juce::Colours::black.withAlpha(0.5f).brighter(0.3f));
+        //g.fillRect(x + (width/4) + 3, y, width * 0.4, height);
 
         // Calcola la posizione della traccia
-        float trackWidth = width * 0.3f;
+        float trackWidth = width * 0.15f;
         float trackX = x + (width - trackWidth) / 2.0f;
         float trackStart = juce::jmin(sliderPos, maxSliderPos);
         float trackEnd = juce::jmax(sliderPos, minSliderPos);
 
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
-        g.fillRect(trackX, trackStart, trackWidth, trackEnd - trackStart);
+        g.fillRect(trackX, trackStart, trackWidth, trackEnd - trackStart);       
 
-       
-
-        /*      !!!WORK IN PROGRESS!!! NON TOCCARE!! HO SONNO!! N */
-        /*
-         g.setColour(triangleColour);
 
         // Primo triangolo (sinistra)
         juce::Path leftTriangle;
-        leftTriangle.addTriangle(trackX - 10, sliderPos, // Punto in basso a sinistra
-            trackX - 20, sliderPos - 5, // Punto in alto
-            trackX - 10, sliderPos - 10); // Punto in basso a destra
+        leftTriangle.addTriangle(trackX - 16, sliderPos + 4, // Punto in basso a sinistra
+            trackX - 8, sliderPos, // Punto in alto
+            trackX - 16, sliderPos - 4); // Punto in basso a destra
         
 
         // Secondo triangolo (destra)
         juce::Path rightTriangle;
-        rightTriangle.addTriangle(trackX + trackWidth + 10, sliderPos, // Punto in basso a destra
-            trackX + trackWidth + 20, sliderPos - 5, // Punto in alto
-            trackX + trackWidth + 10, sliderPos - 10); // Punto in basso a sinistra
+        rightTriangle.addTriangle(trackX + trackWidth + 16, sliderPos + 4, // Punto in basso a destra
+            trackX + trackWidth + 8, sliderPos, // Punto in alto
+            trackX + trackWidth + 16, sliderPos - 4); // Punto in basso a sinistra
 
+        g.setColour(juce::Colours::lightcyan);
+        g.drawLine(trackX + trackWidth + 4, y, trackX + trackWidth + 4, y + height);
+        g.drawLine(trackX - 4, y, trackX - 4, y + height);
+
+        //disegno i trattini, non l'ho fatto con lo strokePath dashed perché non veniva preciso a metà e perché volevo lunghezze diverse
+
+        g.drawLine(trackX - 4, y, trackX - 16, y);
+        g.drawLine(trackX - 4, y + (height / 8), trackX - 12, y + (height / 8));
+        g.drawLine(trackX - 4, y + 2*(height / 8), trackX - 16, y + 2*(height / 8));
+        g.drawLine(trackX - 4, y + 3*(height / 8), trackX - 12, y + 3*(height / 8));
+        g.drawLine(trackX - 4, y + 4*(height / 8), trackX - 16, y + 4*(height / 8));
+        g.drawLine(trackX - 4, y + 5*(height / 8), trackX - 12, y + 5*(height / 8));
+        g.drawLine(trackX - 4, y + 6*(height / 8), trackX - 16, y + 6*(height / 8));
+        g.drawLine(trackX - 4, y + 7*(height / 8), trackX - 12, y + 7*(height / 8));
+        g.drawLine(trackX - 4, y + height, trackX - 16, y + height);
+
+        g.drawLine(trackX + trackWidth + 4, y, trackX + trackWidth + 16, y);
+        g.drawLine(trackX + trackWidth + 4, y + (height / 8), trackX + trackWidth + 12, y + (height / 8));
+        g.drawLine(trackX + trackWidth + 4, y + 2 * (height / 8), trackX + trackWidth + 16, y + 2 * (height / 8));
+        g.drawLine(trackX + trackWidth + 4, y + 3 * (height / 8), trackX + trackWidth + 12, y + 3 * (height / 8));
+        g.drawLine(trackX + trackWidth + 4, y + 4 * (height / 8), trackX + trackWidth + 16, y + 4 * (height / 8));
+        g.drawLine(trackX + trackWidth + 4, y + 5 * (height / 8), trackX + trackWidth + 12, y + 5 * (height / 8));
+        g.drawLine(trackX + trackWidth + 4, y + 6 * (height / 8), trackX + trackWidth + 16, y + 6 * (height / 8));
+        g.drawLine(trackX + trackWidth + 4, y + 7 * (height / 8), trackX + trackWidth + 12, y + 7 * (height / 8));
+        g.drawLine(trackX + trackWidth + 4, y + height, trackX + trackWidth + 16, y + height);
+
+        /*int i;
+        * int j;
+        for (i = 1; i <= 7; i+2)
+        {
+            g.drawLine(trackX - 4, y + i*(height / 8), trackX - 12, y + i*(height / 8));
+        }
+        
+        for (j = 2; j <= 6; i + 2){
+
+            g.drawLine(trackX - 4, y + 2*(height / 8), trackX - 16, y + 2*(height / 8));
+        }     
+        */
+        g.setColour(sliderTrackColour);
         g.fillPath(leftTriangle);
         g.fillPath(rightTriangle);
-        */
+
+        
     }
 
 }//funzione di normalizzazione
