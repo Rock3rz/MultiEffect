@@ -440,6 +440,27 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillPath(xAxis);
     g.fillPath(yAxis);
 
+    //---------------------------------//
+    g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
+    g.fillRect(135, 90, 95, 95);
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //---------------------------------//
+    g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
+    g.fillRect(245, 90, 95, 95);
+  
 
 }
 
