@@ -139,6 +139,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Utilities.cpp"/>
     <ClCompile Include="..\..\Source\MySlider.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\SpectrumAnalyzer.cpp"/>
@@ -2549,6 +2550,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Utilities.h"/>
     <ClInclude Include="..\..\Source\MySlider.h"/>
     <ClInclude Include="..\..\Source\SpectrumAnalyzer.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>

@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "MySlider.h"
+#include "Utilities.h"
 
 #define MARGIN 9.0f
 #define VerticalSliderWidht 50
@@ -104,7 +105,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         float trackX = x + (width / 2.0f);
 
 
-        sliderPos = normalizeValue(sliderPos, 12.f, 188.f); //non so per quale motivo il valore dello slider non è normalizzato
+        sliderPos = Utilities::normalizeValue(sliderPos, 12.f, 188.f); //non so per quale motivo il valore dello slider non è normalizzato
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
         if (sliderPos <= 0.5) {       
@@ -156,30 +157,6 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.drawLine(trackX - 3, y+1, trackX - 3, y + height);
 
         
-        /*
-        //disegno i trattini, non l'ho fatto con lo strokePath dashed perché non veniva preciso a metà e perché volevo lunghezze diverse
-
-        g.drawLine(trackX - 4, y, trackX - 16, y);
-        g.drawLine(trackX - 4, y + (height / 8), trackX - 12, y + (height / 8));
-        g.drawLine(trackX - 4, y + 2*(height / 8), trackX - 16, y + 2*(height / 8));
-        g.drawLine(trackX - 4, y + 3*(height / 8), trackX - 12, y + 3*(height / 8));
-        g.drawLine(trackX - 4, y + 4*(height / 8), trackX - 16, y + 4*(height / 8));
-        g.drawLine(trackX - 4, y + 5*(height / 8), trackX - 12, y + 5*(height / 8));
-        g.drawLine(trackX - 4, y + 6*(height / 8), trackX - 16, y + 6*(height / 8));
-        g.drawLine(trackX - 4, y + 7*(height / 8), trackX - 12, y + 7*(height / 8));
-        g.drawLine(trackX - 4, y + height, trackX - 16, y + height);
-
-        g.drawLine(trackX + trackWidth + 4, y, trackX + trackWidth + 16, y);
-        g.drawLine(trackX + trackWidth + 4, y + (height / 8), trackX + trackWidth + 12, y + (height / 8));
-        g.drawLine(trackX + trackWidth + 4, y + 2 * (height / 8), trackX + trackWidth + 16, y + 2 * (height / 8));
-        g.drawLine(trackX + trackWidth + 4, y + 3 * (height / 8), trackX + trackWidth + 12, y + 3 * (height / 8));
-        g.drawLine(trackX + trackWidth + 4, y + 4 * (height / 8), trackX + trackWidth + 16, y + 4 * (height / 8));
-        g.drawLine(trackX + trackWidth + 4, y + 5 * (height / 8), trackX + trackWidth + 12, y + 5 * (height / 8));
-        g.drawLine(trackX + trackWidth + 4, y + 6 * (height / 8), trackX + trackWidth + 16, y + 6 * (height / 8));
-        g.drawLine(trackX + trackWidth + 4, y + 7 * (height / 8), trackX + trackWidth + 12, y + 7 * (height / 8));
-        g.drawLine(trackX + trackWidth + 4, y + height, trackX + trackWidth + 16, y + height);
-
-      */
 
         g.setColour(juce::Colours::grey); // colore dei segni
       //disegno i trattini
@@ -204,9 +181,6 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         
     }
 
-}//funzione di normalizzazione
-    float MySlider::normalizeValue(float value, float minValue, float maxValue) {
-        return (value - minValue) / (maxValue - minValue);
 }
 
 

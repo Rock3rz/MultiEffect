@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Utilities.h"
 
 #define WindowWidth 1192
 #define WindowHeight 696
@@ -353,11 +354,11 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqLowSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0); // a zero per non sballare le misure
     eqLowLabel.setText("Low", juce::dontSendNotification);
-    eqLowValue.setText(juce::String(linearToDb(eqLowSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+    eqLowValue.setText(juce::String(Utilities::linearToDb(eqLowSlider.getValue()), 1) + " Db", juce::dontSendNotification);
 
     //Converto i valori in decibel per Low
     eqLowSlider.onValueChange = [this]() {
-        eqLowValue.setText(juce::String(linearToDb(eqLowSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        eqLowValue.setText(juce::String(Utilities::linearToDb(eqLowSlider.getValue()), 1) + " Db", juce::dontSendNotification);
         };
 
 
@@ -370,7 +371,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Converto i valori in decibel per mid
     eqMidSlider.onValueChange = [this]() {
-        eqMidValue.setText(juce::String(linearToDb(eqMidSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        eqMidValue.setText(juce::String(Utilities::linearToDb(eqMidSlider.getValue()), 1) + " Db", juce::dontSendNotification);
         };
 
 
@@ -383,7 +384,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Converto i valori in decibel per High
     eqHighSlider.onValueChange = [this]() {
-        eqHighValue.setText(juce::String(linearToDb(eqHighSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        eqHighValue.setText(juce::String(Utilities::linearToDb(eqHighSlider.getValue()), 1) + " Db", juce::dontSendNotification);
         };
 
 
@@ -396,7 +397,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Converto i valori in decibel per masterOut
     eqMasterOutSlider.onValueChange = [this]() {
-        eqMasterOutValue.setText(juce::String(linearToDb(eqMasterOutSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        eqMasterOutValue.setText(juce::String(Utilities::linearToDb(eqMasterOutSlider.getValue()), 1) + " Db", juce::dontSendNotification);
         };
 
 
@@ -488,20 +489,20 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     //------------------------------------------------------SOFT------------------------------------------------------------------------
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
     g.fillRoundedRectangle(25, 90, 95, 95, 4);
-    drawTanhFunction(g, 25, 90, 95, 95);
+    Utilities::drawTanhFunction(g, 25, 90, 95, 95);
 
     //-----------------------------------------MID-----------------------------------------------------//
 
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
     g.fillRoundedRectangle(135, 90, 95, 95, 4);
-    drawMidClippingFunction(g, 135, 90, 95, 95);
+    Utilities::drawMidClippingFunction(g, 135, 90, 95, 95);
     
    
     //-------------------------------HARD---------------------------------------------------------------//
    
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
     g.fillRoundedRectangle(245, 90, 95, 95, 4);
-    drawHardClippingFunction(g, 245, 90, 95, 95);
+    Utilities::drawHardClippingFunction(g, 245, 90, 95, 95);
    
   
     //--------------------------------DISEGNO I CONTORNI IMMAGINE-----------------------
@@ -624,106 +625,11 @@ void MultiEffectAudioProcessorEditor::resized()
 
 }
 
-float MultiEffectAudioProcessorEditor::linearToDb(float value) {
-    return 20 * std::log10(value);
-}
 
-//funzione che disegna il soft clip (tanh)
-void MultiEffectAudioProcessorEditor::drawTanhFunction(juce::Graphics& g, int startX, int startY, int width, int height)
-{
-    // Draw background rectangle
-    g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(startX, startY, width, height, 4);
 
-    drawAxis(g, startX, startY, width, height);
 
-    // Draw the tanh function
-    juce::Path tanhPath;
-    g.setColour(juce::Colours::whitesmoke);
 
-    float scaleX = (width - 20.0f) / 4.0f; // Scale factor for the x axis
-    float scaleY = (height - 20.0f) / 2.0f; // Scale factor for the y axis
-    float offsetX = startX + width / 2.0f; // Center of the rectangle on the x axis
-    float offsetY = startY + height / 2.0f; // Center of the rectangle on the y axis
 
-    for (float x = -2.0f; x <= 2.0f; x += 0.01f)
-    {
-        float y = std::tanh(x);
-        float screenX = offsetX + x * scaleX;
-        float screenY = offsetY - y * scaleY;
-
-        if (x == -2.0f)
-        {
-            tanhPath.startNewSubPath(screenX, screenY);
-        }
-        else
-        {
-            tanhPath.lineTo(screenX, screenY);
-        }
-    }
-
-    g.strokePath(tanhPath, juce::PathStrokeType(1.0f));
-}
-
-//funzione che disegna l'hard clip
-void MultiEffectAudioProcessorEditor::drawHardClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height)
-{
-    drawAxis(g, startX, startY, width, height);
-    g.setColour(juce::Colours::white);
-    g.drawLine(startX + 12.0f, startY + height - 25.0f, startX + 35.0f, startY + height - 25.0f, 1.0f);
-    g.drawLine(startX + 60.0f, startY + 25.0f, startX + width - 12.5f, startY + 25.0f, 1.0f);
-    g.drawLine(startX + 35.0f, startY + height - 25.0f, startX + 60.0f, startY + 25.0f);
-
-   }
-
-void MultiEffectAudioProcessorEditor::drawMidClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height)
-{
-    // Disegna il rettangolo di sfondo
-   
-
-    drawAxis(g, startX, startY, width, height);
-
-    // Disegna la funzione di clipping intermedia
-    juce::Path midClippingPath;
-    g.setColour(juce::Colours::whitesmoke);
-
-    float scaleX = (width - 20.0f) / 4.0f; // Fattore di scala per l'asse x
-    float scaleY = (height - 20.0f) / 2.0f; // Fattore di scala per l'asse y
-    float offsetX = startX + width / 2.0f; // Centro del rettangolo sull'asse x
-    float offsetY = startY + height / 2.0f; // Centro del rettangolo sull'asse y
-
-    for (float x = -2.0f; x <= 2.0f; x += 0.01f)
-    {
-        float y = std::copysign(1.0f - std::exp(-std::abs(x)), x);
-        float screenX = offsetX + x * scaleX;
-        float screenY = offsetY - y * scaleY;
-
-        if (x == -2.0f)
-        {
-            midClippingPath.startNewSubPath(screenX, screenY);
-        }
-        else
-        {
-            midClippingPath.lineTo(screenX, screenY);
-        }
-    }
-
-    g.strokePath(midClippingPath, juce::PathStrokeType(1.0f));
-}
-
-void MultiEffectAudioProcessorEditor::drawAxis(juce::Graphics& g,int startX, int startY, int width, int height) {
-    //disegno Gli assi
-    juce::Path xAxis;
-    juce::Path yAxis;
-    juce::Line<float> xLength = juce::Line<float>(startX, startY + height / 2, startX + width, startY + height / 2);
-    juce::Line<float> yLength = juce::Line<float>(startX + width / 2, startY + height, startX + width / 2, startY);
-    xAxis.addArrow(xLength, .5f, 8.0f, 4.0f);
-    yAxis.addArrow(yLength, .5f, 8.0f, 4.0f);
-
-    g.setColour(juce::Colours::white);
-    g.fillPath(xAxis);
-    g.fillPath(yAxis);
-}
 
 
    

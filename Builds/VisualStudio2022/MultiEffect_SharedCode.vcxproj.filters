@@ -625,6 +625,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Utilities.cpp">
+      <Filter>MultiEffect\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MySlider.cpp">
       <Filter>MultiEffect\Source</Filter>
     </ClCompile>
@@ -3216,6 +3219,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Utilities.h">
+      <Filter>MultiEffect\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MySlider.h">
       <Filter>MultiEffect\Source</Filter>
     </ClInclude>

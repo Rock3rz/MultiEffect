@@ -27,7 +27,7 @@ public:
 
     void SetValueArcColour(juce::Colour MyColour);
 
-    float normalizeValue(float value, float minValue, float maxValue);
+    
 
 private:
 
