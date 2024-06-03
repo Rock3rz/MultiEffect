@@ -128,7 +128,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         //g.fillRect(x + (width/4) + 3, y, width * 0.4, height);
 
         // Calcola la posizione della traccia
-        float trackWidth = width * 0.15f;
+        float trackWidth = width * .2f;
         float trackX = x + (width - trackWidth) / 2.0f;
         float trackStart = juce::jmin(sliderPos, maxSliderPos);
         float trackEnd = juce::jmax(sliderPos, minSliderPos);
@@ -184,13 +184,15 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.setColour(juce::Colours::grey); // colore dei segni
       //disegno i trattini
         for (int i = 0; i <= 8; ++i) {
+            auto yOffset = i * (height / 8);
             if (i % 2 == 0) {
-                g.drawLine(trackX - 4, y + (i * (height / 8)+2), trackX - 16, y + (i * (height / 8)+ 2),2);
-                g.drawLine(trackX + trackWidth + 4, y + (i * (height / 8) + 2), trackX + trackWidth + 16, y + (i * (height / 8) + 2), 2);
+                auto yOffset = i * (height / 8);
+                g.drawLine(trackX - 7, y + yOffset, trackX - 16, y + yOffset,2);
+                g.drawLine(trackX + trackWidth + 7, y + yOffset, trackX + trackWidth + 16, y + yOffset, 2);
             }
             else {
-                g.drawLine(trackX - 4, y + (i * (height / 8)+2), trackX - 12, y + (i * (height / 8)+2), 2);
-                g.drawLine(trackX + trackWidth + 4, y + (i * (height / 8) + 2), trackX + trackWidth + 12, y + (i * (height / 8) + 2), 2);
+                g.drawLine(trackX - 7, y + yOffset, trackX - 12, y + yOffset, 2);
+                g.drawLine(trackX + trackWidth + 7, y + yOffset, trackX + trackWidth + 12, y + yOffset, 2);
             }
         }
         
@@ -199,12 +201,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.fillPath(leftTriangle);
         g.fillPath(rightTriangle);
 
-        /*
-        // Disegna la sfera
-        float sphereRadius = 15.0f;
-        g.setColour(juce::Colours::lightblue);
-        g.fillEllipse(trackX + (trackWidth / 2.0f) - sphereRadius / 2.0f, sliderPos - sphereRadius / 2.0f, sphereRadius, sphereRadius);
-        */
+        
     }
 
 }//funzione di normalizzazione

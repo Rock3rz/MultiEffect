@@ -327,22 +327,22 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //-------------------------------------------------EQ---------------------------------
     eqLowSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqLowSlider.setLookAndFeel(&myLookAndFeelDelayLine);
-    eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0); // a zero per non sballare le misure
     eqLowLabel.setText("Low", juce::dontSendNotification);
 
     eqMidSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqMidSlider.setLookAndFeel(&myLookAndFeelDelayLine);
-    eqMidSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqMidSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
     eqMidLabel.setText("Mid", juce::dontSendNotification);
 
     eqHighSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqHighSlider.setLookAndFeel(&myLookAndFeelDelayLine);
-    eqHighSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqHighSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
     eqHighLabel.setText("High", juce::dontSendNotification);
 
     eqMasterOutSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqMasterOutSlider.setLookAndFeel(&myLookAndFeelDelayLine);
-    eqMasterOutSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    eqMasterOutSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
     eqMasterOutLabel.setText("Gain", juce::dontSendNotification);
 
     //sliders
@@ -543,10 +543,10 @@ void MultiEffectAudioProcessorEditor::resized()
     audioProcessor.spectrum.setBounds(730, 360, 450, 300);
 
     //-----------------------------------------------EQ---------------------------------------
-    eqLowSlider.setBounds(390, 430, 40, 200);
-    eqMidSlider.setBounds(470, 430, 40, 200);
-    eqHighSlider.setBounds(550, 430, 40, 200);
-    eqMasterOutSlider.setBounds(630, 430, 40, 200);
+    eqLowSlider.setBounds(390, 425, 40, 176);
+    eqMidSlider.setBounds(470, 425, 40, 176);
+    eqHighSlider.setBounds(550, 425, 40, 176);
+    eqMasterOutSlider.setBounds(630, 425, 40, 176);
 
     eqLowLabel.setBounds(392, 360, 100, 100);
     eqMidLabel.setBounds(473, 360, 100, 100);

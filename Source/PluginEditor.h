@@ -133,6 +133,13 @@ private:
     juce::Label eqHighLabel;
     juce::Label eqMasterOutLabel;
 
+    //Eq DB Value
+    juce::Label eqLowValue;
+    juce::Label eqMidValue;
+    juce::Label eqHighValue;
+    juce::Label eqMasterOutValue;
+    
+
     //Attachments
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqLowSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqMidSliderAttachment;
