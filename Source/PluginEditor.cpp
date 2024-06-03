@@ -59,7 +59,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
    
 
     //Distortion
-    softDistortionLabel.setText("f(x) = tanH(x)", juce::dontSendNotification);
+    //softDistortionLabel.setText("f(x) = tanH(x)", juce::dontSendNotification);
     midDistortionLabel.setText("f(x) = sign (x)(e^-|x|)", juce::dontSendNotification);
     hardDistortionLabel.setText("f(x) = 1 -> x>1, -1 -> x<-1, x", juce::dontSendNotification);
 
@@ -417,6 +417,27 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawText("Master EQ", 490, 360, 90, 15, juce::Justification::centredTop, true);
     g.drawText("Grafici", RightHalf, juce::Justification::centred);
     g.drawText("Wave viewer", RightHalf, juce::Justification::centredTop);
+
+    //------------------------------------------------------HARD, MID, SOFT CLIPPING DISEGNO--------------------------------------------
+    g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
+    g.fillRect(25, 90, 95, 95);
+    juce::Path xAxis;
+    juce::Path yAxis;
+    juce::Line<float> xLength = juce::Line<float>(37.0f, 175.0f, 37.0f, 97.0f); 
+    juce::Line<float> yLength = juce::Line<float>(37.0f, 174.0f, 115.0f, 174.0f);
+    xAxis.addArrow(xLength, 2.0f, 8.0f, 6.0f);
+    yAxis.addArrow(yLength, 2.0f, 8.0f, 6.0f);
+
+    g.setColour(juce::Colours::whitesmoke);
+    g.drawLine(37.0f, 160.0f, 56.5f, 160.0f, 1.0f);
+    g.drawLine(93.0f, 115.0f, 112.5f, 115.0f, 1.0f);
+    g.drawLine(56.5f, 160.0f, 93.0f, 115.0f);
+
+    g.setColour(juce::Colours::lightcyan);
+    g.fillPath(xAxis);
+    g.fillPath(yAxis);
+
+
 }
 
 void MultiEffectAudioProcessorEditor::resized()
