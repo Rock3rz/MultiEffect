@@ -3565,6 +3565,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Sfondo PlugIn5.png"/>
+    <None Include="..\..\..\..\..\..\..\Desktop\Sfondo PlugIn.png"/>
     <None Include="..\..\..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_devices\native\oboe\src\common\README.md"/>
     <None Include="..\..\..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_devices\native\oboe\src\flowgraph\resampler\README.md"/>
     <None Include="..\..\..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt"/>

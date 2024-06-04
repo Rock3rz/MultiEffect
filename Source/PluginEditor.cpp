@@ -12,7 +12,7 @@
 
 #define WindowWidth 1192
 #define WindowHeight 696
-#define RectBoundThickness 2
+#define RectBoundThickness 1
 #define DelayRotaryLine 100
 #define DelayPositionOffSet 360
 #define RotarySliderDimHW 65
@@ -505,7 +505,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //-------------------------------------------------IMAGES------------------------------------------------------------------------------------
     
-    Background = juce::ImageCache::getFromMemory(BinaryData::Sfondo_PlugIn5_png, BinaryData::Sfondo_PlugIn5_pngSize);
+    Background = juce::ImageCache::getFromMemory(BinaryData::Sfondo_PlugIn_png, BinaryData::Sfondo_PlugIn_pngSize);
 
     if (Background.isNull())
     {
@@ -532,6 +532,25 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     juce::Rectangle<int> RightHalf = MainWindow;
 
 
+    //divisione in 4
+    juce::Rectangle<int> Upper = LeftHalf.removeFromTop(LeftHalf.getHeight() / 2);
+    juce::Rectangle<int> BottomLeft = LeftHalf;
+    juce::Rectangle<int> UpLeft = Upper.removeFromLeft(Upper.getWidth() / 2);
+    juce::Rectangle<int> UpRight = Upper;
+    juce::Rectangle<int> DownLeft = BottomLeft.removeFromLeft(BottomLeft.getWidth() / 2);
+    juce::Rectangle<int> DownRight = BottomLeft;
+        
+    // Disegna i bordi dei rettangoli
+    g.setColour(juce::Colours::lightcyan);
+    g.drawRect(LeftHalf, RectBoundThickness);
+    g.drawRect(RightHalf, RectBoundThickness);
+    g.drawRect(Upper, RectBoundThickness);
+    g.drawRect(BottomLeft, RectBoundThickness);
+    g.drawRect(UpLeft, RectBoundThickness);
+    g.drawRect(UpRight, RectBoundThickness);
+    g.drawRect(DownLeft, RectBoundThickness);
+    g.drawRect(DownRight, RectBoundThickness);
+
     juce::Font Titles_Font("North Carossela", 17.0f, juce::Font::bold);
     g.setColour(juce::Colours::deepskyblue);
     g.setFont(Titles_Font);
@@ -543,7 +562,7 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     //------------------------------------------------------HARD, MID, SOFT CLIPPING DISEGNO--------------------------------------------
 
-    //------------------------------------------------------SOFT------------------------------------------------------------------------
+    //------------------------------------------------------SOFT---------------------------------------//
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
     g.fillRoundedRectangle(35, 110, 75, 75, 4);
     Utilities::drawTanhFunction(g, 35, 110, 75, 75);
