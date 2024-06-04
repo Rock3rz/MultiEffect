@@ -605,13 +605,22 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     juce::Path xAxisSV;
     juce::Path yAxisSV;
-    juce::Line<float> xLengthSV = juce::Line<float>(739, 595, 1161, 595);
-    juce::Line<float> yLengthSV = juce::Line<float>(739, 595, 739, 430);
+    juce::Line<float> xLengthSV = juce::Line<float>(985, 595, 1161, 595);
+    g.drawLine(739, 595, 930, 595);
+    g.drawLine(739, 525, 739, 595);
+    juce::Line<float> yLengthSV = juce::Line<float>(739, 507, 739, 430);
     xAxisSV.addArrow(xLengthSV, 1.0, 7.0f, 3.5f);
     yAxisSV.addArrow(yLengthSV, 1.0f, 7.0f, 3.5f);
 
     g.fillPath(xAxisSV);
     g.fillPath(yAxisSV);
+
+    g.setColour(juce::Colours::whitesmoke.darker(0.6f));
+    g.drawText("Frequency", 907, 591, 100, 11, juce::Justification::centred);
+
+    // Ruoto di -90 gradi per far essere il testo ruotato lungo l'asse  y
+    g.addTransform(juce::AffineTransform::rotation(juce::MathConstants<float>::pi * -0.5f, 680, 595));
+    g.drawText("dB", 710, 647, 100, 11, juce::Justification::centred);
 
 }
 
