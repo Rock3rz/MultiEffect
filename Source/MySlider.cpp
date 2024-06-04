@@ -100,7 +100,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
         // Calcola la posizione della traccia
         float trackWidth = width * 0.3f;
-        float trackHeight = height * 0.5f;
+        float trackHeight = height * 0.3f;
         float trackY = y + (height - trackHeight) / 2.0f;
         float trackX = x + (width / 2.0f);
 
@@ -115,12 +115,23 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
             g.fillRoundedRectangle(trackX, trackY, ((sliderPos-.5f)*width), trackHeight,4);
         }
 
-        // Disegna la sfera
-        float sphereRadius = 15.0f;
-        g.setColour(juce::Colours::lightblue);
-        g.fillEllipse(sliderPos * width, sliderPos , sphereRadius, sphereRadius);
-        DBG(sliderPos);
+
+        
+        // Calculate the triangle position
+        float trianglePosX = x + sliderPos * width;
+        float trianglePosY = y + height / 2.0f;
+        float h = 25.0f;
+        float lato = 30.0f;
+
+        // Draw the triangle
+        juce::Path orizontalTriangle;
+        orizontalTriangle.addTriangle(trianglePosX, trianglePosY,
+            trianglePosX + lato / 2.0f, trianglePosY + h,
+            trianglePosX - lato / 2.0f, trianglePosY + h);
+        g.setColour(juce::Colours::white);
+        g.fillPath(orizontalTriangle);
     }
+
 
     else if (style == juce::Slider::SliderStyle::LinearVertical)
     {
