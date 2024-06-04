@@ -211,6 +211,10 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //delayDryWetLabel.setText("Dry / Wet", juce::dontSendNotification);
     delayDryWetSlider.setRange(0.0f, 1.0f);
     delayDryWetSlider.setValue(0.5f);
+    delayDryWetValue.setText(juce::String(delayDryWetSlider.getValue(),1), juce::dontSendNotification);
+    delayDryWetSlider.onValueChange = [this]() {
+        delayDryWetValue.setText(juce::String(delayDryWetSlider.getValue(), 2), juce::dontSendNotification);
+        };
     
 
 
@@ -227,6 +231,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(delayDryWetSlider);
     addAndMakeVisible(delayGainValue);
     addAndMakeVisible(delayTimeMsValue);
+    addAndMakeVisible(delayDryWetValue);
 
     //Utilities
     addAndMakeVisible(borderDelayGain);
@@ -601,6 +606,7 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //Bounds slider delay
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 15);
+    delayDryWetValue.setBounds(150 + DelayPositionOffSet, 140, 200, 15);
     delayGainSlider.setBounds(43 + DelayPositionOffSet, UpRotarySlidersPosY, 65, 65);
     delayTimeSlider.setBounds(145 + DelayPositionOffSet, UpRotarySlidersPosY, 65,65);
     delayLowPassFilter.setBounds(237 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
