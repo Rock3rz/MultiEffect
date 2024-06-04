@@ -52,6 +52,9 @@ private:
     juce::Label midDistortionLabel;
     juce::Label hardDistortionLabel;
     juce::Label distortionGainValue;
+    juce::Label distortionOffsetValue;
+    juce::Label distortionThresholdValue;
+ 
 
     //Distortion Utilities
     juce::GroupComponent borderDistortionGain;
