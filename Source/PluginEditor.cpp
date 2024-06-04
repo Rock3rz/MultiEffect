@@ -619,7 +619,7 @@ void MultiEffectAudioProcessorEditor::resized()
     borderDelayGain.setBounds(393, 205, 85, 120);
     borderDelayTime.setBounds(495, 205, 85, 120);
     borderDelayLowPass.setBounds(597, 205, 85, 120);
-    borderDelayDryWet.setBounds(435, 90, 200, 70);
+    borderDelayDryWet.setBounds(425, 90, 220, 80);
     delayGainValue.setBounds(412,255,100,100);
     delayTimeMsValue.setBounds(515, 255, 100, 100);
     //--------------------------------------------------------------REVERB------------------------------------------------------
