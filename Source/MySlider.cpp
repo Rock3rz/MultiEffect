@@ -108,13 +108,24 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.drawLine(x + 7*(width / 8), y, x + 7*(width / 8), y + 4);
         g.drawLine(x + width, y, x + width, y + 8);
 
+        //work in progress
+        for (int i = 0; i < 8; ++i) {
+
+        }
+
         // Calcola la posizione della traccia
         float trackWidth = width * 0.3f;
         float trackHeight = height * 0.3f;
         float trackY = y + (height - trackHeight) / 2.0f;
         float trackX = x + (width / 2.0f);
+        
+        
+        DBG(width);
+        DBG(sliderPos);
 
-        sliderPos = Utilities::normalizeValue(sliderPos, 12.f, 188.f); //non so per quale motivo il valore dello slider non è normalizzato
+        sliderPos = Utilities::normalizeValue(sliderPos, minSliderPos, width+7); //non so per quale motivo il valore dello slider non è normalizzato
+        
+        
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
         if (sliderPos <= 0.5) {       

@@ -652,8 +652,8 @@ void MultiEffectAudioProcessorEditor::resized()
     toggleActiveReverb.setBounds(10, 325, 100, 100);
 
     //Sliders
-    reverbDryWetLevelSlider.setBounds(37, 450, 130, 15);
-    reverbRoomSizeSlider.setBounds(190, 450, 130, 15);
+    reverbDryWetLevelSlider.setBounds(37, 450, 128, 15);
+    reverbRoomSizeSlider.setBounds(190, 450, 128, 15);
     reverbDampingSlider.setBounds(65, 550, RotarySliderDimHW, RotarySliderDimHW);
     reverbWidthSlider.setBounds(202, 550, RotarySliderDimHW, RotarySliderDimHW);
 
