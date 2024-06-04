@@ -469,7 +469,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
 
     //-------------------------------------------------DELAY---------------------------------------------------------
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DGAIN", "dGain", 0.001f, 1.f, .5f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DTIME", "dTime", .1f, 2.0f, .5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DTIME", "dTime", .01f, 2.0f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DDRYWET", "dDryWet", .0f, 1.0f, .5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DLOWFILTER", "dLowFilter", .1f, 20.f, 5.f));
 

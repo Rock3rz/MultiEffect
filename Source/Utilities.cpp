@@ -113,6 +113,10 @@ float Utilities::linearToDb(float value) {
     return 20 * std::log10(value);
 }
 
+float Utilities::linearToMs(float value) {
+    return value * 1000;
+}
+
 //funzione di normalizzazione
 float Utilities::normalizeValue(float value, float minValue, float maxValue) {
     return (value - minValue) / (maxValue - minValue);

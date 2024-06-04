@@ -51,6 +51,7 @@ private:
     juce::Label softDistortionLabel;
     juce::Label midDistortionLabel;
     juce::Label hardDistortionLabel;
+    juce::Label distortionGainValue;
 
     //Distortion Utilities
     juce::GroupComponent borderDistortionGain;
@@ -80,6 +81,7 @@ private:
     //delay Labels
     juce::Label delayDryWetLabel;
     juce::Label delayGainValue;
+    juce::Label delayTimeMsValue;
     
     //Delay Utilities
     juce::GroupComponent borderDelayGain;
