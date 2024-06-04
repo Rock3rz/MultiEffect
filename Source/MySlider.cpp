@@ -21,6 +21,8 @@
 #define triangleOffsetY2 0 
 #define triangleOffsetX3 20
 #define triangleOffsetY3 6
+#define HorizontalTriangle 14
+#define HorizontalOffset 4
 
 //==============================================================================
 MySlider::MySlider()
@@ -91,19 +93,26 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
     if (style == juce::Slider::SliderStyle::LinearHorizontal) {
         g.setColour(sliderBackgroundColour);
-        g.drawRoundedRectangle(x, y, width, height, 4, 2);
+        //g.drawRoundedRectangle(x, y, width, height, 4, 2);
 
         g.setColour(juce::Colours::lightcyan);
-        g.drawLine(x, y + height / 2.0f, x + width, y + height / 2.0f);
-        //g.drawLine(x, y + height, x + width, y + height);
+        g.drawLine(x, y, x + width, y );  
 
+        g.drawLine(x, y, x, y + 8);
+        g.drawLine(x + (width / 8), y, x + (width / 8), y + 4);
+        g.drawLine(x + 2*(width / 8), y, x + 2*(width / 8), y + 8);
+        g.drawLine(x + 3*(width / 8), y, x + 3*(width / 8), y + 4);
+        g.drawLine(x + 4*(width / 8), y, x + 4*(width / 8), y + 8);
+        g.drawLine(x + 5*(width / 8), y, x + 5*(width / 8), y + 4);
+        g.drawLine(x + 6*(width / 8), y, x + 6*(width / 8), y + 8);
+        g.drawLine(x + 7*(width / 8), y, x + 7*(width / 8), y + 4);
+        g.drawLine(x + width, y, x + width, y + 8);
 
         // Calcola la posizione della traccia
         float trackWidth = width * 0.3f;
         float trackHeight = height * 0.3f;
         float trackY = y + (height - trackHeight) / 2.0f;
         float trackX = x + (width / 2.0f);
-
 
         sliderPos = Utilities::normalizeValue(sliderPos, 12.f, 188.f); //non so per quale motivo il valore dello slider non è normalizzato
         // Disegna la traccia del slider

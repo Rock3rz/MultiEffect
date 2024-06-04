@@ -207,7 +207,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //dryWet slider Setup
     delayDryWetSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
     delayDryWetSlider.setLookAndFeel(&myLookAndFeelDelayLine);
-    delayDryWetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
+    delayDryWetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     //delayDryWetLabel.setText("Dry / Wet", juce::dontSendNotification);
     delayDryWetSlider.setRange(0.0f, 1.0f);
     delayDryWetSlider.setValue(0.5f);
@@ -496,39 +496,39 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     //------------------------------------------------------SOFT------------------------------------------------------------------------
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(25, 90, 95, 95, 4);
-    Utilities::drawTanhFunction(g, 25, 90, 95, 95);
+    g.fillRoundedRectangle(35, 110, 75, 75, 4);
+    Utilities::drawTanhFunction(g, 35, 110, 75, 75);
 
     //-----------------------------------------MID-----------------------------------------------------//
 
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(125, 90, 95, 95, 4);
-    Utilities::drawMidClippingFunction(g, 125, 90, 95, 95);
+    g.fillRoundedRectangle(135, 110, 75, 75, 4);
+    Utilities::drawMidClippingFunction(g, 135, 110, 75, 75);
     
    
     //-------------------------------HARD---------------------------------------------------------------//
    
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(225, 90, 95, 95, 4);
-    Utilities::drawHardClippingFunction(g, 225, 90, 95, 95);
+    g.fillRoundedRectangle(235, 110, 75, 75, 4);
+    Utilities::drawHardClippingFunction(g, 235, 110, 75, 75);
    
   
     //--------------------------------DISEGNO I CONTORNI IMMAGINE-----------------------
     g.setColour(juce::Colours::white);
     if (isSoftDistortionSelected) {
-        g.drawRoundedRectangle(25, 90, 95, 95, 4, 3);
-        g.drawRoundedRectangle(125, 90, 95, 95, 4, 0);
-        g.drawRoundedRectangle(225, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(35, 110, 75, 75, 4, 3);
+        g.drawRoundedRectangle(135, 110, 75, 75, 4, 0);
+        g.drawRoundedRectangle(235, 110, 75, 75, 4, 0);
     }
     else if (isMidDistortionSelected) {
-        g.drawRoundedRectangle(25, 90, 95, 95, 4, 0);
-        g.drawRoundedRectangle(125, 90, 95, 95, 4, 3);
-        g.drawRoundedRectangle(225, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(35, 110, 75, 75, 4, 0);
+        g.drawRoundedRectangle(135, 110, 75, 75, 4, 3);
+        g.drawRoundedRectangle(235, 110, 75, 75, 4, 0);
     }
     else if (isHardDistortionSelected) {
-        g.drawRoundedRectangle(25, 90, 95, 95, 4, 0);
-        g.drawRoundedRectangle(125, 90, 95, 95, 4, 0);
-        g.drawRoundedRectangle(225, 90, 95, 95, 4, 3);
+        g.drawRoundedRectangle(35, 110, 75, 75, 4, 0);
+        g.drawRoundedRectangle(135, 110, 75, 75, 4, 0);
+        g.drawRoundedRectangle(235, 110, 75, 75, 4, 3);
     }
 
     //-----------------------ROUND RECTANGLES PER I VIEWER------------------------------
@@ -580,9 +580,9 @@ void MultiEffectAudioProcessorEditor::resized()
     toggleActiveDistotion.setBounds(10, -30, 100, 100);
 
     //Toggle DistortionType
-    softDistortion.setBounds(30, 20, 100, 100);
-    midDistortion.setBounds(140, 20, 100, 100);
-    hardDistortion.setBounds(250, 20, 100, 100);
+    softDistortion.setBounds(35, 40, 100, 100);
+    midDistortion.setBounds(135, 40, 100, 100);
+    hardDistortion.setBounds(235, 40, 100, 100);
 
     softDistortionLabel.setBounds(30, 90, 100, 100);
     midDistortionLabel.setBounds(140, 90, 100, 100);
