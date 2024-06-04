@@ -248,14 +248,8 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         //----------------------------------------------------DELAY----------------------------------------------------------------------
            
         if (isDelayActive) {
-            /* work in progress
-            for (int channel = 0; channel < getTotalNumOutputChannels(); ++channel) {
-                auto* channelData = buffer.getWritePointer(channel);
-                    for(int i = 0; i < buffer.getNumSamples(); ++i) {
-                        channelData[i] *= 0;
-                    }
-            }
-            */
+           
+            
             //scrive nel buffer circolare
             fillBuffer(buffer, channel, dGainLevel);
 

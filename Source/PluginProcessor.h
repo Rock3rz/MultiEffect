@@ -69,8 +69,6 @@ public:
     bool isReverbActive = false;
     int distortionType = 0;
 
-   
-
 
     juce::AudioVisualiserComponent waveViewer; //oggetto viewer
     SpectrumAnalyzer spectrum; // analizzatore di spettro
