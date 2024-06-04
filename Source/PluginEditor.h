@@ -122,6 +122,7 @@ private:
     juce::Label reverbRoomSizeValue;
     juce::Label reverbDampingValue;
     juce::Label reverbWidthValue;
+    juce::Label reverbDryWetValue;
 
     
     //Reverb Utilities
