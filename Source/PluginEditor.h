@@ -154,8 +154,13 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> eqMasterOutSliderAttachment;
 
    
-    MultiEffectAudioProcessor& audioProcessor;
+    //------------------------------VIEWER---------------------------------
 
+    MultiEffectAudioProcessor& audioProcessor;
+    juce::GroupComponent borderWV;
+    juce::GroupComponent borderSV;
+
+    //------------------------------IMAGES----------------------------
     juce::Image Background;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MultiEffectAudioProcessorEditor)
 };

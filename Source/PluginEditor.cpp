@@ -428,7 +428,15 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //--------------------------------------------------VIEWER----------------------------------------------------------------------------------
     addAndMakeVisible(audioProcessor.waveViewer);
+    addAndMakeVisible(borderWV);
+    borderWV.setText("Wave Viewer");
+    borderWV.setTextLabelPosition(juce::Justification::centredTop);
     addAndMakeVisible(audioProcessor.spectrum);
+
+    addAndMakeVisible(borderSV);
+    borderSV.setText("Spectrum Viewer");
+    borderSV.setTextLabelPosition(juce::Justification::centredTop);
+
 
     //-------------------------------------------------IMAGES------------------------------------------------------------------------------------
     
@@ -458,21 +466,6 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     juce::Rectangle<int> LeftHalf = MainWindow.removeFromLeft(WindowWidth - WindowWidth / 2.5);
     juce::Rectangle<int> RightHalf = MainWindow;
 
-    //divisione in 4
-    juce::Rectangle<int> Upper = LeftHalf.removeFromTop(LeftHalf.getHeight() / 2);
-    juce::Rectangle<int> BottomLeft = LeftHalf;
-    juce::Rectangle<int> UpLeft = Upper.removeFromLeft(Upper.getWidth() / 2);
-    juce::Rectangle<int> UpRight = Upper;
-    juce::Rectangle<int> DownLeft = BottomLeft.removeFromLeft(BottomLeft.getWidth() / 2);
-    juce::Rectangle<int> DownRight = BottomLeft;
-
-
-    //creo per ogni quadrante delle FlexBox così da poter gestire i posizionamenti più facilmente
-    juce::FlexBox fbRightHalf;
-    juce::FlexBox fbUpLeft;
-    juce::FlexBox fbUpRight;
-    juce::FlexBox fbDownLeft;
-    juce::FlexBox fbDownRight;
 
     juce::Font Titles_Font("North Carossela", 17.0f, juce::Font::bold);
     g.setColour(juce::Colours::deepskyblue);
@@ -481,8 +474,7 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawText("Delay Line", 490, 15, 90, 15, juce::Justification::centredTop, true);
     g.drawText("Riverbero", 132, 360, 90, 15, juce::Justification::centredTop, true);
     g.drawText("Master EQ", 490, 360, 90, 15, juce::Justification::centredTop, true);
-    g.drawText("Grafici", RightHalf, juce::Justification::centred);
-    g.drawText("Wave viewer", RightHalf, juce::Justification::centredTop);
+
 
     //------------------------------------------------------HARD, MID, SOFT CLIPPING DISEGNO--------------------------------------------
 
@@ -494,34 +486,67 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     //-----------------------------------------MID-----------------------------------------------------//
 
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(135, 90, 95, 95, 4);
-    Utilities::drawMidClippingFunction(g, 135, 90, 95, 95);
+    g.fillRoundedRectangle(125, 90, 95, 95, 4);
+    Utilities::drawMidClippingFunction(g, 125, 90, 95, 95);
     
    
     //-------------------------------HARD---------------------------------------------------------------//
    
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(245, 90, 95, 95, 4);
-    Utilities::drawHardClippingFunction(g, 245, 90, 95, 95);
+    g.fillRoundedRectangle(225, 90, 95, 95, 4);
+    Utilities::drawHardClippingFunction(g, 225, 90, 95, 95);
    
   
     //--------------------------------DISEGNO I CONTORNI IMMAGINE-----------------------
     g.setColour(juce::Colours::white);
     if (isSoftDistortionSelected) {
         g.drawRoundedRectangle(25, 90, 95, 95, 4, 3);
-        g.drawRoundedRectangle(135, 90, 95, 95, 4, 0);
-        g.drawRoundedRectangle(245, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(125, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(225, 90, 95, 95, 4, 0);
     }
     else if (isMidDistortionSelected) {
         g.drawRoundedRectangle(25, 90, 95, 95, 4, 0);
-        g.drawRoundedRectangle(135, 90, 95, 95, 4, 3);
-        g.drawRoundedRectangle(245, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(125, 90, 95, 95, 4, 3);
+        g.drawRoundedRectangle(225, 90, 95, 95, 4, 0);
     }
     else if (isHardDistortionSelected) {
         g.drawRoundedRectangle(25, 90, 95, 95, 4, 0);
-        g.drawRoundedRectangle(135, 90, 95, 95, 4, 0);
-        g.drawRoundedRectangle(245, 90, 95, 95, 4, 3);
+        g.drawRoundedRectangle(125, 90, 95, 95, 4, 0);
+        g.drawRoundedRectangle(225, 90, 95, 95, 4, 3);
     }
+
+    //-----------------------ROUND RECTANGLES PER I VIEWER------------------------------
+    g.setColour(juce::Colours::black.withAlpha(0.9f));
+    g.fillRoundedRectangle(729, 90, 445, 183, 4);
+    g.fillRoundedRectangle(729, 420, 445, 183, 4);
+
+    juce::Path xAxisWV;
+    juce::Path yAxisWV;
+    juce::Line<float> xLengthWV = juce::Line<float>(739, 265, 1161, 265);
+    juce::Line<float> yLengthWV = juce::Line<float>(739, 265, 739, 100);
+    xAxisWV.addArrow(xLengthWV, 1.0, 7.0f, 3.5f);
+    yAxisWV.addArrow(yLengthWV, 1.0f, 7.0f, 3.5f);
+
+    juce::Font Axis_Font("Abadi", 10.0f, 0);
+    g.setFont(Axis_Font);
+    g.setColour(juce::Colours::white);
+    g.drawText("-1", 728, 259, 10, 10, juce::Justification::centred);
+    g.drawText("1", 728, 100, 10, 10, juce::Justification::centred);
+
+    g.setColour(juce::Colours::lightcyan);
+    g.fillPath(xAxisWV);
+    g.fillPath(yAxisWV);
+
+
+    juce::Path xAxisSV;
+    juce::Path yAxisSV;
+    juce::Line<float> xLengthSV = juce::Line<float>(739, 595, 1161, 595);
+    juce::Line<float> yLengthSV = juce::Line<float>(739, 595, 739, 430);
+    xAxisSV.addArrow(xLengthSV, 1.0, 7.0f, 3.5f);
+    yAxisSV.addArrow(yLengthSV, 1.0f, 7.0f, 3.5f);
+
+    g.fillPath(xAxisSV);
+    g.fillPath(yAxisSV);
 
 }
 
@@ -600,8 +625,10 @@ void MultiEffectAudioProcessorEditor::resized()
     borderReverbWidth.setBounds(207, 525, 85, 120);
 
     //-------------------------------------------------------------VIEWER-------------------------------------------------------
-    audioProcessor.waveViewer.setBounds(730, 20, 450,300);
-    audioProcessor.spectrum.setBounds(730, 360, 450, 300);
+    audioProcessor.waveViewer.setBounds(742, 90, 430,170);
+    borderWV.setBounds(720, 63, 462, 220);
+    audioProcessor.spectrum.setBounds(742, 420, 430, 170);
+    borderSV.setBounds(720, 393, 462, 220);
 
     //-----------------------------------------------EQ---------------------------------------
     eqLowSlider.setBounds(390, 425, 40, 176);
@@ -618,9 +645,6 @@ void MultiEffectAudioProcessorEditor::resized()
     eqMidValue.setBounds(473, 560, 100, 100);
     eqHighValue.setBounds(550, 560, 100, 100);
     eqMasterOutValue.setBounds(630, 560, 100, 100);
-
-
-
     
 
 }
