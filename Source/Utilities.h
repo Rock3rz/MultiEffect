@@ -20,7 +20,9 @@ public:
    static void drawHardClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height);
    static void drawMidClippingFunction(juce::Graphics& g, int startX, int startY, int width, int height);
    static float linearToDb(float value);
+   static float linearToMs(float value);
    static float normalizeValue(float value, float minValue, float maxValue);
+   
 private:
 
 };
