@@ -96,6 +96,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         //g.drawRoundedRectangle(x, y, width, height, 4, 2);
 
         g.setColour(juce::Colours::lightcyan);
+        /*
         g.drawLine(x, y, x + width, y );  
 
         g.drawLine(x, y, x, y + 8);
@@ -107,10 +108,18 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.drawLine(x + 6*(width / 8), y, x + 6*(width / 8), y + 8);
         g.drawLine(x + 7*(width / 8), y, x + 7*(width / 8), y + 4);
         g.drawLine(x + width, y, x + width, y + 8);
-
+        */
         //work in progress
-        for (int i = 0; i < 8; ++i) {
-
+        g.drawLine(x, y, x + width-2, y);
+        int offSet = width / 8;
+        for (int i = 0; i <=8; i++) {
+            if (i % 2) {
+                g.drawLine(x + i * offSet, y, x + i * offSet, y + 4,2);
+            }
+            else {
+                g.drawLine(x + i * offSet, y, x + i * offSet, y + 8,2);
+            }
+            //g.drawLine(x + width, y, x + width, y + 8,1.5f);
         }
 
         // Calcola la posizione della traccia
