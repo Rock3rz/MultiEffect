@@ -208,13 +208,12 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     delayDryWetSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
     delayDryWetSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     delayDryWetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    //delayDryWetLabel.setText("Dry / Wet", juce::dontSendNotification);
     delayDryWetSlider.setRange(0.0f, 1.0f);
     delayDryWetSlider.setValue(0.5f);
     delayDryWetValue.setText(juce::String(delayDryWetSlider.getValue(),1), juce::dontSendNotification);
     delayDryWetSlider.onValueChange = [this]() {
         delayDryWetValue.setText(juce::String(delayDryWetSlider.getValue(), 2), juce::dontSendNotification);
-        };
+    };
     
 
 
@@ -309,8 +308,8 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Room Size
     reverbRoomSizeSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
-    reverbRoomSizeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
-    reverbRoomSizeLabel.setText("Room size", juce::dontSendNotification);
+    reverbRoomSizeSlider.setLookAndFeel(&myLookAndFeelReverb);
+    reverbRoomSizeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
 
     //Damping
     reverbDampingSlider.setLookAndFeel(&myLookAndFeelReverb);
@@ -319,9 +318,14 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
   
 
     //dry wet
+    reverbDryWetLevelSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbDryWetLevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
-    reverbDryWetLevelSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
-    reverbDryWetLevelLabel.setText("Dry / Wet", juce::dontSendNotification);
+    reverbDryWetLevelSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    ReverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 1), juce::dontSendNotification);
+    reverbDryWetLevelSlider.onValueChange = [this]() {
+        ReverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+        };
+    
 
     //width
     reverbWidthSlider.setLookAndFeel(&myLookAndFeelReverb);
@@ -341,6 +345,8 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //Labels
     addAndMakeVisible(reverbRoomSizeLabel);
     addAndMakeVisible(reverbDryWetLevelLabel);
+    addAndMakeVisible(ReverbDryWetValue);
+    addAndMakeVisible(ReverbRoomSizeValue);
 
     //Utilities
     addAndMakeVisible(borderReverbDamping);
@@ -348,6 +354,12 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     borderReverbDamping.setTextLabelPosition(juce::Justification::centredTop);
     addAndMakeVisible(borderReverbWidth);
     borderReverbWidth.setText("Width");
+    borderReverbWidth.setTextLabelPosition(juce::Justification::centredTop);
+    addAndMakeVisible(borderReverbDryWet);
+    borderReverbDryWet.setText("Dry/Wet");
+    borderReverbDamping.setTextLabelPosition(juce::Justification::centredTop);
+    addAndMakeVisible(borderReverbRoomSize);
+    borderReverbRoomSize.setText("Room Size");
     borderReverbWidth.setTextLabelPosition(juce::Justification::centredTop);
     
    
@@ -606,13 +618,10 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //Bounds slider delay
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 15);
-    delayDryWetValue.setBounds(150 + DelayPositionOffSet, 140, 200, 15);
     delayGainSlider.setBounds(43 + DelayPositionOffSet, UpRotarySlidersPosY, 65, 65);
     delayTimeSlider.setBounds(145 + DelayPositionOffSet, UpRotarySlidersPosY, 65,65);
     delayLowPassFilter.setBounds(237 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
 
-    //Bounds label delay
-    delayDryWetLabel.setBounds(140 + DelayPositionOffSet, 50, 100, 100);
 
     //toggle fD/FW
     isFeedback.setBounds(80 + DelayPositionOffSet, 45, 200, 50);
@@ -627,24 +636,28 @@ void MultiEffectAudioProcessorEditor::resized()
     borderDelayLowPass.setBounds(597, 205, 85, 120);
     borderDelayDryWet.setBounds(425, 90, 220, 80);
     delayGainValue.setBounds(412,255,100,100);
-    delayTimeMsValue.setBounds(515, 255, 100, 100);
+    delayTimeMsValue.setBounds(507, 255, 100, 100);
+    delayDryWetValue.setBounds(515, 143, 200, 15);
+
+
     //--------------------------------------------------------------REVERB------------------------------------------------------
     //Toggle
     toggleActiveReverb.setBounds(10, 325, 100, 100);
 
     //Sliders
-    reverbDryWetLevelSlider.setBounds(25, 400, 150, 100);
-    reverbRoomSizeSlider.setBounds(175, 400, 150, 100);
-    reverbDampingSlider.setBounds(58, 550, RotarySliderDimHW, RotarySliderDimHW);
-    reverbWidthSlider.setBounds(208, 550, RotarySliderDimHW, RotarySliderDimHW);
+    reverbDryWetLevelSlider.setBounds(37, 450, 130, 15);
+    reverbRoomSizeSlider.setBounds(190, 450, 130, 15);
+    reverbDampingSlider.setBounds(65, 550, RotarySliderDimHW, RotarySliderDimHW);
+    reverbWidthSlider.setBounds(202, 550, RotarySliderDimHW, RotarySliderDimHW);
 
     //Labels
-    reverbDryWetLevelLabel.setBounds(65, 360, 100, 100);
-    reverbRoomSizeLabel.setBounds(210, 360, 100, 100);
+    ReverbDryWetValue.setBounds(85, 467, 60, 15);
     
     //Reverb Utilities
-    borderReverbDamping.setBounds(58, 525, 85, 120);
-    borderReverbWidth.setBounds(207, 525, 85, 120);
+    borderReverbDamping.setBounds(65, 525, 85, 120);
+    borderReverbWidth.setBounds(202, 525, 85, 120);
+    borderReverbDryWet.setBounds(32, 420, 140, 70);
+    borderReverbRoomSize.setBounds(185, 420, 140, 70);
 
     //-------------------------------------------------------------VIEWER-------------------------------------------------------
     audioProcessor.waveViewer.setBounds(742, 90, 430,170);

@@ -114,10 +114,14 @@ private:
     //Reverb Labels
     juce::Label reverbRoomSizeLabel;
     juce::Label reverbDryWetLevelLabel;
+    juce::Label ReverbDryWetValue;
+    juce::Label ReverbRoomSizeValue;
     
     //Reverb Utilities
     juce::GroupComponent borderReverbDamping;
     juce::GroupComponent borderReverbWidth;
+    juce::GroupComponent borderReverbDryWet;
+    juce::GroupComponent borderReverbRoomSize;
 
     //ReverbAttachments
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> reverbRoomSizeSliderAttachment;
