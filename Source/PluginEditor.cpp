@@ -15,8 +15,8 @@
 #define RectBoundThickness 2
 #define DelayRotaryLine 100
 #define DelayPositionOffSet 360
-#define RotarySliderDimHW 85
-#define UpRotarySlidersPosY 230
+#define RotarySliderDimHW 65
+#define UpRotarySlidersPosY 232
 #define UpRotarySlidersPosX 30
 
 
@@ -54,14 +54,22 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //Offset
     distortionOffsetSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionOffsetSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    distortionOffsetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    distortionOffsetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
+    distortionOffsetValue.setText(juce::String(Utilities::linearToDb(distortionOffsetSlider.getValue()), 1), juce::dontSendNotification);
+    distortionOffsetSlider.onValueChange = [this]() {
+        distortionOffsetValue.setText(juce::String(Utilities::linearToDb(distortionOffsetSlider.getValue()), 1), juce::dontSendNotification);
+        };
     
 
 
     //Treshold
     distortionThresholdSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionThresholdSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    distortionThresholdSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    distortionThresholdSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
+    distortionThresholdValue.setText(juce::String(Utilities::linearToDb(distortionThresholdSlider.getValue()), 1), juce::dontSendNotification);
+    distortionThresholdSlider.onValueChange = [this]() {
+        distortionThresholdValue.setText(juce::String(Utilities::linearToDb(distortionThresholdSlider.getValue()), 1), juce::dontSendNotification);
+        };
    
 
     //Distortion
@@ -88,6 +96,8 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(midDistortionLabel);
     addAndMakeVisible(hardDistortionLabel);
     addAndMakeVisible(distortionGainValue);
+    addAndMakeVisible(distortionOffsetValue);
+    addAndMakeVisible(distortionThresholdValue);
 
     //Sliders
     addAndMakeVisible(distortionGainSlider);
@@ -319,7 +329,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //Damping
     reverbDampingSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbDampingSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    reverbDampingSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    reverbDampingSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
   
 
     //dry wet
@@ -335,7 +345,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //width
     reverbWidthSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbWidthSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    reverbWidthSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    reverbWidthSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
     
 
     //Toggle active 
@@ -594,10 +604,12 @@ void MultiEffectAudioProcessorEditor::resized()
     //----------------------------------------------------DISTORTION---------------------------------------------------------------------
 
     //Sliders
-    distortionGainSlider.setBounds(UpRotarySlidersPosX+10, UpRotarySlidersPosY+2, 65,65); //x y w h
-    distortionOffsetSlider.setBounds(UpRotarySlidersPosX + 100, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    distortionThresholdSlider.setBounds(UpRotarySlidersPosX + 200, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    distortionGainValue.setBounds(UpRotarySlidersPosX + 15, UpRotarySlidersPosY +42, 65, 65);
+    distortionGainSlider.setBounds(UpRotarySlidersPosX +10, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW); //x y w h
+    distortionOffsetSlider.setBounds(UpRotarySlidersPosX + 110, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    distortionThresholdSlider.setBounds(UpRotarySlidersPosX + 210, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    distortionGainValue.setBounds(UpRotarySlidersPosX + 15, UpRotarySlidersPosY +40, RotarySliderDimHW, RotarySliderDimHW);
+    distortionOffsetValue.setBounds(UpRotarySlidersPosX + 125, UpRotarySlidersPosY + 40, RotarySliderDimHW, RotarySliderDimHW);
+    distortionThresholdValue.setBounds(UpRotarySlidersPosX + 225, UpRotarySlidersPosY + 40, RotarySliderDimHW, RotarySliderDimHW);
 
     //Toggle Active Distortion
     toggleActiveDistotion.setBounds(10, -30, 100, 100);
@@ -624,10 +636,10 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //Bounds slider delay
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 15);
-    delayGainSlider.setBounds(43 + DelayPositionOffSet, UpRotarySlidersPosY, 65, 65);
-    delayTimeSlider.setBounds(140 + DelayPositionOffSet, UpRotarySlidersPosY, 65,65);
-    delayLowPassFilter.setBounds(248 + DelayPositionOffSet, UpRotarySlidersPosY+5, 65,65);
-    delayFilterFrequencyValue.setBounds(250 + DelayPositionOffSet, UpRotarySlidersPosY +30, 100, 100);
+    delayGainSlider.setBounds(43 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayTimeSlider.setBounds(147 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayLowPassFilter.setBounds(248 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayFilterFrequencyValue.setBounds(252 + DelayPositionOffSet, UpRotarySlidersPosY +25, 100, 100);
 
 
     //toggle fD/FW
@@ -654,8 +666,8 @@ void MultiEffectAudioProcessorEditor::resized()
     //Sliders
     reverbDryWetLevelSlider.setBounds(37, 450, 130, 15);
     reverbRoomSizeSlider.setBounds(190, 450, 130, 15);
-    reverbDampingSlider.setBounds(65, 550, RotarySliderDimHW, RotarySliderDimHW);
-    reverbWidthSlider.setBounds(202, 550, RotarySliderDimHW, RotarySliderDimHW);
+    reverbDampingSlider.setBounds(75, 550, RotarySliderDimHW, RotarySliderDimHW);
+    reverbWidthSlider.setBounds(212, 550, RotarySliderDimHW, RotarySliderDimHW);
 
     //Labels
     ReverbDryWetValue.setBounds(85, 467, 60, 15);
