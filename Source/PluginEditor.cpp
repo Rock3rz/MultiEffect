@@ -201,7 +201,11 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //lowPass Filter Slider Setup
     delayLowPassFilter.setLookAndFeel(&myLookAndFeelDelayLine);
     delayLowPassFilter.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    delayLowPassFilter.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    delayLowPassFilter.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
+    delayFilterFrequencyValue.setText("Prova", juce::dontSendNotification);
+    delayLowPassFilter.onValueChange = [this]() {
+        delayFilterFrequencyValue.setText(juce::String(Utilities::linearToMhz(delayLowPassFilter.getValue()),0) + "Hz", juce::dontSendNotification);
+        };
    
 
     //dryWet slider Setup
@@ -232,6 +236,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(delayGainValue);
     addAndMakeVisible(delayTimeMsValue);
     addAndMakeVisible(delayDryWetValue);
+    addAndMakeVisible(delayFilterFrequencyValue);
 
     //Utilities
     addAndMakeVisible(borderDelayGain);
@@ -415,6 +420,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqMasterOutSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
     eqMasterOutLabel.setText("Master\n  out", juce::dontSendNotification);
     eqMasterOutValue.setText("Prova", juce::dontSendNotification);
+
 
     //Converto i valori in decibel per masterOut
     eqMasterOutSlider.onValueChange = [this]() {
@@ -608,8 +614,9 @@ void MultiEffectAudioProcessorEditor::resized()
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 15);
     delayDryWetValue.setBounds(150 + DelayPositionOffSet, 140, 200, 15);
     delayGainSlider.setBounds(43 + DelayPositionOffSet, UpRotarySlidersPosY, 65, 65);
-    delayTimeSlider.setBounds(145 + DelayPositionOffSet, UpRotarySlidersPosY, 65,65);
-    delayLowPassFilter.setBounds(237 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayTimeSlider.setBounds(140 + DelayPositionOffSet, UpRotarySlidersPosY, 65,65);
+    delayLowPassFilter.setBounds(248 + DelayPositionOffSet, UpRotarySlidersPosY+5, 65,65);
+    delayFilterFrequencyValue.setBounds(250 + DelayPositionOffSet, UpRotarySlidersPosY +30, 100, 100);
 
     //Bounds label delay
     delayDryWetLabel.setBounds(140 + DelayPositionOffSet, 50, 100, 100);

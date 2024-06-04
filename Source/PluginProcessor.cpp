@@ -180,6 +180,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         for (auto& filter : lowPassFilters)
         {
             *filter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(getSampleRate(), dCutOffLowPass * 1000.0f, .6f);
+            
         }
     }
 
@@ -377,7 +378,7 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
         auto numSamplesToEnd = delayBufferSize - readPosition;
         auto numSamplesToStart = bufferSize - numSamplesToEnd;
 
-        // Somma diretta senza rampa di gain per la prima parte
+        
         float* bufferData = buffer.getWritePointer(channel);
         const float* delayBufferData = delayBuffer.getReadPointer(channel, readPosition);
         for (int i = 0; i < numSamplesToEnd; ++i)
@@ -388,7 +389,7 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
 
         }
 
-        // Somma diretta senza rampa di gain per la seconda parte
+        
         const float* delayBufferDataStart = delayBuffer.getReadPointer(channel, 0);
         for (int i = 0; i < numSamplesToStart; ++i)
         {
@@ -471,7 +472,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DGAIN", "dGain", 0.001f, 1.f, .5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DTIME", "dTime", .01f, 2.0f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DDRYWET", "dDryWet", .0f, 1.0f, .5f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DLOWFILTER", "dLowFilter", .1f, 20.f, 5.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DLOWFILTER", "dLowFilter", .01f, 2.5f, 1.25f));
 
     //-----------------------------------------------REVERB-------------------------------------------------
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RevROOMSIZE", "revRoomSize", 0.0f, 1.0f, 0.5f));
