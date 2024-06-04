@@ -103,7 +103,7 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     spec.sampleRate = sampleRate;
     spec.maximumBlockSize = samplesPerBlock;
     spec.numChannels = getNumInputChannels();
-    //sampleRate = 44100.f;
+    
 
     lowPassFilters.resize(getNumInputChannels());
     auto dCutOffLowPass = apvt.getRawParameterValue("DLOWFILTER")->load();
@@ -193,8 +193,10 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     //MasterOut
     auto eqMasterOut = apvt.getRawParameterValue("EqMASTEROUTGAIN")->load();
 
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i) {
         buffer.clear(i, 0, buffer.getNumSamples());
+        delayBuffer.clear(i, 0, delayBuffer.getNumSamples());
+    }
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
@@ -243,10 +245,17 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
           
         }
 
-
         //----------------------------------------------------DELAY----------------------------------------------------------------------
-
+           
         if (isDelayActive) {
+            /* work in progress
+            for (int channel = 0; channel < getTotalNumOutputChannels(); ++channel) {
+                auto* channelData = buffer.getWritePointer(channel);
+                    for(int i = 0; i < buffer.getNumSamples(); ++i) {
+                        channelData[i] *= 0;
+                    }
+            }
+            */
             //scrive nel buffer circolare
             fillBuffer(buffer, channel, dGainLevel);
 
