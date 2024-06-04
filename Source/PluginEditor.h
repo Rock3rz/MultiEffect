@@ -83,6 +83,7 @@ private:
     juce::Label delayGainValue;
     juce::Label delayTimeMsValue;
     juce::Label delayDryWetValue;
+    juce::Label delayFilterFrequencyValue;
     
     //Delay Utilities
     juce::GroupComponent borderDelayGain;

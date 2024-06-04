@@ -117,6 +117,10 @@ float Utilities::linearToMs(float value) {
     return value * 1000;
 }
 
+float Utilities::linearToMhz(float value) {
+    return value * 1000;
+}
+
 //funzione di normalizzazione
 float Utilities::normalizeValue(float value, float minValue, float maxValue) {
     return (value - minValue) / (maxValue - minValue);
