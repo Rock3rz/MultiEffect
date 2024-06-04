@@ -118,8 +118,11 @@ private:
     //Reverb Labels
     juce::Label reverbRoomSizeLabel;
     juce::Label reverbDryWetLevelLabel;
-    juce::Label reverbDryWetValue;
+    juce::Label ReverbDryWetValue;
     juce::Label reverbRoomSizeValue;
+    juce::Label reverbDampingValue;
+    juce::Label reverbWidthValue;
+
     
     //Reverb Utilities
     juce::GroupComponent borderReverbDamping;

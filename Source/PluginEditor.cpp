@@ -12,7 +12,7 @@
 
 #define WindowWidth 1192
 #define WindowHeight 696
-#define RectBoundThickness 2
+#define RectBoundThickness 1
 #define DelayRotaryLine 100
 #define DelayPositionOffSet 360
 #define RotarySliderDimHW 65
@@ -55,7 +55,9 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionOffsetSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionOffsetSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionOffsetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
-    distortionOffsetValue.setText(juce::String(distortionOffsetSlider.getValue(), 2), juce::dontSendNotification);
+    distortionOffsetSlider.setRange(-1.0f, 1.0f);
+    distortionOffsetSlider.setValue(0.0f);
+    distortionOffsetValue.setText(juce::String(distortionOffsetSlider.getValue(), 1), juce::dontSendNotification);
     distortionOffsetSlider.onValueChange = [this]() {
         distortionOffsetValue.setText(juce::String(distortionOffsetSlider.getValue(), 2), juce::dontSendNotification);
         };
@@ -66,10 +68,11 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionThresholdSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionThresholdSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionThresholdSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
-    distortionThresholdValue.setText(juce::String(distortionThresholdSlider.getValue(), 2), juce::dontSendNotification);
+    distortionThresholdValue.setText(juce::String(distortionThresholdSlider.getValue(), 1), juce::dontSendNotification);
     distortionThresholdSlider.onValueChange = [this]() {
         distortionThresholdValue.setText(juce::String(distortionThresholdSlider.getValue(), 2), juce::dontSendNotification);
         };
+
    
 
     //Distortion
@@ -325,7 +328,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbRoomSizeSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
     reverbRoomSizeSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbRoomSizeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    reverbRoomSizeValue.setText("Prova", juce::dontSendNotification);
+    reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 1), juce::dontSendNotification);
     reverbRoomSizeSlider.onValueChange = [this]() {
         reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
         };
@@ -334,6 +337,10 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbDampingSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbDampingSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     reverbDampingSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
+    reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 1), juce::dontSendNotification);
+    reverbDampingSlider.onValueChange = [this]() {
+        reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 2), juce::dontSendNotification);
+        };
   
 
     //dry wet
@@ -350,7 +357,10 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbWidthSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbWidthSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     reverbWidthSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
-    
+    reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 1), juce::dontSendNotification);
+    reverbWidthSlider.onValueChange = [this]() {
+        reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 2), juce::dontSendNotification);
+        };
 
     //Toggle active 
     addAndMakeVisible(toggleActiveReverb);
@@ -364,8 +374,10 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //Labels
     addAndMakeVisible(reverbRoomSizeLabel);
     addAndMakeVisible(reverbDryWetLevelLabel);
-    addAndMakeVisible(reverbDryWetValue);
+    addAndMakeVisible(ReverbDryWetValue);
     addAndMakeVisible(reverbRoomSizeValue);
+    addAndMakeVisible(reverbDampingValue);
+    addAndMakeVisible(reverbWidthValue);
 
     //Utilities
     addAndMakeVisible(borderReverbDamping);
@@ -493,7 +505,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //-------------------------------------------------IMAGES------------------------------------------------------------------------------------
     
-    Background = juce::ImageCache::getFromMemory(BinaryData::Sfondo_PlugIn5_png, BinaryData::Sfondo_PlugIn5_pngSize);
+    Background = juce::ImageCache::getFromMemory(BinaryData::Sfondo_PlugIn_png, BinaryData::Sfondo_PlugIn_pngSize);
 
     if (Background.isNull())
     {
@@ -543,6 +555,25 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     juce::Rectangle<int> RightHalf = MainWindow;
 
 
+    //divisione in 4
+    juce::Rectangle<int> Upper = LeftHalf.removeFromTop(LeftHalf.getHeight() / 2);
+    juce::Rectangle<int> BottomLeft = LeftHalf;
+    juce::Rectangle<int> UpLeft = Upper.removeFromLeft(Upper.getWidth() / 2);
+    juce::Rectangle<int> UpRight = Upper;
+    juce::Rectangle<int> DownLeft = BottomLeft.removeFromLeft(BottomLeft.getWidth() / 2);
+    juce::Rectangle<int> DownRight = BottomLeft;
+        
+    // Disegna i bordi dei rettangoli
+    g.setColour(juce::Colours::lightcyan);
+    g.drawRect(LeftHalf, RectBoundThickness);
+    g.drawRect(RightHalf, RectBoundThickness);
+    g.drawRect(Upper, RectBoundThickness);
+    g.drawRect(BottomLeft, RectBoundThickness);
+    g.drawRect(UpLeft, RectBoundThickness);
+    g.drawRect(UpRight, RectBoundThickness);
+    g.drawRect(DownLeft, RectBoundThickness);
+    g.drawRect(DownRight, RectBoundThickness);
+
     juce::Font Titles_Font("North Carossela", 17.0f, juce::Font::bold);
     g.setColour(juce::Colours::deepskyblue);
     g.setFont(Titles_Font);
@@ -554,7 +585,7 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     //------------------------------------------------------HARD, MID, SOFT CLIPPING DISEGNO--------------------------------------------
 
-    //------------------------------------------------------SOFT------------------------------------------------------------------------
+    //------------------------------------------------------SOFT---------------------------------------//
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
     g.fillRoundedRectangle(35, 110, 75, 75, 4);
     Utilities::drawTanhFunction(g, 35, 110, 75, 75);
@@ -616,13 +647,22 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     juce::Path xAxisSV;
     juce::Path yAxisSV;
-    juce::Line<float> xLengthSV = juce::Line<float>(739, 595, 1161, 595);
-    juce::Line<float> yLengthSV = juce::Line<float>(739, 595, 739, 430);
+    juce::Line<float> xLengthSV = juce::Line<float>(985, 595, 1161, 595);
+    g.drawLine(739, 595, 930, 595);
+    g.drawLine(739, 525, 739, 595);
+    juce::Line<float> yLengthSV = juce::Line<float>(739, 507, 739, 430);
     xAxisSV.addArrow(xLengthSV, 1.0, 7.0f, 3.5f);
     yAxisSV.addArrow(yLengthSV, 1.0f, 7.0f, 3.5f);
 
     g.fillPath(xAxisSV);
     g.fillPath(yAxisSV);
+
+    g.setColour(juce::Colours::whitesmoke.darker(0.6f));
+    g.drawText("Frequency", 907, 591, 100, 11, juce::Justification::centred);
+
+    // Ruoto di -90 gradi per far essere il testo ruotato lungo l'asse  y
+    g.addTransform(juce::AffineTransform::rotation(juce::MathConstants<float>::pi * -0.5f, 680, 595));
+    g.drawText("dB", 710, 647, 100, 11, juce::Justification::centred);
 
 }
 
@@ -693,24 +733,21 @@ void MultiEffectAudioProcessorEditor::resized()
     //Sliders
     reverbDryWetLevelSlider.setBounds(37, 450, 128, 15);
     reverbRoomSizeSlider.setBounds(190, 450, 128, 15);
-    reverbDampingSlider.setBounds(75, 550, RotarySliderDimHW, RotarySliderDimHW);
-    reverbWidthSlider.setBounds(212, 550, RotarySliderDimHW, RotarySliderDimHW);
+    reverbDampingSlider.setBounds(75, 553, RotarySliderDimHW, RotarySliderDimHW);
+    reverbWidthSlider.setBounds(212, 553, RotarySliderDimHW, RotarySliderDimHW);
 
     //Labels
-    reverbDryWetValue.setBounds(85, 470, 60, 15);
-    reverbRoomSizeValue.setBounds(230, 470, 128, 15);
-    
+    ReverbDryWetValue.setBounds(83, 467, 60, 15);
+    reverbRoomSizeValue.setBounds(237, 467, 60, 15);
+    reverbDampingValue.setBounds(89, 617, 60, 15);
+    reverbWidthValue.setBounds(226, 617, 60, 15);
+
     //Reverb Utilities
     borderReverbDamping.setBounds(65, 525, 85, 120);
     borderReverbWidth.setBounds(202, 525, 85, 120);
     borderReverbDryWet.setBounds(32, 420, 140, 70);
     borderReverbRoomSize.setBounds(185, 420, 140, 70);
 
-    //-------------------------------------------------------------VIEWER-------------------------------------------------------
-    audioProcessor.waveViewer.setBounds(742, 90, 430,170);
-    borderWV.setBounds(720, 63, 462, 220);
-    audioProcessor.spectrum.setBounds(742, 420, 430, 170);
-    borderSV.setBounds(720, 393, 462, 220);
 
     //-----------------------------------------------EQ------------------------------------------
     eqLowSlider.setBounds(390, 425, 40, 176);
@@ -721,7 +758,7 @@ void MultiEffectAudioProcessorEditor::resized()
     eqLowLabel.setBounds(392, 360, 100, 100);
     eqMidLabel.setBounds(473, 360, 100, 100);
     eqHighLabel.setBounds(550, 360, 100, 100);
-    eqMasterOutLabel.setBounds(630, 360, 100, 100);
+    eqMasterOutLabel.setBounds(625, 360, 100, 100);
 
     eqLowValue.setBounds(392, 560, 100, 100);
     eqMidValue.setBounds(473, 560, 100, 100);
@@ -731,6 +768,13 @@ void MultiEffectAudioProcessorEditor::resized()
     moreSamples.setBounds(1150, 375, 25, 25);
     lessSamples.setBounds(1030, 375, 25, 25);
     numSaples.setBounds(1057, 340, 100, 100);
+
+
+    //-------------------------------------------------------------VIEWER-------------------------------------------------------
+    audioProcessor.waveViewer.setBounds(742, 90, 430, 170);
+    borderWV.setBounds(720, 63, 462, 220);
+    audioProcessor.spectrum.setBounds(742, 420, 430, 170);
+    borderSV.setBounds(720, 393, 462, 220);    
 
 }
 

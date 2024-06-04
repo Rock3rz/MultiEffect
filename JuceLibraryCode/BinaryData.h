@@ -11,8 +11,11 @@ namespace BinaryData
     extern const char*   Sfondo_PlugIn5_png;
     const int            Sfondo_PlugIn5_pngSize = 315134;
 
+    extern const char*   Sfondo_PlugIn_png;
+    const int            Sfondo_PlugIn_pngSize = 269482;
+
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 1;
+    const int namedResourceListSize = 2;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
