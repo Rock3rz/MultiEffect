@@ -44,9 +44,9 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0);
     distortionGainSlider.setPaintingIsUnclipped(true);
-    distortionGainValue.setText(juce::String(Utilities::linearToDb(distortionGainSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+    distortionGainValue.setText(juce::String(Utilities::linearToDb(distortionGainSlider.getValue()), 2) + " Db", juce::dontSendNotification);
     distortionGainSlider.onValueChange = [this]() {
-        distortionGainValue.setText(juce::String(Utilities::linearToDb(distortionGainSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        distortionGainValue.setText(juce::String(Utilities::linearToDb(distortionGainSlider.getValue()), 2) + " Db", juce::dontSendNotification);
         };
     
     
@@ -55,9 +55,9 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionOffsetSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionOffsetSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionOffsetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
-    distortionOffsetValue.setText(juce::String(Utilities::linearToDb(distortionOffsetSlider.getValue()), 1), juce::dontSendNotification);
+    distortionOffsetValue.setText(juce::String(distortionOffsetSlider.getValue(), 2), juce::dontSendNotification);
     distortionOffsetSlider.onValueChange = [this]() {
-        distortionOffsetValue.setText(juce::String(Utilities::linearToDb(distortionOffsetSlider.getValue()), 1), juce::dontSendNotification);
+        distortionOffsetValue.setText(juce::String(distortionOffsetSlider.getValue(), 2), juce::dontSendNotification);
         };
     
 
@@ -66,9 +66,9 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionThresholdSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionThresholdSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionThresholdSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
-    distortionThresholdValue.setText(juce::String(Utilities::linearToDb(distortionThresholdSlider.getValue()), 1), juce::dontSendNotification);
+    distortionThresholdValue.setText(juce::String(distortionThresholdSlider.getValue(), 2), juce::dontSendNotification);
     distortionThresholdSlider.onValueChange = [this]() {
-        distortionThresholdValue.setText(juce::String(Utilities::linearToDb(distortionThresholdSlider.getValue()), 1), juce::dontSendNotification);
+        distortionThresholdValue.setText(juce::String(distortionThresholdSlider.getValue(), 2), juce::dontSendNotification);
         };
    
 
@@ -325,6 +325,10 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbRoomSizeSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
     reverbRoomSizeSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbRoomSizeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    reverbRoomSizeValue.setText("Prova", juce::dontSendNotification);
+    reverbRoomSizeSlider.onValueChange = [this]() {
+        reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
+        };
 
     //Damping
     reverbDampingSlider.setLookAndFeel(&myLookAndFeelReverb);
@@ -336,9 +340,9 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     reverbDryWetLevelSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbDryWetLevelSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
     reverbDryWetLevelSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    ReverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 1), juce::dontSendNotification);
+    reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 1), juce::dontSendNotification);
     reverbDryWetLevelSlider.onValueChange = [this]() {
-        ReverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+        reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
         };
     
 
@@ -360,8 +364,8 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //Labels
     addAndMakeVisible(reverbRoomSizeLabel);
     addAndMakeVisible(reverbDryWetLevelLabel);
-    addAndMakeVisible(ReverbDryWetValue);
-    addAndMakeVisible(ReverbRoomSizeValue);
+    addAndMakeVisible(reverbDryWetValue);
+    addAndMakeVisible(reverbRoomSizeValue);
 
     //Utilities
     addAndMakeVisible(borderReverbDamping);
@@ -397,7 +401,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         }
         };
 
-    //-------------------------------------------------EQ---------------------------------
+    //-------------------------------------------------EQ-----------------------------------------------------------
     eqLowSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqLowSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0); // a zero per non sballare le misure
@@ -495,7 +499,30 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     {
         DBG("Failed to load background image");
     }
-    
+    //-------------------------------------------------SPECTRUM-----------------------------------------------
+
+    moreSamples.setButtonText("+");
+    moreSamples.onClick = [this]() {
+        if (audioProcessor.spectrum.getScopeSize() < 20000) {
+            audioProcessor.spectrum.setScopeSize(audioProcessor.spectrum.getScopeSize() * 2);
+            numSaples.setText(juce::String(audioProcessor.spectrum.getScopeSize()) + " Samples", juce::dontSendNotification);
+        }
+        };
+
+    lessSamples.setButtonText("-");
+    lessSamples.onClick = [this]() {
+        if (audioProcessor.spectrum.getScopeSize() > 8) {
+            audioProcessor.spectrum.setScopeSize(audioProcessor.spectrum.getScopeSize() / 2);
+            numSaples.setText(juce::String(audioProcessor.spectrum.getScopeSize()) + " Samples", juce::dontSendNotification);
+        }
+        };
+
+    numSaples.setText(juce::String(audioProcessor.spectrum.getScopeSize()) + " Samples", juce::dontSendNotification);
+    addAndMakeVisible(moreSamples);
+    addAndMakeVisible(lessSamples);
+    addAndMakeVisible(numSaples);
+
+
 }
 
 MultiEffectAudioProcessorEditor::~MultiEffectAudioProcessorEditor()
@@ -631,7 +658,7 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //-----------------------------------------------------DELAY---------------------------------------------------------------------
     
-        //toggle attivazione delay
+    //toggle attivazione delay
     toggleActiveDelay.setBounds(10 + DelayPositionOffSet, -30, 100, 100);
 
     //Bounds slider delay
@@ -666,11 +693,12 @@ void MultiEffectAudioProcessorEditor::resized()
     //Sliders
     reverbDryWetLevelSlider.setBounds(37, 450, 128, 15);
     reverbRoomSizeSlider.setBounds(190, 450, 128, 15);
-    reverbDampingSlider.setBounds(65, 550, RotarySliderDimHW, RotarySliderDimHW);
-    reverbWidthSlider.setBounds(202, 550, RotarySliderDimHW, RotarySliderDimHW);
+    reverbDampingSlider.setBounds(75, 550, RotarySliderDimHW, RotarySliderDimHW);
+    reverbWidthSlider.setBounds(212, 550, RotarySliderDimHW, RotarySliderDimHW);
 
     //Labels
-    ReverbDryWetValue.setBounds(85, 467, 60, 15);
+    reverbDryWetValue.setBounds(85, 470, 60, 15);
+    reverbRoomSizeValue.setBounds(230, 470, 128, 15);
     
     //Reverb Utilities
     borderReverbDamping.setBounds(65, 525, 85, 120);
@@ -684,7 +712,7 @@ void MultiEffectAudioProcessorEditor::resized()
     audioProcessor.spectrum.setBounds(742, 420, 430, 170);
     borderSV.setBounds(720, 393, 462, 220);
 
-    //-----------------------------------------------EQ---------------------------------------
+    //-----------------------------------------------EQ------------------------------------------
     eqLowSlider.setBounds(390, 425, 40, 176);
     eqMidSlider.setBounds(470, 425, 40, 176);
     eqHighSlider.setBounds(550, 425, 40, 176);
@@ -699,7 +727,10 @@ void MultiEffectAudioProcessorEditor::resized()
     eqMidValue.setBounds(473, 560, 100, 100);
     eqHighValue.setBounds(550, 560, 100, 100);
     eqMasterOutValue.setBounds(630, 560, 100, 100);
-    
+    //-------------------------------------------SPECTRUM--------------------------------------------
+    moreSamples.setBounds(1150, 375, 25, 25);
+    lessSamples.setBounds(1030, 375, 25, 25);
+    numSaples.setBounds(1057, 340, 100, 100);
 
 }
 

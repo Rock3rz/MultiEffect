@@ -15,7 +15,7 @@
 SpectrumAnalyzer::SpectrumAnalyzer() :forwardFFT(fftOrder), window(fftSize, juce::dsp::WindowingFunction<float>::hann)
 {
     startTimerHz(30); // Refresh rate di 30Hz
-
+    scopeData.resize(scopeSize);
 }
 
 SpectrumAnalyzer::~SpectrumAnalyzer()

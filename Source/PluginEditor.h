@@ -118,8 +118,8 @@ private:
     //Reverb Labels
     juce::Label reverbRoomSizeLabel;
     juce::Label reverbDryWetLevelLabel;
-    juce::Label ReverbDryWetValue;
-    juce::Label ReverbRoomSizeValue;
+    juce::Label reverbDryWetValue;
+    juce::Label reverbRoomSizeValue;
     
     //Reverb Utilities
     juce::GroupComponent borderReverbDamping;
@@ -170,6 +170,11 @@ private:
     juce::GroupComponent borderWV;
     juce::GroupComponent borderSV;
 
+    //------------------------------SPECTRUM---------------------------------
+    juce::TextButton moreSamples;
+    juce::TextButton lessSamples;
+    juce::Label numSaples;
+    
     //------------------------------IMAGES----------------------------
     juce::Image Background;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MultiEffectAudioProcessorEditor)
