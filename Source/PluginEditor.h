@@ -27,13 +27,11 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     
-    
-    
 private:
 
-    bool isSoftDistortionSelected;
-    bool isMidDistortionSelected;
-    bool isHardDistortionSelected;
+    bool isSoftDistortionSelected = true;
+    bool isMidDistortionSelected = false;
+    bool isHardDistortionSelected = false;
     
 
     //-------------------------------------LOOK&FEEL-----------------------------------------------------------------------
@@ -81,6 +79,7 @@ private:
 
     //delay Labels
     juce::Label delayDryWetLabel;
+    juce::Label delayGainValue;
     
     //Delay Utilities
     juce::GroupComponent borderDelayGain;

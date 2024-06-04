@@ -174,9 +174,12 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //Delay slider Setup
     delayGainSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     delayGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    delayGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 40, 20);
+    delayGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
     delayGainSlider.setDoubleClickReturnValue(true, .5f);
-  
+    delayGainValue.setText(juce::String(Utilities::linearToDb(delayGainSlider.getValue())), juce::dontSendNotification);
+    delayGainSlider.onValueChange = [this]() {
+        delayGainValue.setText(juce::String(Utilities::linearToDb(delayGainSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        };
     //delayGainSlider.setSize(200.f, 200.f);
 
     //Time delay slider Setup
@@ -198,6 +201,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //delayDryWetLabel.setText("Dry / Wet", juce::dontSendNotification);
     delayDryWetSlider.setRange(0.0f, 1.0f);
     delayDryWetSlider.setValue(0.5f);
+    
 
 
     //ToggleActibeDelay
@@ -211,6 +215,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(delayTimeSlider);
     addAndMakeVisible(delayLowPassFilter);
     addAndMakeVisible(delayDryWetSlider);
+    addAndMakeVisible(delayGainValue);
 
     //Utilities
     addAndMakeVisible(borderDelayGain);
@@ -392,7 +397,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqMasterOutSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqMasterOutSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqMasterOutSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
-    eqMasterOutLabel.setText("Gain", juce::dontSendNotification);
+    eqMasterOutLabel.setText("Master\n  out", juce::dontSendNotification);
     eqMasterOutValue.setText("Prova", juce::dontSendNotification);
 
     //Converto i valori in decibel per masterOut
@@ -578,16 +583,14 @@ void MultiEffectAudioProcessorEditor::resized()
     borderDistortionTreshold.setBounds(230, 205, 85, 120);
 
 
-
-
     //-----------------------------------------------------DELAY---------------------------------------------------------------------
-    // 
+    
         //toggle attivazione delay
     toggleActiveDelay.setBounds(10 + DelayPositionOffSet, -30, 100, 100);
 
     //Bounds slider delay
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 30);
-    delayGainSlider.setBounds(33 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
+    delayGainSlider.setBounds(43 + DelayPositionOffSet, UpRotarySlidersPosY, 65, 65);
     delayTimeSlider.setBounds(135 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
     delayLowPassFilter.setBounds(237 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
 
@@ -606,6 +609,7 @@ void MultiEffectAudioProcessorEditor::resized()
     borderDelayTime.setBounds(495, 205, 85, 120);
     borderDelayLowPass.setBounds(597, 205, 85, 120);
     borderDelayDryWet.setBounds(435, 90, 200, 70);
+    delayGainValue.setBounds(412,255,100,100);
     //--------------------------------------------------------------REVERB------------------------------------------------------
     //Toggle
     toggleActiveReverb.setBounds(10, 325, 100, 100);
