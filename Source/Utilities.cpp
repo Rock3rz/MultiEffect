@@ -125,3 +125,14 @@ float Utilities::linearToMhz(float value) {
 float Utilities::normalizeValue(float value, float minValue, float maxValue) {
     return (value - minValue) / (maxValue - minValue);
 }
+
+juce::AudioBuffer<float> Utilities::zeroBuffer(juce::AudioBuffer<float> buf,int numChannel) {
+    
+    for (int channel = 0; channel < numChannel; ++channel) {
+        auto* channelData = buf.getWritePointer(channel);
+        for (int i = 0; i < buf.getNumSamples(); ++i) {
+            channelData[i] *= 0.f;
+        }
+    }
+    return buf;
+}

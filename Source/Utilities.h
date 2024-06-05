@@ -23,7 +23,7 @@ public:
    static float linearToMs(float value);
    static float linearToMhz(float value);
    static float normalizeValue(float value, float minValue, float maxValue);
-   
+   static juce::AudioBuffer<float> zeroBuffer(juce::AudioBuffer<float> buf,int numChannel);
 private:
 
 };

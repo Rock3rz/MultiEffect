@@ -9,6 +9,7 @@
 #include <cmath>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Utilities.h"
 
 
 //==============================================================================
@@ -99,7 +100,8 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 {
     auto delayBufferSize = 3 * sampleRate;
     delayBuffer.setSize(getNumInputChannels(), (int)delayBufferSize);
-
+    delayBuffer = Utilities::zeroBuffer(delayBuffer, getTotalNumOutputChannels());
+    
     spec.sampleRate = sampleRate;
     spec.maximumBlockSize = samplesPerBlock;
     spec.numChannels = getNumInputChannels();
@@ -246,7 +248,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         }
 
         //----------------------------------------------------DELAY----------------------------------------------------------------------
-           
+        
         if (isDelayActive) {
            
             
@@ -255,7 +257,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
             //legge dal buffer in ritardo
             readFromBuffer(channel, buffer, delayBuffer, dGainLevel, timeDelay, dDryWet);
-
+            
             if (isFeedbackActive)
             {
                 fillBuffer(buffer, channel, dGainLevel);
@@ -300,7 +302,6 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     }
 
    
-
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::ProcessContextReplacing<float> context(block);
     lowShelf.process(context);
@@ -373,7 +374,7 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
         for (int i = 0; i < bufferSize; ++i)
         {
             //bufferData[i] += delayBufferData[i] * gain;
-            bufferData[i] = (bufferData[i] * dry) + (delayBufferData[i] * wet * gain);
+            bufferData[i] = ((bufferData[i] * dry) + (delayBufferData[i] * wet * gain));
         }
     }
     else
@@ -388,8 +389,8 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
         {
 
             //bufferData[i] += delayBufferData[i] * gain;
-            bufferData[i] = (bufferData[i] * dry) + (delayBufferData[i] * wet * gain);
-
+            bufferData[i] = ((bufferData[i] * dry) + (delayBufferData[i] * wet * gain));
+            
         }
 
         
@@ -397,10 +398,15 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
         for (int i = 0; i < numSamplesToStart; ++i)
         {
             // bufferData[numSamplesToEnd + i] += delayBufferDataStart[i] * gain;
-            bufferData[numSamplesToEnd + i] = (bufferData[numSamplesToEnd + i] * dry) + (delayBufferDataStart[i] * wet * gain);
+            bufferData[numSamplesToEnd + i] = ((bufferData[numSamplesToEnd + i] * dry) + (delayBufferDataStart[i] * wet * gain));
+            
         }
+
+              
     }
-    /*
+
+
+    /* QUESTO L'HO MESSO PERCHE' PENSAVO SERVISSE MA IN REATA' FILTRAVA DUE VOLTE E NON SI SENTIVA NIENTE
     //applicazione del lowPass nel buffer di delay
     if (isDelayLowPassActive) {
         juce::dsp::AudioBlock<float> audioBlock(delayBuffer); //creazione di "blocchi"
@@ -494,5 +500,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     //ritorno il vettore da inizio a fine
     return { params.begin(), params.end() };
 }
+
+
 
 
