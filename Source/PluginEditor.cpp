@@ -325,7 +325,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     toggleActiveReverb.setButtonText("Inactive");
 
     //Room Size
-    reverbRoomSizeSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
+    reverbRoomSizeSlider.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
     reverbRoomSizeSlider.setLookAndFeel(&myLookAndFeelReverb);
     reverbRoomSizeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 1), juce::dontSendNotification);

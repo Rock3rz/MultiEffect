@@ -86,7 +86,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
     juce::Colour sliderBackgroundColour = juce::Colours::darkgrey;
     // Colore della traccia del slider
-    juce::Colour sliderTrackColour = juce::Colours::azure;
+    juce::Colour sliderTrackColour = juce::Colours::aqua;
     juce::Colour triangleColours = juce::Colours::white;
     //juce::Colour triangleColour = juce::Colours::red; // Colore per i triangoli
 
@@ -96,19 +96,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         //g.drawRoundedRectangle(x, y, width, height, 4, 2);
 
         g.setColour(juce::Colours::lightcyan);
-        /*
-        g.drawLine(x, y, x + width, y );  
-
-        g.drawLine(x, y, x, y + 8);
-        g.drawLine(x + (width / 8), y, x + (width / 8), y + 4);
-        g.drawLine(x + 2*(width / 8), y, x + 2*(width / 8), y + 8);
-        g.drawLine(x + 3*(width / 8), y, x + 3*(width / 8), y + 4);
-        g.drawLine(x + 4*(width / 8), y, x + 4*(width / 8), y + 8);
-        g.drawLine(x + 5*(width / 8), y, x + 5*(width / 8), y + 4);
-        g.drawLine(x + 6*(width / 8), y, x + 6*(width / 8), y + 8);
-        g.drawLine(x + 7*(width / 8), y, x + 7*(width / 8), y + 4);
-        g.drawLine(x + width, y, x + width, y + 8);
-        */
+        
         //work in progress
         g.drawLine(x, y, x + width-2, y);
         int offSet = width / 8;
@@ -129,19 +117,17 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         float trackX = x + (width / 2.0f);
         
         
-        DBG(width);
-        DBG(sliderPos);
-
+       
         sliderPos = Utilities::normalizeValue(sliderPos, minSliderPos, width+7); //non so per quale motivo il valore dello slider non è normalizzato
         
         
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
         if (sliderPos <= 0.5) {       
-            g.fillRoundedRectangle(trackX- ((.5f - sliderPos) * width), trackY, ((.5f - sliderPos)*width), trackHeight,4);
+            g.fillRoundedRectangle(trackX- ((.5f - sliderPos) * width), trackY, ((.5f - sliderPos)*width), trackHeight,3);
         }
         else if (sliderPos > 0.5) {    
-            g.fillRoundedRectangle(trackX, trackY, ((sliderPos-.5f)*width), trackHeight,4);
+            g.fillRoundedRectangle(trackX, trackY, ((sliderPos-.5f)*width), trackHeight,3);
         }
 
 
@@ -219,6 +205,55 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.fillPath(rightTriangle);
 
         
+    }
+    else if (style == juce::Slider::SliderStyle::LinearBar) {
+        g.setColour(sliderBackgroundColour);
+        //g.drawRoundedRectangle(x, y, width, height, 4, 2);
+
+        g.setColour(juce::Colours::lightcyan);
+
+        //work in progress
+        g.drawLine(x, y, x + width - 2, y);
+        int offSet = width / 8;
+        for (int i = 0; i <= 8; i++) {
+            if (i % 2) {
+                g.drawLine(x + i * offSet, y, x + i * offSet, y + 4, 2);
+            }
+            else {
+                g.drawLine(x + i * offSet, y, x + i * offSet, y + 8, 2);
+            }
+            //g.drawLine(x + width, y, x + width, y + 8,1.5f);
+        }
+
+        // Calcola la posizione della traccia
+        float trackWidth = width * 0.3f;
+        float trackHeight = height * 0.3f;
+        float trackY = y + (height - trackHeight) / 2.0f;
+        float trackX = x + (width / 2.0f);
+
+
+
+        sliderPos = Utilities::normalizeValue(sliderPos, minSliderPos, width + 7); //non so per quale motivo il valore dello slider non è normalizzato
+
+
+        // Disegna la traccia del slider
+        g.setColour(sliderTrackColour);
+        
+        g.fillRoundedRectangle(x, trackY, sliderPos * width, trackHeight, 3);
+
+        // Calculate the triangle position
+        float trianglePosX = x + sliderPos * width;
+        float trianglePosY = y + height / 2.0f;
+        float h = 25.0f;
+        float lato = 30.0f;
+
+        // Draw the triangle
+        juce::Path orizontalTriangle;
+        orizontalTriangle.addTriangle(trianglePosX, trianglePosY,
+            trianglePosX + lato / 2.0f, trianglePosY + h,
+            trianglePosX - lato / 2.0f, trianglePosY + h);
+        g.setColour(juce::Colours::white);
+        g.fillPath(orizontalTriangle);
     }
     
 
