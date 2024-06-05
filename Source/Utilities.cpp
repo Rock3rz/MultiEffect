@@ -68,9 +68,9 @@ void Utilities::drawHardClippingFunction(juce::Graphics& g, int startX, int star
 {
     Utilities::drawAxis(g, startX, startY, width, height);
     g.setColour(juce::Colours::white);
-    g.drawLine(startX + 12.0f, startY + height - 25.0f, startX + 35.0f, startY + height - 25.0f, 1.0f);
-    g.drawLine(startX + 60.0f, startY + 25.0f, startX + width - 12.5f, startY + 25.0f, 1.0f);
-    g.drawLine(startX + 35.0f, startY + height - 25.0f, startX + 60.0f, startY + 25.0f);
+    g.drawLine(startX + 8.f, startY + height - 25.0f, startX + 25.f, startY + height - 25.0f, 1.0f);
+    g.drawLine(startX + 48.0f, startY + 25.0f, startX + width - 12.5f, startY + 25.0f, 1.0f);
+    g.drawLine(startX + 25.0f, startY + height - 25.0f, startX + 48.0f, startY + 25.0f);
 
 }
 
