@@ -220,6 +220,9 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
         
     }
+    
+
+   
 
 }
 

@@ -179,7 +179,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     if (isDelayLowPassActive) {
         for (auto& filter : lowPassFilters)
         {
-            *filter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(getSampleRate(), dCutOffLowPass * 1000.0f, .6f);
+            *filter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(getSampleRate(), dCutOffLowPass * 1000.0f);
             
         }
     }
@@ -265,7 +265,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     if (isDelayActive) {
         updateBufferPosition(buffer, delayBuffer);
     }
-
+    
     // aggiunta
     if (isDelayLowPassActive) {
         juce::dsp::AudioBlock<float> audioBlock(delayBuffer);
@@ -400,12 +400,14 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
             bufferData[numSamplesToEnd + i] = (bufferData[numSamplesToEnd + i] * dry) + (delayBufferDataStart[i] * wet * gain);
         }
     }
+    /*
     //applicazione del lowPass nel buffer di delay
     if (isDelayLowPassActive) {
         juce::dsp::AudioBlock<float> audioBlock(delayBuffer); //creazione di "blocchi"
         juce::dsp::ProcessContextReplacing<float> context(audioBlock); //sostituisce il contenuto del blocco con i nuovi dati filtrati
         lowPassFilters[channel].process(context); //filtra il contenuto dei nuovi dati
     }
+    */
 }
 
 void MultiEffectAudioProcessor::updateBufferPosition(juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer)
@@ -475,7 +477,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DGAIN", "dGain", 0.001f, 1.f, .5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DTIME", "dTime", .01f, 2.0f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DDRYWET", "dDryWet", .0f, 1.0f, .5f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DLOWFILTER", "dLowFilter", .01f, 2.5f, 1.25f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DLOWFILTER", "dLowFilter", .01f, 10.f, 5.f));
 
     //-----------------------------------------------REVERB-------------------------------------------------
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RevROOMSIZE", "revRoomSize", 0.0f, 1.0f, 0.5f));
