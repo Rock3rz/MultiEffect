@@ -38,8 +38,6 @@ private:
     bool isDistortionSelected = false;
     bool isReverbSelected = false;
 
-    
-    
 
     //-------------------------------------LOOK&FEEL-----------------------------------------------------------------------
     MySlider myLookAndFeelDistortion;

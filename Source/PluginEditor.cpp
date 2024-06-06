@@ -727,12 +727,10 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     else {
         g.drawRoundedRectangle(12, 358, 332, 323, 3, 0);
     }
-    //Sg.drawRoundedRectangle(12, 358, 332, 323, 3, 3); // Reverb
+    
     g.drawRoundedRectangle(12+357,358,332,323,3,3);
 
     
-    
-
 
     //------------------------------------------------------HARD, MID, SOFT CLIPPING DISEGNO--------------------------------------------
 

@@ -107,19 +107,15 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
             else {
                 g.drawLine(x + i * offSet, y, x + i * offSet, y + 8,2);
             }
-            //g.drawLine(x + width, y, x + width, y + 8,1.5f);
         }
 
         // Calcola la posizione della traccia
         float trackWidth = width * 0.3f;
         float trackHeight = height * 0.3f;
         float trackY = y + (height - trackHeight) / 2.0f;
-        float trackX = x + (width / 2.0f);
-        
-        
+        float trackX = x + (width / 2.0f);  
        
         sliderPos = Utilities::normalizeValue(sliderPos, minSliderPos, width+7); //non so per quale motivo il valore dello slider non è normalizzato
-        
         
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
@@ -129,7 +125,6 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         else if (sliderPos > 0.5) {    
             g.fillRoundedRectangle(trackX, trackY, ((sliderPos-.5f)*width), trackHeight,3);
         }
-
 
         
         // Calculate the triangle position
@@ -152,7 +147,6 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
     {
 
         g.setColour(juce::Colours::lightblue.withAlpha(0.5f).brighter(0.3f));  //colore per la barra
-        //g.fillRect(x + (width/4) + 3, y, width * 0.4, height);
 
         // Calcola la posizione della traccia
         float trackWidth = width * .2f;
@@ -183,7 +177,6 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.drawLine(trackX - 3, y+1, trackX - 3, y + height);
 
         
-
         g.setColour(juce::Colours::grey); // colore dei segni
       //disegno i trattini
         for (int i = 0; i <= 8; ++i) {
@@ -198,21 +191,14 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
                 g.drawLine(trackX + trackWidth + 7, y + yOffset, trackX + trackWidth + 12, y + yOffset, 2);
             }
         }
-        
-
         g.setColour(triangleColours); // colore dei triangoli
         g.fillPath(leftTriangle);
-        g.fillPath(rightTriangle);
-
-        
+        g.fillPath(rightTriangle);       
     }
     else if (style == juce::Slider::SliderStyle::LinearBar) {
         g.setColour(sliderBackgroundColour);
-        //g.drawRoundedRectangle(x, y, width, height, 4, 2);
-
         g.setColour(juce::Colours::lightcyan);
 
-        //work in progress
         g.drawLine(x, y, x + width - 2, y);
         int offSet = width / 8;
         for (int i = 0; i <= 8; i++) {
@@ -222,7 +208,6 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
             else {
                 g.drawLine(x + i * offSet, y, x + i * offSet, y + 8, 2);
             }
-            //g.drawLine(x + width, y, x + width, y + 8,1.5f);
         }
 
         // Calcola la posizione della traccia

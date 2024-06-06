@@ -26,7 +26,6 @@ public:
 
     static constexpr int fftOrder = 11;             // FFT order
     static constexpr int fftSize = 1 << fftOrder;   // FFT size
-    //static constexpr int scopeSize = 128;
     void setScopeSize(int newScopeSize) {
         scopeSize = newScopeSize;
         scopeData.resize(scopeSize);
@@ -48,7 +47,6 @@ private:
     float fftData[2 * fftSize];
     int fifoIndex = 0;
     bool nextFFTBlockReady = false;
-    //float scopeData[scopeSize];
     int scopeSize = 512;
     std::vector<float> scopeData;
 

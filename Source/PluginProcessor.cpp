@@ -131,8 +131,7 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 
 void MultiEffectAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
+    
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -186,15 +185,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         }
     }
 
-    /*
-    //Reverb
-    auto revRoomSizeLevel = apvt.getRawParameterValue("RevROOMSIZE")->load();
-    auto revDampingLevel = apvt.getRawParameterValue("RevDAMPING")->load();
-    auto revDryLevel = apvt.getRawParameterValue("RevDRYWET")->load();
-    auto revWidth = apvt.getRawParameterValue("RevWIDTH")->load();
-
-    */
-
+    
     //MasterOut
     auto eqMasterOut = apvt.getRawParameterValue("EqMASTEROUTGAIN")->load();
 
@@ -271,7 +262,6 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         updateBufferPosition(buffer, delayBuffer);
     }
     
-    // aggiunta
     if (isDelayLowPassActive) {
         juce::dsp::AudioBlock<float> audioBlock(delayBuffer);
         juce::dsp::ProcessContextReplacing<float> context(audioBlock);
@@ -392,7 +382,7 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
         const float* delayBufferData = delayBuffer.getReadPointer(channel, readPosition);
         for (int i = 0; i < bufferSize; ++i)
         {
-            //bufferData[i] += delayBufferData[i] * gain;
+       
             bufferData[i] = ((bufferData[i] * dry) + (delayBufferData[i] * wet * gain));
         }
     }
@@ -407,7 +397,6 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
         for (int i = 0; i < numSamplesToEnd; ++i)
         {
 
-            //bufferData[i] += delayBufferData[i] * gain;
             bufferData[i] = ((bufferData[i] * dry) + (delayBufferData[i] * wet * gain));
             
         }
@@ -416,23 +405,11 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
         const float* delayBufferDataStart = delayBuffer.getReadPointer(channel, 0);
         for (int i = 0; i < numSamplesToStart; ++i)
         {
-            // bufferData[numSamplesToEnd + i] += delayBufferDataStart[i] * gain;
+            
             bufferData[numSamplesToEnd + i] = ((bufferData[numSamplesToEnd + i] * dry) + (delayBufferDataStart[i] * wet * gain));
             
-        }
-
-              
+        }  
     }
-
-
-    /* QUESTO L'HO MESSO PERCHE' PENSAVO SERVISSE MA IN REATA' FILTRAVA DUE VOLTE E NON SI SENTIVA NIENTE
-    //applicazione del lowPass nel buffer di delay
-    if (isDelayLowPassActive) {
-        juce::dsp::AudioBlock<float> audioBlock(delayBuffer); //creazione di "blocchi"
-        juce::dsp::ProcessContextReplacing<float> context(audioBlock); //sostituisce il contenuto del blocco con i nuovi dati filtrati
-        lowPassFilters[channel].process(context); //filtra il contenuto dei nuovi dati
-    }
-    */
 }
 
 void MultiEffectAudioProcessor::updateBufferPosition(juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer)
