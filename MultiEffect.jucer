@@ -4,9 +4,10 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="EZW0iH" name="MultiEffect">
     <GROUP id="{AF019E2B-C7E3-9610-9DEA-506827C9EAA9}" name="Source">
+      <FILE id="j2HvL1" name="Defines.h" compile="0" resource="0" file="Source/Defines.h"/>
+      <FILE id="brO7rn" name="Sfondo PlugIn.png" compile="0" resource="1"
+            file="Source/Sfondo PlugIn.png"/>
       <FILE id="nZI9Ag" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
-      <FILE id="wnIjqb" name="Sfondo PlugIn.png" compile="0" resource="1"
-            file="../../../Downloads/Sfondo PlugIn.png"/>
       <FILE id="ngWK3G" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
       <FILE id="qshU4E" name="MySlider.cpp" compile="1" resource="0" file="Source/MySlider.cpp"/>
       <FILE id="TvfnU7" name="MySlider.h" compile="0" resource="0" file="Source/MySlider.h"/>

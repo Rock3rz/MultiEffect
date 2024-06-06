@@ -10,6 +10,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "Utilities.h"
+#include "Defines.h"
 
 
 //==============================================================================
@@ -101,6 +102,7 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     auto delayBufferSize = 3 * sampleRate;
     delayBuffer.setSize(getNumInputChannels(), (int)delayBufferSize);
     delayBuffer = Utilities::zeroBuffer(delayBuffer, getTotalNumOutputChannels());
+    
     
     spec.sampleRate = sampleRate;
     spec.maximumBlockSize = samplesPerBlock;
@@ -268,6 +270,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         for (int channel = 0; channel < totalNumInputChannels; ++channel)
         {
             lowPassFilters[channel].process(context);
+            
         }
     }
    

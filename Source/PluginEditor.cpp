@@ -9,9 +9,9 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "Utilities.h"
+#include "Defines.h"
 
-#define WindowWidth 1192
-#define WindowHeight 696
+
 #define RectBoundThickness 1
 #define DelayRotaryLine 100
 #define DelayPositionOffSet 360
@@ -24,7 +24,7 @@
 MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    setSize(WindowWidth, WindowHeight);
+    setSize(globalWindowWidth, globalWindowHeight);
     setResizable(false, false);
     setLookAndFeel(nullptr);
 
@@ -55,7 +55,6 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionOffsetSlider.setLookAndFeel(&myLookAndFeelDistortion);
     distortionOffsetSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionOffsetSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
-    distortionOffsetSlider.setRange(-1.0f, 1.0f);
     distortionOffsetSlider.setValue(0.0f);
     distortionOffsetValue.setText(juce::String(distortionOffsetSlider.getValue(), 1), juce::dontSendNotification);
     distortionOffsetSlider.onValueChange = [this]() {
@@ -74,11 +73,6 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         };
 
    
-
-    //Distortion
-    //softDistortionLabel.setText("f(x) = tanH(x)", juce::dontSendNotification);
-    //midDistortionLabel.setText("f(x) = sign (x)(e^-|x|)", juce::dontSendNotification);
-    //hardDistortionLabel.setText("f(x) = 1 -> x>1, -1 -> x<-1, x", juce::dontSendNotification);
 
     //ToggleDistortinButtons
     softDistortion.setButtonText("Soft");
@@ -668,13 +662,13 @@ MultiEffectAudioProcessorEditor::~MultiEffectAudioProcessorEditor()
 void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 {
     g.setImageResamplingQuality(juce::Graphics::highResamplingQuality);
-    g.drawImage(Background, 0, 0, WindowWidth, WindowHeight, 0, 0, WindowWidth, WindowHeight, false);
+    g.drawImage(Background, 0, 0, globalWindowWidth, globalWindowHeight, 0, 0, globalWindowWidth, globalWindowHeight, false);
 
     //Calcolo i limiti della finestra
-    juce::Rectangle<int> MainWindow(WindowWidth, WindowHeight);
+    juce::Rectangle<int> MainWindow(globalWindowWidth, globalWindowHeight);
 
     //dimensionamento dei rettangoli principali
-    juce::Rectangle<int> LeftHalf = MainWindow.removeFromLeft(WindowWidth - WindowWidth / 2.5);
+    juce::Rectangle<int> LeftHalf = MainWindow.removeFromLeft(globalWindowWidth - globalWindowWidth / 2.5);
     juce::Rectangle<int> RightHalf = MainWindow;
 
 
@@ -700,35 +694,35 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     juce::Font Titles_Font("North Carossela", 17.0f, juce::Font::bold);
     g.setColour(juce::Colours::deepskyblue);
     g.setFont(Titles_Font);
-    g.drawText("Distortion", 132, 15, 90, 15, juce::Justification::centredTop, true);
-    g.drawText("Delay Line", 490, 15, 90, 15, juce::Justification::centredTop, true);
-    g.drawText("Riverbero", 132, 360, 90, 15, juce::Justification::centredTop, true);
-    g.drawText("Master EQ", 490, 360, 90, 15, juce::Justification::centredTop, true);
+    g.drawText("Distortion", distortionTitleX, distortionTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
+    g.drawText("Delay Line", delayTitleX, delayTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
+    g.drawText("Riverbero", revebtTitleX, reverbTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
+    g.drawText("Master EQ", eqTitleX, eqTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
 
     //------------------------------------------------------DISEGNO IL RIQUADRO SELETTORE DELL'EFFETTO---------------------------
     g.setColour(juce::Colours::deepskyblue.withAlpha(.8f));
     
     if (isDistortionSelected) {
-        g.drawRoundedRectangle(12, 10, 332, 323, 3, 3); //Distorsione
+        g.drawRoundedRectangle(distortinoSelectionBoxX, distortionSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 3); //Distorsione
     }
     else {
-        g.drawRoundedRectangle(12, 10, 332, 323, 3, 0);
+        g.drawRoundedRectangle(distortinoSelectionBoxX, distortionSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 0);
     }
     if (isDelaySelected) {
 
-        g.drawRoundedRectangle(12 + 357, 10, 332, 323, 3, 3); //Delay
+        g.drawRoundedRectangle(delaySelectionBoxX, delaySelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 3); //Delay
     } 
     else {
-        g.drawRoundedRectangle(12 + 357, 10, 332, 323, 3, 0);
+        g.drawRoundedRectangle(delaySelectionBoxX, delaySelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 0);
     }
     if (isReverbSelected) {
-        g.drawRoundedRectangle(12, 358, 332, 323, 3, 3);
+        g.drawRoundedRectangle(reverbSelectionBoxX, reverbSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 3);
     }
     else {
-        g.drawRoundedRectangle(12, 358, 332, 323, 3, 0);
+        g.drawRoundedRectangle(reverbSelectionBoxX, reverbSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 0);
     }
     
-    g.drawRoundedRectangle(12+357,358,332,323,3,3);
+    g.drawRoundedRectangle(eqSelectionBoxX, eqSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness,3);
 
     
 
@@ -736,58 +730,59 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     //------------------------------------------------------SOFT---------------------------------------//
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(35, 110, 75, 75, 4);
-    Utilities::drawTanhFunction(g, 35, 110, 75, 75);
+    g.fillRoundedRectangle(softDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4);
+    Utilities::drawTanhFunction(g, softDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght);
 
     //-----------------------------------------MID-----------------------------------------------------//
 
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(135, 110, 75, 75, 4);
-    Utilities::drawMidClippingFunction(g, 135, 110, 75, 75);
+    g.fillRoundedRectangle(midDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4);
+    Utilities::drawMidClippingFunction(g, midDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght);
     
    
     //-------------------------------HARD---------------------------------------------------------------//
    
     g.setColour(juce::Colours::darkgrey.withAlpha(0.9f).darker(0.7f));
-    g.fillRoundedRectangle(235, 110, 75, 75, 4);
-    Utilities::drawHardClippingFunction(g, 235, 110, 75, 75);
+    g.fillRoundedRectangle(hardDistortionDrawX, 110, graphicSideLenght, graphicSideLenght, 4);
+    Utilities::drawHardClippingFunction(g, hardDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght);
    
   
     //--------------------------------DISEGNO I CONTORNI IMMAGINE-----------------------
     g.setColour(juce::Colours::white);
     if (isSoftDistortionSelected) {
-        g.drawRoundedRectangle(35, 110, 75, 75, 4, 3);
-        g.drawRoundedRectangle(135, 110, 75, 75, 4, 0);
-        g.drawRoundedRectangle(235, 110, 75, 75, 4, 0);
+        g.drawRoundedRectangle(softDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 3);
+        g.drawRoundedRectangle(midDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 0);
+        g.drawRoundedRectangle(hardDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 0);
     }
     else if (isMidDistortionSelected) {
-        g.drawRoundedRectangle(35, 110, 75, 75, 4, 0);
-        g.drawRoundedRectangle(135, 110, 75, 75, 4, 3);
-        g.drawRoundedRectangle(235, 110, 75, 75, 4, 0);
+        g.drawRoundedRectangle(softDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 0);
+        g.drawRoundedRectangle(midDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 3);
+        g.drawRoundedRectangle(hardDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 0);
     }
     else if (isHardDistortionSelected) {
-        g.drawRoundedRectangle(35, 110, 75, 75, 4, 0);
-        g.drawRoundedRectangle(135, 110, 75, 75, 4, 0);
-        g.drawRoundedRectangle(235, 110, 75, 75, 4, 3);
+        g.drawRoundedRectangle(softDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 0);
+        g.drawRoundedRectangle(midDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 0);
+        g.drawRoundedRectangle(hardDistortionDrawX, everyDrawY, graphicSideLenght, graphicSideLenght, 4, 3);
     }
 
     //-----------------------ROUND RECTANGLES PER I VIEWER------------------------------
     g.setColour(juce::Colours::black.withAlpha(0.9f));
-    g.fillRoundedRectangle(729, 90, 445, 183, 4);
-    g.fillRoundedRectangle(729, 420, 445, 183, 4);
+    g.fillRoundedRectangle(everyBlackImageX, viewerBlackImageY, everyWidth, everyHeight, everyBlackImageRoundness);
+    g.fillRoundedRectangle(everyBlackImageX, spectrumBlackImageY, everyWidth, everyHeight, everyBlackImageRoundness);
 
     juce::Path xAxisWV;
     juce::Path yAxisWV;
-    juce::Line<float> xLengthWV = juce::Line<float>(739, 265, 1161, 265);
-    juce::Line<float> yLengthWV = juce::Line<float>(739, 265, 739, 100);
-    xAxisWV.addArrow(xLengthWV, 1.0, 7.0f, 3.5f);
-    yAxisWV.addArrow(yLengthWV, 1.0f, 7.0f, 3.5f);
+    juce::Line<float> xLengthWV = juce::Line<float>(viewerXLineGraphicStartX, viewerXLineGraphicStartY, viewerXLineGraphicEndX, viewerXLineGrahpicEndY);
+    juce::Line<float> yLengthWV = juce::Line<float>(viewerYLineGraphicStartX, viewerYLineGraphicStartY, viewerYLineGraphicEndX, viewerYLineGraphicEndY);
+    xAxisWV.addArrow(xLengthWV, everyArrowGraphicThickness, everyArrowGraphicHeadWidth, everyArrowGraphicHeadLenght);
+    yAxisWV.addArrow(yLengthWV, everyArrowGraphicThickness, everyArrowGraphicHeadWidth, everyArrowGraphicHeadLenght);
+    
 
     juce::Font Axis_Font("Abadi", 10.0f, 0);
     g.setFont(Axis_Font);
     g.setColour(juce::Colours::white);
-    g.drawText("-1", 728, 259, 10, 10, juce::Justification::centred);
-    g.drawText("1", 728, 100, 10, 10, juce::Justification::centred);
+    g.drawText("-1", viewerEveryNumemberX, viewerLowNumberY, viewerEveryNumberLenght, viewerEveryNumberLenght, juce::Justification::centred);
+    g.drawText("1", viewerEveryNumemberX, viewerHighNumberY, viewerEveryNumberLenght, viewerEveryNumberLenght, juce::Justification::centred);
 
     g.setColour(juce::Colours::lightcyan);
     g.fillPath(xAxisWV);
@@ -796,22 +791,22 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
 
     juce::Path xAxisSV;
     juce::Path yAxisSV;
-    juce::Line<float> xLengthSV = juce::Line<float>(985, 595, 1161, 595);
-    g.drawLine(739, 595, 930, 595);
-    g.drawLine(739, 525, 739, 595);
-    juce::Line<float> yLengthSV = juce::Line<float>(739, 507, 739, 430);
-    xAxisSV.addArrow(xLengthSV, 1.0, 7.0f, 3.5f);
-    yAxisSV.addArrow(yLengthSV, 1.0f, 7.0f, 3.5f);
+    juce::Line<float> xLengthSV = juce::Line<float>(spectrumXLineGraphicStartX, spectrumXLineGraphicStartY, spectrumYLineGraphicEndX, spectrumYLineGraphicEndY);
+    g.drawLine(spectrumEveryLineGraphicX, spectrumXLineGraphicY, spectrumXLineGraphicEndX, spectrumXLineGraphicY);
+    g.drawLine(spectrumEveryLineGraphicX, spectrumYLineGraphicStartY, spectrumEveryLineGraphicX, spectrumXLineGraphicStartY);
+    juce::Line<float> yLengthSV = juce::Line<float>(spectrumEveryLineGraphicX, spectrumYLineGraphicStartArrow, spectrumEveryLineGraphicX, 430);
+    xAxisSV.addArrow(xLengthSV, everyArrowGraphicThickness, everyArrowGraphicHeadWidth, everyArrowGraphicHeadLenght);
+    yAxisSV.addArrow(yLengthSV, everyArrowGraphicThickness, everyArrowGraphicHeadWidth, everyArrowGraphicHeadLenght);
 
     g.fillPath(xAxisSV);
     g.fillPath(yAxisSV);
 
     g.setColour(juce::Colours::whitesmoke.darker(0.6f));
-    g.drawText("Frequency", 907, 591, 100, 11, juce::Justification::centred);
+    g.drawText("Frequency", spectrumFreqStartX, spectrumFreqStartY, spectrumGraphicWordsHeight, spectrumGraphicWordsLenght, juce::Justification::centred);
 
     // Ruoto di -90 gradi per far essere il testo ruotato lungo l'asse  y
     g.addTransform(juce::AffineTransform::rotation(juce::MathConstants<float>::pi * -0.5f, 680, 595));
-    g.drawText("dB", 710, 647, 100, 11, juce::Justification::centred);
+    g.drawText("dB", spectrumDbStartX, spectrumDBStartY, spectrumGraphicWordsHeight, spectrumGraphicWordsLenght, juce::Justification::centred);
 
 }
 

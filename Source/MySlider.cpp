@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "MySlider.h"
 #include "Utilities.h"
+#include "Defines.h"
 
 #define MARGIN 9.0f
 #define VerticalSliderWidht 50

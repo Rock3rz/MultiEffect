@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include <juce_graphics/juce_graphics.h>
 #include "Utilities.h"
+#include "Defines.h"
 
 
 void Utilities::drawAxis(juce::Graphics& g, int startX, int startY, int width, int height) {

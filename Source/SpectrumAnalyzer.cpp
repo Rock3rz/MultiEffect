@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "SpectrumAnalyzer.h"
+#include "Defines.h"
 
 //==============================================================================
 SpectrumAnalyzer::SpectrumAnalyzer() :forwardFFT(fftOrder), window(fftSize, juce::dsp::WindowingFunction<float>::hann)
