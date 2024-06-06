@@ -374,11 +374,11 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     //Labels
     addAndMakeVisible(reverbRoomSizeLabel);
     addAndMakeVisible(reverbDryWetLevelLabel);
-    addAndMakeVisible(ReverbDryWetValue);
+    addAndMakeVisible(reverbDryWetValue);
     addAndMakeVisible(reverbRoomSizeValue);
     addAndMakeVisible(reverbDampingValue);
     addAndMakeVisible(reverbWidthValue);
-
+    
     //Utilities
     addAndMakeVisible(borderReverbDamping);
     borderReverbDamping.setText("Damping");
@@ -410,6 +410,62 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         else if (!toggleActiveReverb.getToggleState())
         {
             audioProcessor.isReverbActive = false;
+        }
+        };
+
+    addAndMakeVisible(comboBox);
+    
+    comboBox.addItem("Stanza Piccola", 1);
+    comboBox.addItem("Stanza Media", 2);
+    comboBox.addItem("Caverna", 3);
+    comboBox.addItem("Stanza senza mobili", 4);
+    comboBox.addItem("Stanza arredata", 5);
+    comboBox.addItem("Stanza di vetro", 6);
+    comboBox.addItem("None", 7);
+
+    comboBox.onChange = [this]() {
+        int index = comboBox.getSelectedId();
+        switch (index) {
+        case 1:
+            audioProcessor.presetIndex = 0;
+            //reverbRoomSizeSlider.setValue(.01f, juce::dontSendNotification);
+
+            
+            repaint();
+                break;
+        case 2:
+            audioProcessor.presetIndex = 1;
+            //reverbRoomSizeSlider.setValue(.9f, juce::dontSendNotification);
+            repaint();
+                break;
+        case 3:
+            audioProcessor.presetIndex = 2;
+            //reverbRoomSizeSlider.setValue(.2f, juce::dontSendNotification);
+            repaint();
+            break;
+        case 4:
+            audioProcessor.presetIndex = 3;
+            //reverbWidthSlider.setValue(.2f, juce::dontSendNotification);
+            repaint();
+            break;
+        case 5:
+            audioProcessor.presetIndex = 4;
+            //reverbWidthSlider.setValue(.2f, juce::dontSendNotification);
+            repaint();
+            break;
+        case 6:
+            audioProcessor.presetIndex = 5;
+            //reverbWidthSlider.setValue(.2f, juce::dontSendNotification);
+            repaint();
+            break;
+        case 7:
+            audioProcessor.presetIndex = 6;
+            //reverbWidthSlider.setValue(.2f, juce::dontSendNotification);
+            repaint();
+            break;
+        default:
+            break;
+
         }
         };
 
@@ -534,7 +590,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     addAndMakeVisible(lessSamples);
     addAndMakeVisible(numSaples);
 
-
+   
 }
 
 MultiEffectAudioProcessorEditor::~MultiEffectAudioProcessorEditor()
@@ -731,22 +787,24 @@ void MultiEffectAudioProcessorEditor::resized()
     toggleActiveReverb.setBounds(10, 325, 100, 100);
 
     //Sliders
-    reverbDryWetLevelSlider.setBounds(37, 450, 128, 15);
-    reverbRoomSizeSlider.setBounds(190, 450, 128, 15);
-    reverbDampingSlider.setBounds(75, 553, RotarySliderDimHW, RotarySliderDimHW);
-    reverbWidthSlider.setBounds(212, 553, RotarySliderDimHW, RotarySliderDimHW);
+    reverbDryWetLevelSlider.setBounds(37, 470, 128, 15);
+    reverbRoomSizeSlider.setBounds(190, 470, 128, 15);
+    reverbDampingSlider.setBounds(75, 573, RotarySliderDimHW, RotarySliderDimHW);
+    reverbWidthSlider.setBounds(212, 573, RotarySliderDimHW, RotarySliderDimHW);
 
     //Labels
-    ReverbDryWetValue.setBounds(83, 467, 60, 15);
-    reverbRoomSizeValue.setBounds(237, 467, 60, 15);
-    reverbDampingValue.setBounds(89, 617, 60, 15);
-    reverbWidthValue.setBounds(226, 617, 60, 15);
+    reverbDryWetValue.setBounds(83, 487, 60, 15);
+    reverbRoomSizeValue.setBounds(237, 487, 60, 15);
+    reverbDampingValue.setBounds(89, 637, 60, 15);
+    reverbWidthValue.setBounds(226, 637, 60, 15);
 
     //Reverb Utilities
-    borderReverbDamping.setBounds(65, 525, 85, 120);
-    borderReverbWidth.setBounds(202, 525, 85, 120);
-    borderReverbDryWet.setBounds(32, 420, 140, 70);
-    borderReverbRoomSize.setBounds(185, 420, 140, 70);
+    borderReverbDamping.setBounds(65, 545, 85, 120);
+    borderReverbWidth.setBounds(202, 545, 85, 120);
+    borderReverbDryWet.setBounds(32, 440, 140, 70);
+    borderReverbRoomSize.setBounds(185, 440, 140, 70);
+
+    comboBox.setBounds(32, 395, 290, 30);
 
 
     //-----------------------------------------------EQ------------------------------------------
@@ -776,6 +834,7 @@ void MultiEffectAudioProcessorEditor::resized()
     audioProcessor.spectrum.setBounds(742, 420, 430, 170);
     borderSV.setBounds(720, 393, 462, 220);    
 
+    
 }
 
 

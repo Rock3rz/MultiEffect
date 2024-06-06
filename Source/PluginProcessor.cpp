@@ -186,11 +186,14 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         }
     }
 
+    /*
     //Reverb
     auto revRoomSizeLevel = apvt.getRawParameterValue("RevROOMSIZE")->load();
     auto revDampingLevel = apvt.getRawParameterValue("RevDAMPING")->load();
     auto revDryLevel = apvt.getRawParameterValue("RevDRYWET")->load();
     auto revWidth = apvt.getRawParameterValue("RevWIDTH")->load();
+
+    */
 
     //MasterOut
     auto eqMasterOut = apvt.getRawParameterValue("EqMASTEROUTGAIN")->load();
@@ -282,16 +285,32 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     //----------------------------------------------------RIVERBERO------------------------------------------------------------------
     if (isReverbActive) {
 
-
         juce::Reverb::Parameters reverbParams;
-        reverbParams.roomSize = *apvt.getRawParameterValue("RevROOMSIZE");
-        reverbParams.damping = *apvt.getRawParameterValue("RevDAMPING");
-        reverbParams.wetLevel = *apvt.getRawParameterValue("RevDRYWET");
-        reverbParams.dryLevel = 1 - reverbParams.wetLevel;
-        reverbParams.width = *apvt.getRawParameterValue("RevWIDTH");
+        if (presetIndex < 6) {
+            if (tempIndex != presetIndex) {
+                auto& preset = presets[presetIndex];
 
-        //reverb.setSampleRate(48000);
+                reverbParams.roomSize = preset.roomSize;
+                reverbParams.damping = preset.damping;
+                reverbParams.wetLevel = preset.wetLevel;
+                reverbParams.dryLevel = 1 - reverbParams.wetLevel;
+                reverbParams.width = preset.width;
+            }
+        }
+        else {
+            
+            reverbParams.roomSize = *apvt.getRawParameterValue("RevROOMSIZE");
+            reverbParams.damping = *apvt.getRawParameterValue("RevDAMPING");
+            reverbParams.wetLevel = *apvt.getRawParameterValue("RevDRYWET");
+            reverbParams.dryLevel = 1 - reverbParams.wetLevel;
+            reverbParams.width = *apvt.getRawParameterValue("RevWIDTH");
+            
+        }
+
+        
         reverb.setParameters(reverbParams);
+
+
 
 
         auto* channelData1 = buffer.getWritePointer(0);
@@ -326,7 +345,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
             channelData[samples] *= eqMasterOut;
         }
     }
-    
+   
 }
 
 void MultiEffectAudioProcessor::fillBuffer(juce::AudioBuffer<float>& buffer, int channel, float g)
@@ -501,6 +520,27 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     return { params.begin(), params.end() };
 }
 
+// Definizione dei preset
+const ReverbPreset MultiEffectAudioProcessor::presets[] = {
+    { "Small Room", 0.2f, 0.5f, 0.3f, 0.5f },          // Stanza piccola
+    { "Medium Room", 0.5f, 0.5f, 0.4f, 0.7f },         // Stanza media
+    { "Cavern", 1.0f, 0.8f, 0.6f, 1.0f },              // Caverna
+    { "Empty Room", 0.6f, 0.2f, 0.5f,0.8f },           // Stanza normale senza mobili
+    { "Furnished Room", 0.6f, 0.7f, 0.5f, 0.7f },      // Stanza normale arredata con divano e mobili
+    { "Glass Room", 0.5f, 0.1f, 0.4f,0.9f } ,           // Stanza di vetro
+    {"None", 0.5f,0.5f,0.5f,0.5f}                       //None
+};
+
+void MultiEffectAudioProcessor::loadPreset(int index)
+{
+   
+        auto& preset = presets[index];
+        *apvt.getRawParameterValue("RevROOMSIZE") = preset.roomSize;
+        *apvt.getRawParameterValue("RevDAMPING") = preset.damping;
+        *apvt.getRawParameterValue("RevDRYWET") = preset.wetLevel;
+        *apvt.getRawParameterValue("RevWIDTH") = preset.width;
+        
+}
 
 
 

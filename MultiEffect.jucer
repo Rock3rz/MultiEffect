@@ -5,6 +5,8 @@
   <MAINGROUP id="EZW0iH" name="MultiEffect">
     <GROUP id="{AF019E2B-C7E3-9610-9DEA-506827C9EAA9}" name="Source">
       <FILE id="nZI9Ag" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
+      <FILE id="wnIjqb" name="Sfondo PlugIn.png" compile="0" resource="1"
+            file="../../../Downloads/Sfondo PlugIn.png"/>
       <FILE id="ngWK3G" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
       <FILE id="qshU4E" name="MySlider.cpp" compile="1" resource="0" file="Source/MySlider.cpp"/>
       <FILE id="TvfnU7" name="MySlider.h" compile="0" resource="0" file="Source/MySlider.h"/>
@@ -12,8 +14,6 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="EGggVO" name="Sfondo PlugIn5.png" compile="0" resource="1"
             file="Sfondo PlugIn5.png"/>
-      <FILE id="AwdfdH" name="Sfondo PlugIn.png" compile="0" resource="1"
-            file="../../../../../Desktop/Sfondo PlugIn.png"/>
       <FILE id="U2dzXX" name="SpectrumAnalyzer.cpp" compile="1" resource="0"
             file="Source/SpectrumAnalyzer.cpp"/>
       <FILE id="IxbzwD" name="SpectrumAnalyzer.h" compile="0" resource="0"

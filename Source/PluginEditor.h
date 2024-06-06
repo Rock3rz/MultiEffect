@@ -118,7 +118,6 @@ private:
     //Reverb Labels
     juce::Label reverbRoomSizeLabel;
     juce::Label reverbDryWetLevelLabel;
-    juce::Label ReverbDryWetValue;
     juce::Label reverbRoomSizeValue;
     juce::Label reverbDampingValue;
     juce::Label reverbWidthValue;
@@ -181,5 +180,7 @@ private:
     
     //------------------------------IMAGES----------------------------
     juce::Image Background;
+
+    juce::ComboBox comboBox;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MultiEffectAudioProcessorEditor)
 };

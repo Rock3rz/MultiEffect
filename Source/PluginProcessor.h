@@ -15,6 +15,15 @@
 //==============================================================================
 /**
 */
+struct ReverbPreset{
+    const char* name;
+    float roomSize;
+    float damping;
+    float wetLevel;
+    float width;
+
+};
+
 class MultiEffectAudioProcessor  : public juce::AudioProcessor
 {
 public:
@@ -68,6 +77,10 @@ public:
     bool isDelayLowPassActive = false;
     bool isReverbActive = false;
     int distortionType = 0;
+
+    int presetIndex = 6;
+    int tempIndex = 0;
+    void loadPreset(int index);
     
    
 
@@ -83,6 +96,7 @@ private:
 
     //riverbero
     juce::Reverb reverb;
+    static const ReverbPreset presets[];
 
     //juce::dsp::ProcessorChain<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Filter<float>> eq;
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> lowShelf;
