@@ -423,6 +423,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     comboBox.addItem("Stanza di vetro", 6);
     comboBox.addItem("None", 7);
 
+    comboBox.setText("Select a Preset");
     comboBox.onChange = [this]() {
         int index = comboBox.getSelectedId();
         switch (index) {
@@ -625,7 +626,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     moreSamples.setButtonText("+");
     moreSamples.onClick = [this]() {
-        if (audioProcessor.spectrum.getScopeSize() < 20000) {
+        if (audioProcessor.spectrum.getScopeSize() < 15000) {
             audioProcessor.spectrum.setScopeSize(audioProcessor.spectrum.getScopeSize() * 2);
             numSaples.setText(juce::String(audioProcessor.spectrum.getScopeSize()) + " Samples", juce::dontSendNotification);
         }
@@ -789,7 +790,7 @@ void MultiEffectAudioProcessorEditor::resized()
     distortionThresholdValue.setBounds(UpRotarySlidersPosX + 225, UpRotarySlidersPosY + 40, RotarySliderDimHW, RotarySliderDimHW);
 
     //Toggle Active Distortion
-    toggleActiveDistotion.setBounds(10, -30, 100, 100);
+    toggleActiveDistotion.setBounds(15, -25, 100, 100);
 
     //Toggle DistortionType
     softDistortion.setBounds(35, 40, 100, 100);
@@ -809,7 +810,7 @@ void MultiEffectAudioProcessorEditor::resized()
     //-----------------------------------------------------DELAY---------------------------------------------------------------------
     
     //toggle attivazione delay
-    toggleActiveDelay.setBounds(10 + DelayPositionOffSet, -30, 100, 100);
+    toggleActiveDelay.setBounds(15 + DelayPositionOffSet, -25, 100, 100);
 
     //Bounds slider delay
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 15);
@@ -838,7 +839,7 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //--------------------------------------------------------------REVERB------------------------------------------------------
     //Toggle
-    toggleActiveReverb.setBounds(10, 325, 100, 100);
+    toggleActiveReverb.setBounds(15, 325, 100, 100);
 
     //Sliders
     reverbDryWetLevelSlider.setBounds(37, 470, 128, 15);
