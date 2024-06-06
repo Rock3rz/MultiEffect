@@ -28,10 +28,17 @@ public:
     void resized() override;
     
 private:
-
+    //Booleani per condizione di attivazione riquadro tipo distorsione
     bool isSoftDistortionSelected = true;
     bool isMidDistortionSelected = false;
     bool isHardDistortionSelected = false;
+
+    //Boolenani per condizione attivazione selezione effetto
+    bool isDelaySelected = false;
+    bool isDistortionSelected = false;
+    bool isReverbSelected = false;
+
+    
     
 
     //-------------------------------------LOOK&FEEL-----------------------------------------------------------------------
@@ -139,6 +146,9 @@ private:
     //toggle
     juce::ToggleButton toggleActiveReverb;
 
+    //ComboBox per preset
+    juce::ComboBox comboBox;
+
    //--------------------------------------------EQ---------------------------------
     
     //sliders
@@ -180,7 +190,8 @@ private:
     
     //------------------------------IMAGES----------------------------
     juce::Image Background;
+    
 
-    juce::ComboBox comboBox;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MultiEffectAudioProcessorEditor)
 };

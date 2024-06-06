@@ -128,10 +128,14 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         toggleActiveDistotion.setButtonText(toggleActiveDistotion.getToggleState() ? "Active" : "Inactive");
         if (toggleActiveDistotion.getToggleState()) {
             audioProcessor.isDistortionActive = true;
+            isDistortionSelected = true;
+            repaint();
         }
         else if (!toggleActiveDistotion.getToggleState())
         {
             audioProcessor.isDistortionActive = false;
+            isDistortionSelected = false;
+            repaint();
         }
         };
 
@@ -301,10 +305,14 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         toggleActiveDelay.setButtonText(toggleActiveDelay.getToggleState() ? "Active" : "Inactive");
         if (toggleActiveDelay.getToggleState()) {
             audioProcessor.isDelayActive = true;
+            isDelaySelected = true;
+            repaint();
         }
         else if (!toggleActiveDelay.getToggleState())
         {
             audioProcessor.isDelayActive = false;
+            isDelaySelected = false;
+            repaint();
         }
         };
 
@@ -406,10 +414,14 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         toggleActiveReverb.setButtonText(toggleActiveReverb.getToggleState() ? "Active" : "Inactive");
         if (toggleActiveReverb.getToggleState()) {
             audioProcessor.isReverbActive = true;
+            isReverbSelected = true;
+            repaint();
         }
         else if (!toggleActiveReverb.getToggleState())
         {
             audioProcessor.isReverbActive = false;
+            isReverbSelected = false;
+            repaint();
         }
         };
 
@@ -692,6 +704,34 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawText("Delay Line", 490, 15, 90, 15, juce::Justification::centredTop, true);
     g.drawText("Riverbero", 132, 360, 90, 15, juce::Justification::centredTop, true);
     g.drawText("Master EQ", 490, 360, 90, 15, juce::Justification::centredTop, true);
+
+    //------------------------------------------------------DISEGNO IL RIQUADRO SELETTORE DELL'EFFETTO---------------------------
+    g.setColour(juce::Colours::deepskyblue.withAlpha(.8f));
+    
+    if (isDistortionSelected) {
+        g.drawRoundedRectangle(12, 10, 332, 323, 3, 3); //Distorsione
+    }
+    else {
+        g.drawRoundedRectangle(12, 10, 332, 323, 3, 0);
+    }
+    if (isDelaySelected) {
+
+        g.drawRoundedRectangle(12 + 357, 10, 332, 323, 3, 3); //Delay
+    } 
+    else {
+        g.drawRoundedRectangle(12 + 357, 10, 332, 323, 3, 0);
+    }
+    if (isReverbSelected) {
+        g.drawRoundedRectangle(12, 358, 332, 323, 3, 3);
+    }
+    else {
+        g.drawRoundedRectangle(12, 358, 332, 323, 3, 0);
+    }
+    //Sg.drawRoundedRectangle(12, 358, 332, 323, 3, 3); // Reverb
+    g.drawRoundedRectangle(12+357,358,332,323,3,3);
+
+    
+    
 
 
     //------------------------------------------------------HARD, MID, SOFT CLIPPING DISEGNO--------------------------------------------
