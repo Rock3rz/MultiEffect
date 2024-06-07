@@ -321,7 +321,8 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
 
     //--------------------------------------------------REVERB----------------------------------------------------------------------------------
-        //toggle active
+    
+    //toggle active
     toggleActiveReverb.setButtonText("Inactive");
 
     //Room Size
@@ -419,11 +420,11 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     addAndMakeVisible(comboBox);
     
-    comboBox.addItem("Stanza Piccola", 1);
-    comboBox.addItem("Stanza Media", 2);
-    comboBox.addItem("Caverna", 3);
-    comboBox.addItem("Stanza senza mobili", 4);
-    comboBox.addItem("Stanza arredata", 5);
+    comboBox.addItem("Spazio piccolo", 1);
+    comboBox.addItem("Caverna", 2);
+    comboBox.addItem("Stanza vuota", 3);
+    comboBox.addItem("stanza arredata", 4);
+    comboBox.addItem("Stanza di gomma", 5);
     comboBox.addItem("Stanza di vetro", 6);
     comboBox.addItem("None", 7);
 
@@ -432,81 +433,102 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
         int index = comboBox.getSelectedId();
         switch (index) {
         case 1:
-            //stanza piccolaa
+            //spazio piccolo
             audioProcessor.presetIndex = 0;
-            reverbRoomSizeSlider.setValue(.2f, juce::dontSendNotification);
+            reverbRoomSizeSlider.setValue(SMALL_SPACE_ROOM_SIZE, juce::dontSendNotification);
             reverbRoomSizeSlider.setEnabled(false);
-            reverbDampingSlider.setValue(0.5f, juce::dontSendNotification);
+            reverbDampingSlider.setValue(SMALL_SPACE_DAMPING, juce::dontSendNotification);
             reverbDampingSlider.setEnabled(false);
-            reverbDryWetLevelSlider.setValue(.3f, juce::dontSendNotification);
+            reverbDryWetLevelSlider.setValue(SMALL_SPACE_WET_LEVEL, juce::dontSendNotification);
             reverbDryWetLevelSlider.setEnabled(false);
-            reverbWidthSlider.setValue(.5f, juce::dontSendNotification);
+            reverbWidthSlider.setValue(SMALL_SPACE_WIDTH, juce::dontSendNotification);
             reverbWidthSlider.setEnabled(false);
+            reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+            reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 2), juce::dontSendNotification);
             repaint();
                 break;
         case 2:
-            //stanza Media
+            //Caverna
             audioProcessor.presetIndex = 1;
-            reverbRoomSizeSlider.setValue(.5f, juce::dontSendNotification);
+            reverbRoomSizeSlider.setValue(CAVERN_ROOM_SIZE, juce::dontSendNotification);
             reverbRoomSizeSlider.setEnabled(false);
-            reverbDampingSlider.setValue(0.5f, juce::dontSendNotification);
+            reverbDampingSlider.setValue(CAVERN_DAMPING, juce::dontSendNotification);
             reverbDampingSlider.setEnabled(false);
-            reverbDryWetLevelSlider.setValue(.4f, juce::dontSendNotification);
+            reverbDryWetLevelSlider.setValue(CAVERN_WET_LEVEL, juce::dontSendNotification);
             reverbDryWetLevelSlider.setEnabled(false);
-            reverbWidthSlider.setValue(.7f, juce::dontSendNotification);
+            reverbWidthSlider.setValue(CAVERN_WIDTH, juce::dontSendNotification);
             reverbWidthSlider.setEnabled(false);
+            reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+            reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 2), juce::dontSendNotification);
             repaint();
                 break;
         case 3:
-            //Caverna
+            //Stanza Vuota
             audioProcessor.presetIndex = 2;
-            reverbRoomSizeSlider.setValue(1.f, juce::dontSendNotification);
+            reverbRoomSizeSlider.setValue(EMPTY_ROOM_SIZE, juce::dontSendNotification);
             reverbRoomSizeSlider.setEnabled(false);
-            reverbDampingSlider.setValue(0.8f, juce::dontSendNotification);
+            reverbDampingSlider.setValue(EMPTY_ROOM_DAMPING, juce::dontSendNotification);
             reverbDampingSlider.setEnabled(false);
-            reverbDryWetLevelSlider.setValue(.6f, juce::dontSendNotification);
+            reverbDryWetLevelSlider.setValue(EMPTY_ROOM_WET_LEVEL, juce::dontSendNotification);
             reverbDryWetLevelSlider.setEnabled(false);
-            reverbWidthSlider.setValue(1.f, juce::dontSendNotification);
-            reverbWidthSlider.setEnabled(false);
+            reverbWidthSlider.setValue(EMPTY_ROOM_WIDTH, juce::dontSendNotification);
+            reverbWidthSlider.setEnabled(false); reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+            reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 2), juce::dontSendNotification);
             repaint();
             break;
         case 4:
-            //Stanza Vuota
+            //Stanza arredata
             audioProcessor.presetIndex = 3;
-            reverbRoomSizeSlider.setValue(.6f, juce::dontSendNotification);
+            reverbRoomSizeSlider.setValue(FURNISHED_ROOM_SIZE, juce::dontSendNotification);
             reverbRoomSizeSlider.setEnabled(false);
-            reverbDampingSlider.setValue(0.2f, juce::dontSendNotification);
+            reverbDampingSlider.setValue(FURNISHED_ROOM_DAMPING, juce::dontSendNotification);
             reverbDampingSlider.setEnabled(false);
-            reverbDryWetLevelSlider.setValue(.5f, juce::dontSendNotification);
+            reverbDryWetLevelSlider.setValue(FURNISHED_ROOM_WET_LEVEL, juce::dontSendNotification);
             reverbDryWetLevelSlider.setEnabled(false);
-            reverbWidthSlider.setValue(.8f, juce::dontSendNotification);
-            reverbWidthSlider.setEnabled(false);
+            reverbWidthSlider.setValue(FURNISHED_ROOM_WIDTH, juce::dontSendNotification);
+            reverbWidthSlider.setEnabled(false); reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+            reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 2), juce::dontSendNotification);
             repaint();
             break;
         case 5:
-            //Stanza arredata
+            //stanza di gomma
             audioProcessor.presetIndex = 4;
-            reverbRoomSizeSlider.setValue(.6f, juce::dontSendNotification);
+            reverbRoomSizeSlider.setValue(RUBBER_ROOM_SIZE, juce::dontSendNotification);
             reverbRoomSizeSlider.setEnabled(false);
-            reverbDampingSlider.setValue(0.7f, juce::dontSendNotification);
+            reverbDampingSlider.setValue(RUBBER_ROOM_DAMPING, juce::dontSendNotification);
             reverbDampingSlider.setEnabled(false);
-            reverbDryWetLevelSlider.setValue(.5f, juce::dontSendNotification);
+            reverbDryWetLevelSlider.setValue(RUBBER_ROOM_WET_LEVEL, juce::dontSendNotification);
             reverbDryWetLevelSlider.setEnabled(false);
-            reverbWidthSlider.setValue(.7f, juce::dontSendNotification);
-            reverbWidthSlider.setEnabled(false);
+            reverbWidthSlider.setValue(RUBBER_ROOM_WIDTH, juce::dontSendNotification);
+            reverbWidthSlider.setEnabled(false); reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+            reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 2), juce::dontSendNotification);
             repaint();
             break;
+            
         case 6:
             //stanza di vetro
             audioProcessor.presetIndex = 5;
-            reverbRoomSizeSlider.setValue(.5f, juce::dontSendNotification);
+            reverbRoomSizeSlider.setValue(GLASS_ROOM_SIZE, juce::dontSendNotification);
             reverbRoomSizeSlider.setEnabled(false);
-            reverbDampingSlider.setValue(0.1f, juce::dontSendNotification);
+            reverbDampingSlider.setValue(GLASS_ROOM_DAMPING, juce::dontSendNotification);
             reverbDampingSlider.setEnabled(false);
-            reverbDryWetLevelSlider.setValue(.4f, juce::dontSendNotification);
+            reverbDryWetLevelSlider.setValue(GLASS_ROOM_WET_LEVEL, juce::dontSendNotification);
             reverbDryWetLevelSlider.setEnabled(false);
-            reverbWidthSlider.setValue(.9f, juce::dontSendNotification);
-            reverbWidthSlider.setEnabled(false);
+            reverbWidthSlider.setValue(GLASS_ROOM_WIDTH, juce::dontSendNotification);
+            reverbWidthSlider.setEnabled(false); reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+            reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 2), juce::dontSendNotification);
             repaint();
             break;
         case 7:
@@ -519,7 +541,10 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
             reverbDryWetLevelSlider.setValue(.5f, juce::dontSendNotification);
             reverbDryWetLevelSlider.setEnabled(true);
             reverbWidthSlider.setValue(.5f, juce::dontSendNotification);
-            reverbWidthSlider.setEnabled(true);
+            reverbWidthSlider.setEnabled(true); reverbRoomSizeValue.setText(juce::String(reverbRoomSizeSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDampingValue.setText(juce::String(reverbDampingSlider.getValue(), 2), juce::dontSendNotification);
+            reverbDryWetValue.setText(juce::String(reverbDryWetLevelSlider.getValue(), 2), juce::dontSendNotification);
+            reverbWidthValue.setText(juce::String(reverbWidthSlider.getValue(), 2), juce::dontSendNotification);
             repaint();
             break;
         default:

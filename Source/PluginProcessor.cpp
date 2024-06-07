@@ -502,24 +502,22 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
 
 // Definizione dei preset
 const ReverbPreset MultiEffectAudioProcessor::presets[] = {
-    { "Small Room", 0.2f, 0.5f, 0.3f, 0.5f },          // Stanza piccola
-    { "Medium Room", 0.5f, 0.5f, 0.4f, 0.7f },         // Stanza media
-    { "Cavern", 1.0f, 0.8f, 0.6f, 1.0f },              // Caverna
-    { "Empty Room", 0.6f, 0.2f, 0.5f,0.8f },           // Stanza normale senza mobili
-    { "Furnished Room", 0.6f, 0.7f, 0.5f, 0.7f },      // Stanza normale arredata con divano e mobili
-    { "Glass Room", 0.5f, 0.1f, 0.4f,0.9f } ,           // Stanza di vetro
-    {"None", 0.5f,0.5f,0.5f,0.5f}                       //None
+    { "Small Space", SMALL_SPACE_ROOM_SIZE, SMALL_SPACE_DAMPING, SMALL_SPACE_WET_LEVEL, SMALL_SPACE_WIDTH},              // Stanza piccola
+    { "Cavern", CAVERN_ROOM_SIZE, CAVERN_DAMPING, CAVERN_WET_LEVEL, CAVERN_WIDTH},                                       // Caverna
+    { "Empty Room", EMPTY_ROOM_SIZE, EMPTY_ROOM_DAMPING, EMPTY_ROOM_WET_LEVEL, EMPTY_ROOM_WIDTH},                        // Stanza vuota
+    { "Furnished Room", FURNISHED_ROOM_SIZE, FURNISHED_ROOM_DAMPING, FURNISHED_ROOM_WET_LEVEL, FURNISHED_ROOM_WIDTH},    // Stanza arredata 
+    { "Rubber Room", RUBBER_ROOM_SIZE, RUBBER_ROOM_DAMPING, RUBBER_ROOM_WET_LEVEL, RUBBER_ROOM_WIDTH},                   //Stanza di gomma
+    { "Glass Room", GLASS_ROOM_SIZE, GLASS_ROOM_DAMPING, GLASS_ROOM_WET_LEVEL,GLASS_ROOM_WIDTH} ,                        // Stanza di vetro
+    { "None", 0.5f,0.5f,0.5f,0.5f}                                                                                       //None
 };
 
 void MultiEffectAudioProcessor::loadPreset(int index)
 {
-   
-        auto& preset = presets[index];
-        *apvt.getRawParameterValue("RevROOMSIZE") = preset.roomSize;
-        *apvt.getRawParameterValue("RevDAMPING") = preset.damping;
-        *apvt.getRawParameterValue("RevDRYWET") = preset.wetLevel;
-        *apvt.getRawParameterValue("RevWIDTH") = preset.width;
-        
+    auto& preset = presets[index];
+    *apvt.getRawParameterValue("RevROOMSIZE") = preset.roomSize;
+    *apvt.getRawParameterValue("RevDAMPING") = preset.damping;
+    *apvt.getRawParameterValue("RevDRYWET") = preset.wetLevel;
+    *apvt.getRawParameterValue("RevWIDTH") = preset.width;
 }
 
 
