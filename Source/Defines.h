@@ -207,6 +207,6 @@
 #define UpperReverbBorderPosY 440
 #define LowerReverbBorderPosY 545
 #define UpperReverbBorderWidth 140
-#define LowerReverbBorderHeight 70
+#define UpperReverbBorderHeight 70
 #define LowerReverbBorderWidth 85
 #define LowerReverbBorderHeight 120

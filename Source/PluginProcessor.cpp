@@ -109,9 +109,9 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     spec.numChannels = getNumInputChannels();
     
 
-    lowPassFilters.resize(getNumInputChannels());
+    DelayLowPassFilters.resize(getNumInputChannels());
     auto dCutOffLowPass = apvt.getRawParameterValue("DLOWFILTER")->load();
-    for (auto& filter : lowPassFilters)
+    for (auto& filter : DelayLowPassFilters)
     {
         filter.reset();
         filter.prepare(spec);
@@ -180,7 +180,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
     //applicazione del filtro ad ogni chiamata processBlock
     if (isDelayLowPassActive) {
-        for (auto& filter : lowPassFilters)
+        for (auto& filter : DelayLowPassFilters)
         {
             *filter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(getSampleRate(), dCutOffLowPass * 1000.0f);
             
@@ -211,14 +211,14 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
                     channelData[sample] *= disGainLevel;
                     channelData[sample] += disOffsetLevel;
                     channelData[sample] = tanh(channelData[sample]); //tanH
-                    channelData[sample] -= disOffsetLevel;
+                    //channelData[sample] -= disOffsetLevel;
                     break;
 
                 case 1:
                     channelData[sample] *= disGainLevel;
                     channelData[sample] += disOffsetLevel;
                     channelData[sample] = ((channelData[sample] > 0.f) - (channelData[sample] < 0.f)) * (1.f-std::exp(-std::abs(channelData[sample]))); //sign(x)*(1-e^-|x|);
-                    channelData[sample] -= disOffsetLevel;
+                    //channelData[sample] -= disOffsetLevel;
                     break;
 
                 case 2:
@@ -269,7 +269,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         juce::dsp::ProcessContextReplacing<float> context(audioBlock);
         for (int channel = 0; channel < totalNumInputChannels; ++channel)
         {
-            lowPassFilters[channel].process(context);
+            DelayLowPassFilters[channel].process(context);
             
         }
     }

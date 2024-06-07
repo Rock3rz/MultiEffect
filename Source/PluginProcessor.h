@@ -119,10 +119,11 @@ public:
     SpectrumAnalyzer spectrum; // analizzatore di spettro
 
 private:
+    //delay
 
     juce::AudioBuffer<float> delayBuffer;
     int mWritePosition{ 0 };
-    std::vector<juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>> lowPassFilters;
+    std::vector<juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>> DelayLowPassFilters;
     juce::dsp::ProcessSpec spec;
 
     //riverbero
@@ -133,7 +134,7 @@ private:
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> peak;
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> highShelf;
 
-
+    //albero in che gestisce tutti gli stati del plugin
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MultiEffectAudioProcessor)

@@ -912,8 +912,8 @@ void MultiEffectAudioProcessorEditor::resized()
     //Reverb Utilities
     borderReverbDamping.setBounds(65, LowerReverbBorderPosY, LowerReverbBorderWidth, LowerReverbBorderHeight);
     borderReverbWidth.setBounds(202, LowerReverbBorderPosY, LowerReverbBorderWidth, LowerReverbBorderHeight);
-    borderReverbDryWet.setBounds(32, UpperReverbBorderPosY, UpperReverbBorderWidth, LowerReverbBorderHeight);
-    borderReverbRoomSize.setBounds(185, UpperReverbBorderPosY, UpperReverbBorderWidth, LowerReverbBorderHeight);
+    borderReverbDryWet.setBounds(32, UpperReverbBorderPosY, UpperReverbBorderWidth, UpperReverbBorderHeight);
+    borderReverbRoomSize.setBounds(185, UpperReverbBorderPosY, UpperReverbBorderWidth, UpperReverbBorderHeight);
 
     comboBox.setBounds(38, 397, 280, 30);
 
