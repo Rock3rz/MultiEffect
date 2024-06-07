@@ -86,10 +86,12 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
     float maxSliderPos, juce::Slider::SliderStyle style, juce::Slider& slider) {
 
     juce::Colour sliderBackgroundColour = juce::Colours::darkgrey;
+
     // Colore della traccia del slider
-    juce::Colour sliderTrackColour = juce::Colours::aqua;
+    juce::Colour sliderTrackColour = juce::Colours::cornflowerblue;
+
+    //Colore Triangoli
     juce::Colour triangleColours = juce::Colours::white;
-    //juce::Colour triangleColour = juce::Colours::red; // Colore per i triangoli
 
 
     if (style == juce::Slider::SliderStyle::LinearHorizontal) {
@@ -98,7 +100,6 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
         g.setColour(juce::Colours::lightcyan);
         
-        //work in progress
         g.drawLine(x, y, x + width-2, y);
         int offSet = width / 8;
         for (int i = 0; i <=8; i++) {
@@ -114,10 +115,11 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         float trackWidth = width * 0.3f;
         float trackHeight = height * 0.3f;
         float trackY = y + (height - trackHeight) / 2.0f;
-        float trackX = x + (width / 2.0f);  
-       
-        sliderPos = Utilities::normalizeValue(sliderPos, minSliderPos, width+7); //non so per quale motivo il valore dello slider non è normalizzato
-        
+        float trackX = x + (width / 2.0f); 
+
+       //Normalizzazione valore slider
+        sliderPos = Utilities::normalizeValue(sliderPos, minSliderPos, width+7); 
+
         // Disegna la traccia del slider
         g.setColour(sliderTrackColour);
         if (sliderPos <= 0.5) {       
@@ -126,15 +128,14 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         else if (sliderPos > 0.5) {    
             g.fillRoundedRectangle(trackX, trackY, ((sliderPos-.5f)*width), trackHeight,3);
         }
-
         
-        // Calculate the triangle position
+        //Calcolo Posizione del Triangolo
         float trianglePosX = x + sliderPos * width;
         float trianglePosY = y + height / 2.0f;
         float h = 25.0f;
         float lato = 30.0f;
 
-        // Draw the triangle
+        //Disegno il triangolo di conseguenza
         juce::Path orizontalTriangle;
         orizontalTriangle.addTriangle(trianglePosX, trianglePosY,
             trianglePosX + lato / 2.0f, trianglePosY + h,
@@ -155,19 +156,19 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         float trackStart = juce::jmin(sliderPos, maxSliderPos);
         float trackEnd = juce::jmax(sliderPos, minSliderPos);
 
-        // Disegna la traccia del slider
-        
-        g.fillRoundedRectangle(trackX, trackStart, trackWidth, trackEnd - trackStart,3);       
+        // Disegna la traccia del slider 
+        g.setColour(juce::Colours::cornflowerblue);
+        g.fillRoundedRectangle(trackX, trackStart, trackWidth, trackEnd - trackStart, 3);       
 
         
-        // Primo triangolo (sinistra)
+        //Primo triangolo (sinistra)
         juce::Path leftTriangle;
         leftTriangle.addTriangle(trackX - triangleOffsetX1, sliderPos + triangleOffsetY1, 
             trackX - triangleOffsetX2, sliderPos + triangleOffsetY2,
             trackX - triangleOffsetX3, sliderPos - triangleOffsetY3); 
         
 
-        // Secondo triangolo (destra)
+        //Secondo triangolo (destra)
         juce::Path rightTriangle;
         rightTriangle.addTriangle(trackX + trackWidth + triangleOffsetX1, sliderPos + triangleOffsetY1, 
             trackX + trackWidth + triangleOffsetX2, sliderPos + triangleOffsetY2, 
@@ -179,6 +180,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
 
         
         g.setColour(juce::Colours::grey); // colore dei segni
+
       //disegno i trattini
         for (int i = 0; i <= 8; ++i) {
             auto yOffset = i * (height / 8);
@@ -192,7 +194,7 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
                 g.drawLine(trackX + trackWidth + 7, y + yOffset, trackX + trackWidth + 12, y + yOffset, 2);
             }
         }
-        g.setColour(triangleColours); // colore dei triangoli
+        g.setColour(triangleColours); //colore dei triangoli
         g.fillPath(leftTriangle);
         g.fillPath(rightTriangle);       
     }
@@ -200,7 +202,8 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         g.setColour(sliderBackgroundColour);
         g.setColour(juce::Colours::lightcyan);
 
-        g.drawLine(x, y, x + width - 2, y);
+        g.drawLine(x, y, x + width - 4, y);
+
         int offSet = width / 8;
         for (int i = 0; i <= 8; i++) {
             if (i % 2) {
@@ -218,8 +221,8 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         float trackX = x + (width / 2.0f);
 
 
-
-        sliderPos = Utilities::normalizeValue(sliderPos, minSliderPos, width + 7); //non so per quale motivo il valore dello slider non è normalizzato
+        //Normalizzazione valore slider
+        sliderPos = Utilities::normalizeValue(sliderPos, minSliderPos, width + 7);
 
 
         // Disegna la traccia del slider
@@ -227,23 +230,20 @@ void MySlider::drawLinearSlider(juce::Graphics& g, int x, int	y, int width, int 
         
         g.fillRoundedRectangle(x, trackY, sliderPos * width, trackHeight, 3);
 
-        // Calculate the triangle position
+        //Calcolo posizione del triangolo
         float trianglePosX = x + sliderPos * width;
         float trianglePosY = y + height / 2.0f;
         float h = 25.0f;
         float lato = 30.0f;
 
-        // Draw the triangle
+        //Disegno il triangolo
         juce::Path orizontalTriangle;
         orizontalTriangle.addTriangle(trianglePosX, trianglePosY,
             trianglePosX + lato / 2.0f, trianglePosY + h,
             trianglePosX - lato / 2.0f, trianglePosY + h);
         g.setColour(juce::Colours::white);
         g.fillPath(orizontalTriangle);
-    }
-    
-
-   
+    }   
 
 }
 

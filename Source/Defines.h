@@ -37,7 +37,7 @@
 #define selectinoEffectHeight 323
 #define selectionBorderThickness 3
 //-----------------------Distortion---------------------------------------
-#define distortinoSelectionBoxX 12
+#define distortionSelectionBoxX 12
 #define distortionSelectionBoxY 10
 //-----------------------Delay-------------------------------------------
 #define delaySelectionBoxX 369

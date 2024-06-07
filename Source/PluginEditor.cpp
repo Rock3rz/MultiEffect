@@ -29,11 +29,9 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     setLookAndFeel(nullptr);
 
     //-----------------------------------------------MY LOOK&FEEL COLOURS----------------------------------------------------------
-    myLookAndFeelDistortion.SetValueArcColour(juce::Colours::mediumaquamarine);
-    myLookAndFeelDelayLine.SetValueArcColour(juce::Colours::turquoise);
-    myLookAndFeelReverb.SetValueArcColour(juce::Colours::deepskyblue);
-    myLookAndFeelEQ.SetValueArcColour(juce::Colours::azure);
-
+    myLookAndFeelDistortion.SetValueArcColour(juce::Colour::fromRGB(163, 196, 238));
+    myLookAndFeelDelayLine.SetValueArcColour(juce::Colour::fromRGB(94, 134, 193));
+    myLookAndFeelReverb.SetValueArcColour(juce::Colour::fromRGB(86, 163, 255));
 
     //-----------------------------------------------DISTORTION--------------------------------------------------------------------
     //toggle active
@@ -44,9 +42,9 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     distortionGainSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     distortionGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0);
     distortionGainSlider.setPaintingIsUnclipped(true);
-    distortionGainValue.setText(juce::String(Utilities::linearToDb(distortionGainSlider.getValue()), 2) + " Db", juce::dontSendNotification);
+    distortionGainValue.setText(juce::String(Utilities::linearToDb(distortionGainSlider.getValue()), 2) + " dB", juce::dontSendNotification);
     distortionGainSlider.onValueChange = [this]() {
-        distortionGainValue.setText(juce::String(Utilities::linearToDb(distortionGainSlider.getValue()), 2) + " Db", juce::dontSendNotification);
+        distortionGainValue.setText(juce::String(Utilities::linearToDb(distortionGainSlider.getValue()), 2) + " dB", juce::dontSendNotification);
         };
     
     
@@ -195,7 +193,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     delayGainSlider.setDoubleClickReturnValue(true, .5f);
     delayGainValue.setText(juce::String(Utilities::linearToDb(delayGainSlider.getValue())), juce::dontSendNotification);
     delayGainSlider.onValueChange = [this]() {
-        delayGainValue.setText(juce::String(Utilities::linearToDb(delayGainSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        delayGainValue.setText(juce::String(Utilities::linearToDb(delayGainSlider.getValue()), 1) + " dB", juce::dontSendNotification);
         };
     
 
@@ -203,9 +201,9 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     delayTimeSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     delayTimeSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     delayTimeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0);
-    delayTimeMsValue.setText(juce::String(Utilities::linearToMs(delayTimeSlider.getValue()), 0) + " Ms", juce::dontSendNotification);
+    delayTimeMsValue.setText(juce::String(Utilities::linearToMs(delayTimeSlider.getValue()), 0) + " ms", juce::dontSendNotification);
     delayTimeSlider.onValueChange = [this]() {
-        delayTimeMsValue.setText(juce::String(Utilities::linearToMs(delayTimeSlider.getValue()), 0) + " Ms", juce::dontSendNotification);
+        delayTimeMsValue.setText(juce::String(Utilities::linearToMs(delayTimeSlider.getValue()), 0) + " ms", juce::dontSendNotification);
         };
     
 
@@ -535,11 +533,11 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqLowSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0); // a zero per non sballare le misure
     eqLowLabel.setText("Low", juce::dontSendNotification);
-    eqLowValue.setText(juce::String(Utilities::linearToDb(eqLowSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+    eqLowValue.setText(juce::String(Utilities::linearToDb(eqLowSlider.getValue()), 1) + " dB", juce::dontSendNotification);
 
     //Converto i valori in decibel per Low
     eqLowSlider.onValueChange = [this]() {
-        eqLowValue.setText(juce::String(Utilities::linearToDb(eqLowSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        eqLowValue.setText(juce::String(Utilities::linearToDb(eqLowSlider.getValue()), 1) + " dB", juce::dontSendNotification);
         };
 
 
@@ -552,7 +550,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Converto i valori in decibel per mid
     eqMidSlider.onValueChange = [this]() {
-        eqMidValue.setText(juce::String(Utilities::linearToDb(eqMidSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        eqMidValue.setText(juce::String(Utilities::linearToDb(eqMidSlider.getValue()), 1) + " dB", juce::dontSendNotification);
         };
 
 
@@ -565,7 +563,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Converto i valori in decibel per High
     eqHighSlider.onValueChange = [this]() {
-        eqHighValue.setText(juce::String(Utilities::linearToDb(eqHighSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        eqHighValue.setText(juce::String(Utilities::linearToDb(eqHighSlider.getValue()), 1) + " dB", juce::dontSendNotification);
         };
 
 
@@ -579,7 +577,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     //Converto i valori in decibel per masterOut
     eqMasterOutSlider.onValueChange = [this]() {
-        eqMasterOutValue.setText(juce::String(Utilities::linearToDb(eqMasterOutSlider.getValue()), 1) + " Db", juce::dontSendNotification);
+        eqMasterOutValue.setText(juce::String(Utilities::linearToDb(eqMasterOutSlider.getValue()), 1) + " dB", juce::dontSendNotification);
         };
 
 
@@ -695,7 +693,7 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.setColour(juce::Colours::deepskyblue);
     g.setFont(Titles_Font);
     g.drawText("Distortion", distortionTitleX, distortionTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
-    g.drawText("Delay Line", delayTitleX, delayTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
+    g.drawText("Echo", delayTitleX, delayTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
     g.drawText("Riverbero", revebtTitleX, reverbTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
     g.drawText("Master EQ", eqTitleX, eqTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
 
@@ -703,10 +701,10 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.setColour(juce::Colours::deepskyblue.withAlpha(.8f));
     
     if (isDistortionSelected) {
-        g.drawRoundedRectangle(distortinoSelectionBoxX, distortionSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 3); //Distorsione
+        g.drawRoundedRectangle(distortionSelectionBoxX, distortionSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 3); //Distorsione
     }
     else {
-        g.drawRoundedRectangle(distortinoSelectionBoxX, distortionSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 0);
+        g.drawRoundedRectangle(distortionSelectionBoxX, distortionSelectionBoxY, selectionEffectWidth, selectinoEffectHeight, selectionBorderThickness, 0);
     }
     if (isDelaySelected) {
 
@@ -876,7 +874,7 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //Sliders
     reverbDryWetLevelSlider.setBounds(37, 470, 128, 15);
-    reverbRoomSizeSlider.setBounds(190, 470, 128, 15);
+    reverbRoomSizeSlider.setBounds(193, 470, 128, 15);
     reverbDampingSlider.setBounds(75, 573, RotarySliderDimHW, RotarySliderDimHW);
     reverbWidthSlider.setBounds(212, 573, RotarySliderDimHW, RotarySliderDimHW);
 
@@ -892,7 +890,7 @@ void MultiEffectAudioProcessorEditor::resized()
     borderReverbDryWet.setBounds(32, 440, 140, 70);
     borderReverbRoomSize.setBounds(185, 440, 140, 70);
 
-    comboBox.setBounds(32, 395, 290, 30);
+    comboBox.setBounds(38, 397, 280, 30);
 
 
     //-----------------------------------------------EQ------------------------------------------
@@ -910,6 +908,7 @@ void MultiEffectAudioProcessorEditor::resized()
     eqMidValue.setBounds(473, 560, 100, 100);
     eqHighValue.setBounds(550, 560, 100, 100);
     eqMasterOutValue.setBounds(630, 560, 100, 100);
+
     //-------------------------------------------SPECTRUM--------------------------------------------
     moreSamples.setBounds(1150, 375, 25, 25);
     lessSamples.setBounds(1030, 375, 25, 25);
