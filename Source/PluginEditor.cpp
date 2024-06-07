@@ -16,7 +16,7 @@
 #define DelayRotaryLine 100
 #define DelayPositionOffSet 360
 #define RotarySliderDimHW 65
-#define UpRotarySlidersPosY 232
+#define everyDistortionGainY 232
 #define UpRotarySlidersPosX 30
 
 
@@ -815,29 +815,29 @@ void MultiEffectAudioProcessorEditor::resized()
     //----------------------------------------------------DISTORTION---------------------------------------------------------------------
 
     //Sliders
-    distortionGainSlider.setBounds(UpRotarySlidersPosX +10, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW); //x y w h
-    distortionOffsetSlider.setBounds(UpRotarySlidersPosX + 110, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    distortionThresholdSlider.setBounds(UpRotarySlidersPosX + 210, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    distortionGainValue.setBounds(UpRotarySlidersPosX + 15, UpRotarySlidersPosY +40, RotarySliderDimHW, RotarySliderDimHW);
-    distortionOffsetValue.setBounds(UpRotarySlidersPosX + 125, UpRotarySlidersPosY + 40, RotarySliderDimHW, RotarySliderDimHW);
-    distortionThresholdValue.setBounds(UpRotarySlidersPosX + 225, UpRotarySlidersPosY + 40, RotarySliderDimHW, RotarySliderDimHW);
+    distortionGainSlider.setBounds(distortionGainSliderPosX, everyDistortionGainY, everyRotarySliderDim, everyRotarySliderDim); //x y w h
+    distortionOffsetSlider.setBounds(distortionOffsetSliderPosX, everyDistortionGainY, everyRotarySliderDim, everyRotarySliderDim);
+    distortionThresholdSlider.setBounds(treshHoldSliderPosX, everyDistortionGainY, everyRotarySliderDim, everyRotarySliderDim);
+    distortionGainValue.setBounds(distortionGainLabelValueX, everyDistortionLabelBalueY, everyRotarySliderDim, everyRotarySliderDim);
+    distortionOffsetValue.setBounds(distortionOffsetLabelValueX, everyDistortionLabelBalueY, everyRotarySliderDim, everyRotarySliderDim);
+    distortionThresholdValue.setBounds(distortionThreshHoldLabelValueX, everyDistortionLabelBalueY, everyRotarySliderDim, everyRotarySliderDim);
 
     //Toggle Active Distortion
-    toggleActiveDistotion.setBounds(15, -25, 100, 100);
+    toggleActiveDistotion.setBounds(15, -25, everyToggleSide, everyToggleSide);
 
     //Toggle DistortionType
-    softDistortion.setBounds(35, 40, 100, 100);
-    midDistortion.setBounds(135, 40, 100, 100);
-    hardDistortion.setBounds(235, 40, 100, 100);
+    softDistortion.setBounds(softDistortionToggleX, everyDistortionToggleY, everyToggleSide, everyToggleSide);
+    midDistortion.setBounds(midDistortionToggleX, everyDistortionToggleY, everyToggleSide, everyToggleSide);
+    hardDistortion.setBounds(hardDistortionToggleX, everyDistortionToggleY, everyToggleSide, everyToggleSide);
 
-    softDistortionLabel.setBounds(30, 90, 100, 100);
-    midDistortionLabel.setBounds(140, 90, 100, 100);
-    hardDistortionLabel.setBounds(250, 90, 100, 100);
+    softDistortionLabel.setBounds(softDistortionTypeLabelX, everyDistortionTypeLabelY, everyToggleSide, everyToggleSide);
+    midDistortionLabel.setBounds(midDistortionTypeLabelX, everyDistortionTypeLabelY, everyToggleSide, everyToggleSide);
+    hardDistortionLabel.setBounds(hardDistortionTypeLabelX, everyDistortionTypeLabelY, everyToggleSide, everyToggleSide);
 
     //Distortion Utilities
-    borderDistortionGain.setBounds(30, 205, 85, 120);
-    borderDistortionOffset.setBounds(130, 205, 85, 120);
-    borderDistortionTreshold.setBounds(230, 205, 85, 120);
+    borderDistortionGain.setBounds(distortionGainBorderX, everyDistortionBorderY, dirtortionBorderWidth, distortionBorderHeight);
+    borderDistortionOffset.setBounds(distortionOffsetBorderX, everyDistortionBorderY, dirtortionBorderWidth, distortionBorderHeight);
+    borderDistortionTreshold.setBounds(distortionThresholdBorderX, everyDistortionBorderY, dirtortionBorderWidth, distortionBorderHeight);
 
 
     //-----------------------------------------------------DELAY---------------------------------------------------------------------
@@ -847,10 +847,10 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //Bounds slider delay
     delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 15);
-    delayGainSlider.setBounds(43 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    delayTimeSlider.setBounds(147 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    delayLowPassFilter.setBounds(248 + DelayPositionOffSet, UpRotarySlidersPosY, RotarySliderDimHW, RotarySliderDimHW);
-    delayFilterFrequencyValue.setBounds(252 + DelayPositionOffSet, UpRotarySlidersPosY +25, 100, 100);
+    delayGainSlider.setBounds(43 + DelayPositionOffSet, everyDistortionGainY, RotarySliderDimHW, RotarySliderDimHW);
+    delayTimeSlider.setBounds(147 + DelayPositionOffSet, everyDistortionGainY, RotarySliderDimHW, RotarySliderDimHW);
+    delayLowPassFilter.setBounds(248 + DelayPositionOffSet, everyDistortionGainY, RotarySliderDimHW, RotarySliderDimHW);
+    delayFilterFrequencyValue.setBounds(252 + DelayPositionOffSet, everyDistortionGainY +25, 100, 100);
 
 
     //toggle fD/FW

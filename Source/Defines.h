@@ -116,5 +116,48 @@
 #define spectrumDBStartY 647
 
 //===============================OBJECT SIZE===============================================
+//--------------------------------ToggleSize-----------------------------------------------
+#define everyToggleSide 100
+
+//--------------------------------Distortion-----------------------------------------------
+//------------------------Toggle----------------------------------------------------------
+#define everyDistortionToggleY 40
+
+#define softDistortionToggleX 35
+#define midDistortionToggleX 135 
+#define hardDistortionToggleX 235
+
+//-----------------------Labels------------------------------------------------------------
+#define everyDistortionTypeLabelY 90
+
+#define softDistortionTypeLabelX 30
+#define midDistortionTypeLabelX 140
+#define hardDistortionTypeLabelX 250
+
+//-----------------------Borders-----------------------------------------------------------
+#define everyDistortionBorderY 205
+
+#define dirtortionBorderWidth 85
+#define distortionBorderHeight 120
+
+#define distortionGainBorderX 30
+#define distortionOffsetBorderX 130 
+#define distortionThresholdBorderX 230
+
+
+
+
+#define everyRotarySliderDim 65
+#define everyDistortionGainY 232
+#define everyDistortionLabelBalueY 272
 
 //-------------------------------Distortion-----------------------------------------------
+//----------------Slider------------------------------------------------------------------
+#define distortionGainSliderPosX 40
+#define distortionOffsetSliderPosX 140
+#define treshHoldSliderPosX 240
+
+//----------------ValueLabel--------------------------------------------------------------
+#define distortionGainLabelValueX 45
+#define distortionOffsetLabelValueX 155
+#define distortionThreshHoldLabelValueX 255
