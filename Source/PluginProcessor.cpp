@@ -233,7 +233,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
                         channelData[sample] = -disTresholdLevel;
                     }
 
-                    channelData[sample] -= disOffsetLevel;
+                    //channelData[sample] -= disOffsetLevel;
 
                     break;
                 default:
@@ -380,7 +380,7 @@ void MultiEffectAudioProcessor::readFromBuffer(int channel, juce::AudioBuffer<fl
 
     if ((readPosition + bufferSize) < delayBufferSize)
     {
-        // Somma diretta senza rampa di gain
+        
         float* bufferData = buffer.getWritePointer(channel);
         const float* delayBufferData = delayBuffer.getReadPointer(channel, readPosition);
         for (int i = 0; i < bufferSize; ++i)
