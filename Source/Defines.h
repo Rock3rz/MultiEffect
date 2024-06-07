@@ -13,6 +13,8 @@
 //===================================GLOBAL MEASURE===================================
 #define globalWindowWidth 1192
 #define globalWindowHeight 696
+#define LineThickness 1
+#define RotarySliderDimHW 65
 //===================================TITLE DIEMNSIONS=================================
 #define everyTitleHeight 90
 #define everyTitleWidth 15
@@ -161,3 +163,50 @@
 #define distortionGainLabelValueX 45
 #define distortionOffsetLabelValueX 155
 #define distortionThreshHoldLabelValueX 255
+
+//------------------------------Delay------------------------------------------------
+//-------------toggle------------------------
+#define everyToggleDelayHW 100
+#define toggleFDFBWidth 200
+#define toggleFDFBHeight 50
+#define toggleFDFBPosY 45
+
+//----------------slider------------------------------------------------------------
+
+
+//-------------------Value Label--------------------------------------------
+#define delayGain_Time_ValueHW 100
+#define delayGain_Time_ValuePosY 255
+#define delayDryWetWidth 200
+#define delayDryWetHeight 15
+
+//------------------Borders-------------------------------------------
+#define LowerElementsBorderPosY 205
+#define LowerElementsBorderWidth 85
+#define LowerElementsBorderHeight 120
+#define FirstLowerElementPosX 393
+#define LowerElementsPosOffsetX 102
+
+//------------------------------------Reverb-----------------------------------
+//------------------toggle-----------------
+#define ReverbToggleHW 100
+
+//------------------sliders----------------------------
+#define reverbLinearSlidersHeight 15
+#define reverbLinearSlidersWidth 128
+#define reverbLinearPosY 470
+#define LowerElReverbPosY 573
+
+//-----------------Labels---------------------------
+#define everyReverbLabelWidth 60
+#define everyReverbLabelHeight 15
+#define UpperReverbLabelsPosY 487
+#define LowerReverbLabelsPosY 637
+
+//------------------borders-------------------------
+#define UpperReverbBorderPosY 440
+#define LowerReverbBorderPosY 545
+#define UpperReverbBorderWidth 140
+#define LowerReverbBorderHeight 70
+#define LowerReverbBorderWidth 85
+#define LowerReverbBorderHeight 120

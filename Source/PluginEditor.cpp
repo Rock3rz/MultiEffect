@@ -12,10 +12,8 @@
 #include "Defines.h"
 
 
-#define RectBoundThickness 1
 #define DelayRotaryLine 100
 #define DelayPositionOffSet 360
-#define RotarySliderDimHW 65
 #define everyDistortionGainY 232
 #define UpRotarySlidersPosX 30
 
@@ -705,14 +703,14 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
         
     // Disegna i bordi dei rettangoli
     g.setColour(juce::Colours::lightcyan);
-    g.drawRect(LeftHalf, RectBoundThickness);
-    g.drawRect(RightHalf, RectBoundThickness);
-    g.drawRect(Upper, RectBoundThickness);
-    g.drawRect(BottomLeft, RectBoundThickness);
-    g.drawRect(UpLeft, RectBoundThickness);
-    g.drawRect(UpRight, RectBoundThickness);
-    g.drawRect(DownLeft, RectBoundThickness);
-    g.drawRect(DownRight, RectBoundThickness);
+    g.drawRect(LeftHalf, LineThickness);
+    g.drawRect(RightHalf, LineThickness);
+    g.drawRect(Upper, LineThickness);
+    g.drawRect(BottomLeft, LineThickness);
+    g.drawRect(UpLeft, LineThickness);
+    g.drawRect(UpRight, LineThickness);
+    g.drawRect(DownLeft, LineThickness);
+    g.drawRect(DownRight, LineThickness);
 
     juce::Font Titles_Font("North Carossela", 17.0f, juce::Font::bold);
     g.setColour(juce::Colours::deepskyblue);
@@ -866,10 +864,10 @@ void MultiEffectAudioProcessorEditor::resized()
     //-----------------------------------------------------DELAY---------------------------------------------------------------------
     
     //toggle attivazione delay
-    toggleActiveDelay.setBounds(15 + DelayPositionOffSet, -25, 100, 100);
+    toggleActiveDelay.setBounds(15 + DelayPositionOffSet, -25, everyToggleDelayHW, everyToggleDelayHW);
 
     //Bounds slider delay
-    delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, 200, 15);
+    delayDryWetSlider.setBounds(75 + DelayPositionOffSet, 120, delayDryWetWidth, delayDryWetHeight);
     delayGainSlider.setBounds(43 + DelayPositionOffSet, everyDistortionGainY, RotarySliderDimHW, RotarySliderDimHW);
     delayTimeSlider.setBounds(147 + DelayPositionOffSet, everyDistortionGainY, RotarySliderDimHW, RotarySliderDimHW);
     delayLowPassFilter.setBounds(248 + DelayPositionOffSet, everyDistortionGainY, RotarySliderDimHW, RotarySliderDimHW);
@@ -877,43 +875,45 @@ void MultiEffectAudioProcessorEditor::resized()
 
 
     //toggle fD/FW
-    isFeedback.setBounds(80 + DelayPositionOffSet, 45, 200, 50);
-    isFeedForward.setBounds(180 + DelayPositionOffSet, 45, 200, 50);
+    isFeedback.setBounds(80 + DelayPositionOffSet, toggleFDFBPosY, toggleFDFBWidth, toggleFDFBHeight);
+    isFeedForward.setBounds(180 + DelayPositionOffSet, toggleFDFBPosY, toggleFDFBWidth, toggleFDFBHeight);
 
     //Toggle
-    toggleActiveDelayLowPass.setBounds(250 + DelayPositionOffSet, 165, 100, 100);
+    toggleActiveDelayLowPass.setBounds(250 + DelayPositionOffSet, 165, everyToggleDelayHW, everyToggleDelayHW);
 
     //Delay Utilities
-    borderDelayGain.setBounds(393, 205, 85, 120);
-    borderDelayTime.setBounds(495, 205, 85, 120);
-    borderDelayLowPass.setBounds(597, 205, 85, 120);
+    borderDelayGain.setBounds(FirstLowerElementPosX, LowerElementsBorderPosY, LowerElementsBorderWidth, LowerElementsBorderHeight);
+    borderDelayTime.setBounds(FirstLowerElementPosX + LowerElementsPosOffsetX, LowerElementsBorderPosY, LowerElementsBorderWidth, LowerElementsBorderHeight);
+    borderDelayLowPass.setBounds(FirstLowerElementPosX + LowerElementsPosOffsetX, LowerElementsBorderPosY, LowerElementsBorderWidth, LowerElementsBorderHeight);
     borderDelayDryWet.setBounds(425, 90, 220, 80);
-    delayGainValue.setBounds(412,255,100,100);
-    delayTimeMsValue.setBounds(507, 255, 100, 100);
-    delayDryWetValue.setBounds(515, 143, 200, 15);
+
+    //Value Labels
+    delayGainValue.setBounds(412, delayGain_Time_ValuePosY, delayGain_Time_ValueHW, delayGain_Time_ValueHW);
+    delayTimeMsValue.setBounds(507, delayGain_Time_ValuePosY, delayGain_Time_ValueHW, delayGain_Time_ValueHW);
+    delayDryWetValue.setBounds(515, 143, delayDryWetWidth, delayDryWetHeight);
 
 
     //--------------------------------------------------------------REVERB------------------------------------------------------
     //Toggle
-    toggleActiveReverb.setBounds(15, 325, 100, 100);
+    toggleActiveReverb.setBounds(15, 325, ReverbToggleHW, ReverbToggleHW);
 
     //Sliders
-    reverbDryWetLevelSlider.setBounds(37, 470, 128, 15);
-    reverbRoomSizeSlider.setBounds(193, 470, 128, 15);
-    reverbDampingSlider.setBounds(75, 573, RotarySliderDimHW, RotarySliderDimHW);
-    reverbWidthSlider.setBounds(212, 573, RotarySliderDimHW, RotarySliderDimHW);
+    reverbDryWetLevelSlider.setBounds(37, reverbLinearPosY, reverbLinearSlidersWidth, reverbLinearSlidersHeight);
+    reverbRoomSizeSlider.setBounds(193, reverbLinearPosY, reverbLinearSlidersWidth, reverbLinearSlidersHeight);
+    reverbDampingSlider.setBounds(75, LowerElReverbPosY, RotarySliderDimHW, RotarySliderDimHW);
+    reverbWidthSlider.setBounds(212, LowerElReverbPosY, RotarySliderDimHW, RotarySliderDimHW);
 
     //Labels
-    reverbDryWetValue.setBounds(83, 487, 60, 15);
-    reverbRoomSizeValue.setBounds(237, 487, 60, 15);
-    reverbDampingValue.setBounds(89, 637, 60, 15);
-    reverbWidthValue.setBounds(226, 637, 60, 15);
+    reverbDryWetValue.setBounds(83, UpperReverbLabelsPosY, everyReverbLabelWidth, everyReverbLabelHeight);
+    reverbRoomSizeValue.setBounds(237, UpperReverbLabelsPosY, everyReverbLabelWidth, everyReverbLabelHeight);
+    reverbDampingValue.setBounds(89, LowerReverbLabelsPosY, everyReverbLabelWidth, everyReverbLabelHeight);
+    reverbWidthValue.setBounds(226, LowerReverbLabelsPosY, everyReverbLabelWidth, everyReverbLabelHeight);
 
     //Reverb Utilities
-    borderReverbDamping.setBounds(65, 545, 85, 120);
-    borderReverbWidth.setBounds(202, 545, 85, 120);
-    borderReverbDryWet.setBounds(32, 440, 140, 70);
-    borderReverbRoomSize.setBounds(185, 440, 140, 70);
+    borderReverbDamping.setBounds(65, LowerReverbBorderPosY, LowerReverbBorderWidth, LowerReverbBorderHeight);
+    borderReverbWidth.setBounds(202, LowerReverbBorderPosY, LowerReverbBorderWidth, LowerReverbBorderHeight);
+    borderReverbDryWet.setBounds(32, UpperReverbBorderPosY, UpperReverbBorderWidth, LowerReverbBorderHeight);
+    borderReverbRoomSize.setBounds(185, UpperReverbBorderPosY, UpperReverbBorderWidth, LowerReverbBorderHeight);
 
     comboBox.setBounds(38, 397, 280, 30);
 
