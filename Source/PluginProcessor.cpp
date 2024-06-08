@@ -127,8 +127,8 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     distortionLowPass.prepare(distorsionSpec);
     distortionHighPass.prepare(distorsionSpec);
 
-    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, 30);
-    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 15000);
+    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderLowPass(sampleRate, 15000);
+    *distortionHighPass.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderHighPass(sampleRate, 30);
    
     
     eQSpec.sampleRate = sampleRate;
@@ -217,9 +217,11 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         if (isDistortionActive) {
             auto* channelData = buffer.getWritePointer(channel);
 
-            
+            //filtri work in progress
             juce::dsp::AudioBlock<float> audioBlock(buffer);
             juce::dsp::ProcessContextReplacing<float> context(audioBlock);
+            distortionLowPass.process(context);
+            distortionHighPass.process(context);
 
 
             for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
@@ -235,8 +237,6 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
                 case 1:
                     
-                   
-
                     channelData[sample] *= disGainLevel;
                     channelData[sample] += disOffsetLevel;
                     channelData[sample] = ((channelData[sample] > 0.f) - (channelData[sample] < 0.f)) * (1.f-std::exp(-std::abs(channelData[sample]))); //sign(x)*(1-e^-|x|);
@@ -245,8 +245,6 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
                 case 2:
                     
-                  
-
                     channelData[sample] *= disGainLevel;                     // 1 se > 1
                     channelData[sample] += disOffsetLevel;                  // -1 se < 1
                                                                             // x altrimenti
@@ -265,9 +263,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
                 }
             }
 
-            //distortionLowPass.process(context);
-            //distortionHighPass.process(context);
-          
+           
         }
 
         //----------------------------------------------------DELAY----------------------------------------------------------------------
