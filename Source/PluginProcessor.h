@@ -124,7 +124,10 @@ private:
     juce::AudioBuffer<float> delayBuffer;
     int mWritePosition{ 0 };
     std::vector<juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>> DelayLowPassFilters;
-    juce::dsp::ProcessSpec spec;
+    
+    juce::dsp::ProcessSpec spec; //spec del delay
+    juce::dsp::ProcessSpec distorsionSpec;
+    juce::dsp::ProcessSpec eQSpec;
 
     //riverbero
     juce::Reverb reverb;
@@ -133,6 +136,9 @@ private:
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> lowShelf;
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> peak;
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> highShelf;
+
+    juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> distortionLowPass;
+    juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> distortionHighPass;
 
     //albero in che gestisce tutti gli stati del plugin
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
