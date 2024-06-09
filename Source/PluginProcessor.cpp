@@ -130,8 +130,8 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     distortionLowPass.prepare(distorsionSpec);
     distortionHighPass.prepare(distorsionSpec);
 
-    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, 15000);
-    *distortionHighPass.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 50);
+    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderLowPass(sampleRate, 10000);
+    *distortionHighPass.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderHighPass(sampleRate, 50);
    
     
     eQSpec.sampleRate = sampleRate;
@@ -208,6 +208,10 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     //MasterOut
     auto eqMasterOut = apvt.getRawParameterValue("EqMASTEROUTGAIN")->load();
 
+    //Roba dei filtri che ronzano =(
+    juce::dsp::AudioBlock<float> audioBlock(buffer);
+    juce::dsp::ProcessContextReplacing<float> context1(audioBlock);
+
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i) {
         buffer.clear(i, 0, buffer.getNumSamples());
         delayBuffer.clear(i, 0, delayBuffer.getNumSamples());
@@ -221,26 +225,39 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
             auto* channelData = buffer.getWritePointer(channel);
 
             //filtri work in progress
-           
             
-
-
             for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
                 switch (distortionType)
                 {
                 case 0:
-
+                    
                     channelData[sample] *= disGainLevel;
                     channelData[sample] += disOffsetLevel;
+
+                    if (channelData[sample] > disTresholdLevel) {
+                        channelData[sample] = disTresholdLevel;
+                    }
+                    else if (channelData[sample] < -disTresholdLevel) {
+                        channelData[sample] = -disTresholdLevel;
+                    }
+
                     channelData[sample] = tanh(channelData[sample]); //tanH
                     //channelData[sample] -= disOffsetLevel;
-                   
+                    
                     break;
 
                 case 1:
                     
                     channelData[sample] *= disGainLevel;
                     channelData[sample] += disOffsetLevel;
+
+                    if (channelData[sample] > disTresholdLevel) {
+                        channelData[sample] = disTresholdLevel;
+                    }
+                    else if (channelData[sample] < -disTresholdLevel) {
+                        channelData[sample] = -disTresholdLevel;
+                    }
+
                     channelData[sample] = ((channelData[sample] > 0.f) - (channelData[sample] < 0.f)) * (1.f-std::exp(-std::abs(channelData[sample]))); //sign(x)*(1-e^-|x|);
                     //channelData[sample] -= disOffsetLevel;
                     break;
@@ -264,10 +281,11 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
                     break;
                 }
             }
-            juce::dsp::AudioBlock<float> audioBlock(buffer);
-            juce::dsp::ProcessContextReplacing<float> context(audioBlock);
-            distortionLowPass.process(context);
-            distortionHighPass.process(context);
+           
+            //RONZA DA MORIRE =(
+            //distortionLowPass.process(context1);
+            //distortionHighPass.process(context1);
+            
            
         }
 

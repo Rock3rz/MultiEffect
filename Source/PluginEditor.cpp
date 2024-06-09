@@ -883,8 +883,8 @@ void MultiEffectAudioProcessorEditor::resized()
 
     //Delay Utilities
     borderDelayGain.setBounds(FirstLowerElementPosX, LowerElementsBorderPosY, LowerElementsBorderWidth, LowerElementsBorderHeight);
-    borderDelayTime.setBounds(FirstLowerElementPosX + LowerElementsPosOffsetX, LowerElementsBorderPosY, LowerElementsBorderWidth, LowerElementsBorderHeight);
-    borderDelayLowPass.setBounds(FirstLowerElementPosX + LowerElementsPosOffsetX, LowerElementsBorderPosY, LowerElementsBorderWidth, LowerElementsBorderHeight);
+    borderDelayTime.setBounds(FirstLowerElementPosX + FirstLowerElementsPosOffsetX, LowerElementsBorderPosY, LowerElementsBorderWidth, LowerElementsBorderHeight);
+    borderDelayLowPass.setBounds(FirstLowerElementPosX + SecondLowerElementPosOffsetX, LowerElementsBorderPosY, LowerElementsBorderWidth, LowerElementsBorderHeight);
     borderDelayDryWet.setBounds(425, 90, 220, 80);
 
     //Value Labels

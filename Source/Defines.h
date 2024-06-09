@@ -185,7 +185,8 @@
 #define LowerElementsBorderWidth 85
 #define LowerElementsBorderHeight 120
 #define FirstLowerElementPosX 393
-#define LowerElementsPosOffsetX 102
+#define FirstLowerElementsPosOffsetX 102
+#define SecondLowerElementPosOffsetX 204
 
 //------------------------------------Reverb-----------------------------------
 //------------------toggle-----------------
