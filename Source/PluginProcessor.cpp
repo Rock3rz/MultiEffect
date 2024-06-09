@@ -124,11 +124,14 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     distorsionSpec.maximumBlockSize = samplesPerBlock;
     distorsionSpec.numChannels = getNumInputChannels();
 
+    distortionLowPass.reset();
+    distortionHighPass.reset();
+
     distortionLowPass.prepare(distorsionSpec);
     distortionHighPass.prepare(distorsionSpec);
 
-    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderLowPass(sampleRate, 15000);
-    *distortionHighPass.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderHighPass(sampleRate, 30);
+    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, 15000);
+    *distortionHighPass.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 50);
    
     
     eQSpec.sampleRate = sampleRate;
@@ -218,10 +221,8 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
             auto* channelData = buffer.getWritePointer(channel);
 
             //filtri work in progress
-            juce::dsp::AudioBlock<float> audioBlock(buffer);
-            juce::dsp::ProcessContextReplacing<float> context(audioBlock);
-            distortionLowPass.process(context);
-            distortionHighPass.process(context);
+           
+            
 
 
             for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
@@ -233,6 +234,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
                     channelData[sample] += disOffsetLevel;
                     channelData[sample] = tanh(channelData[sample]); //tanH
                     //channelData[sample] -= disOffsetLevel;
+                   
                     break;
 
                 case 1:
@@ -262,7 +264,10 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
                     break;
                 }
             }
-
+            juce::dsp::AudioBlock<float> audioBlock(buffer);
+            juce::dsp::ProcessContextReplacing<float> context(audioBlock);
+            distortionLowPass.process(context);
+            distortionHighPass.process(context);
            
         }
 
