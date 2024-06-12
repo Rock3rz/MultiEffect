@@ -476,9 +476,9 @@ void MultiEffectAudioProcessor::updateFilters() {
     auto midGain = apvt.getRawParameterValue("EqMID")->load();
     auto highGain = apvt.getRawParameterValue("EqHIGH")->load();
 
-    *lowShelf.state = *juce::dsp::IIR::Coefficients<float>::makeLowShelf(getSampleRate(), 200.0f, 2.5f, lowGain);
-    *peak.state = *juce::dsp::IIR::Coefficients<float>::makePeakFilter(getSampleRate(), 1000.0f, 1.5f, midGain);
-    *highShelf.state = *juce::dsp::IIR::Coefficients<float>::makeHighShelf(getSampleRate(), 5000.0f, 2.5f, highGain);
+    *lowShelf.state = *juce::dsp::IIR::Coefficients<float>::makeLowShelf(getSampleRate(), 400.0f, 2.5f, lowGain);
+    *peak.state = *juce::dsp::IIR::Coefficients<float>::makePeakFilter(getSampleRate(), 1600.0f, 1.5f, midGain);
+    *highShelf.state = *juce::dsp::IIR::Coefficients<float>::makeHighShelf(getSampleRate(), 3200.0f, 2.5f, highGain);
 }
 
 
@@ -540,7 +540,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout MultiEffectAudioProcessor::c
     params.push_back(std::make_unique<juce::AudioParameterFloat>("EqLOW", "LowCutFreq", 0.001f, 2.f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMID", "MidCutFreq", 0.001f, 2.f, 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("EqHIGH", "HighCutFreq", 0.001f, 2.f, 1.f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMASTEROUTGAIN", "MasterOutGain", 0.001f, 2.f, 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("EqMASTEROUTGAIN", "MasterOutGain", 0.001f, 5.f, 1.f));
 
     //ritorno il vettore da inizio a fine
     return { params.begin(), params.end() };

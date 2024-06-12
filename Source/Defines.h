@@ -211,3 +211,17 @@
 #define UpperReverbBorderHeight 70
 #define LowerReverbBorderWidth 85
 #define LowerReverbBorderHeight 120
+
+//---------------------------------EQ----------------------------------------------
+//--------------------sliders-------------------------------------------------
+#define eqSlidereveryY 425
+#define eqSliderEveryWidth 40
+#define eqSliderEveryHeight 176
+
+//------------------Labels-----------------------------------------------------
+#define qeLabelsEveryY 365
+#define eqLabelsEveryEdge 100
+
+//------------------Borders------------------------------------------------------
+#define eqBordersEveryY 560
+#define eqBorderEveryEdge 100

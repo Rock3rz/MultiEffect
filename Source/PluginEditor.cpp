@@ -181,8 +181,8 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     toggleActiveDelayLowPass.setButtonText("Filter");
 
     //Delay ToggleFeedBack
-    isFeedback.setButtonText("FeedBack");
-    isFeedForward.setButtonText("FeedForward");
+    isFeedback.setButtonText("Delay");
+    isFeedForward.setButtonText("Echo");
 
     //Delay slider Setup
     delayGainSlider.setLookAndFeel(&myLookAndFeelDelayLine);
@@ -555,7 +555,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqLowSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqLowSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqLowSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0, 0); // a zero per non sballare le misure
-    eqLowLabel.setText("Low", juce::dontSendNotification);
+    eqLowLabel.setText("200 Hz", juce::dontSendNotification);
     eqLowValue.setText(juce::String(Utilities::linearToDb(eqLowSlider.getValue()), 1) + " dB", juce::dontSendNotification);
 
     //Converto i valori in decibel per Low
@@ -568,7 +568,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqMidSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqMidSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqMidSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
-    eqMidLabel.setText("Mid", juce::dontSendNotification);
+    eqMidLabel.setText("1600 Hz", juce::dontSendNotification);
     eqMidValue.setText("Prova", juce::dontSendNotification);
 
     //Converto i valori in decibel per mid
@@ -581,7 +581,7 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
     eqHighSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     eqHighSlider.setLookAndFeel(&myLookAndFeelDelayLine);
     eqHighSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 0,0); // a zero per non sballare le misure
-    eqHighLabel.setText("High", juce::dontSendNotification);
+    eqHighLabel.setText("3200 Hz", juce::dontSendNotification);
     eqHighValue.setText("Prova", juce::dontSendNotification);
 
     //Converto i valori in decibel per High
@@ -716,7 +716,7 @@ void MultiEffectAudioProcessorEditor::paint (juce::Graphics& g)
     g.setColour(juce::Colours::deepskyblue);
     g.setFont(Titles_Font);
     g.drawText("Distortion", distortionTitleX, distortionTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
-    g.drawText("Echo", delayTitleX, delayTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
+    g.drawText("Delay / Echo", delayTitleX, delayTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
     g.drawText("Riverbero", revebtTitleX, reverbTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
     g.drawText("Master EQ", eqTitleX, eqTitleY, everyTitleHeight, everyTitleWidth, juce::Justification::centredTop, true);
 
@@ -919,20 +919,20 @@ void MultiEffectAudioProcessorEditor::resized()
 
 
     //-----------------------------------------------EQ------------------------------------------
-    eqLowSlider.setBounds(390, 425, 40, 176);
-    eqMidSlider.setBounds(470, 425, 40, 176);
-    eqHighSlider.setBounds(550, 425, 40, 176);
-    eqMasterOutSlider.setBounds(630, 425, 40, 176);
+    eqLowSlider.setBounds(390, eqSlidereveryY, eqSliderEveryWidth, eqSliderEveryHeight);
+    eqMidSlider.setBounds(470, eqSlidereveryY, eqSliderEveryWidth, eqSliderEveryHeight);
+    eqHighSlider.setBounds(550, eqSlidereveryY, eqSliderEveryWidth, eqSliderEveryHeight);
+    eqMasterOutSlider.setBounds(630, eqSlidereveryY, eqSliderEveryWidth, eqSliderEveryHeight);
 
-    eqLowLabel.setBounds(392, 360, 100, 100);
-    eqMidLabel.setBounds(473, 360, 100, 100);
-    eqHighLabel.setBounds(550, 360, 100, 100);
-    eqMasterOutLabel.setBounds(625, 360, 100, 100);
+    eqLowLabel.setBounds(392, qeLabelsEveryY, eqLabelsEveryEdge, eqLabelsEveryEdge);
+    eqMidLabel.setBounds(473, qeLabelsEveryY, eqLabelsEveryEdge, eqLabelsEveryEdge);
+    eqHighLabel.setBounds(550, qeLabelsEveryY, eqLabelsEveryEdge, eqLabelsEveryEdge);
+    eqMasterOutLabel.setBounds(625, qeLabelsEveryY, eqLabelsEveryEdge, eqLabelsEveryEdge);
 
-    eqLowValue.setBounds(392, 560, 100, 100);
-    eqMidValue.setBounds(473, 560, 100, 100);
-    eqHighValue.setBounds(550, 560, 100, 100);
-    eqMasterOutValue.setBounds(630, 560, 100, 100);
+    eqLowValue.setBounds(392, eqBordersEveryY, eqBorderEveryEdge, eqBorderEveryEdge);
+    eqMidValue.setBounds(473, eqBordersEveryY, eqBorderEveryEdge, eqBorderEveryEdge);
+    eqHighValue.setBounds(550, eqBordersEveryY, eqBorderEveryEdge, eqBorderEveryEdge);
+    eqMasterOutValue.setBounds(630, eqBordersEveryY, eqBorderEveryEdge, eqBorderEveryEdge);
 
     //-------------------------------------------SPECTRUM--------------------------------------------
     moreSamples.setBounds(1150, 375, 25, 25);
