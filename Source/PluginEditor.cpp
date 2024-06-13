@@ -418,12 +418,12 @@ MultiEffectAudioProcessorEditor::MultiEffectAudioProcessorEditor (MultiEffectAud
 
     addAndMakeVisible(comboBox);
     
-    comboBox.addItem("Spazio piccolo", 1);
-    comboBox.addItem("Caverna", 2);
-    comboBox.addItem("Stanza vuota", 3);
-    comboBox.addItem("stanza arredata", 4);
-    comboBox.addItem("Stanza di gomma", 5);
-    comboBox.addItem("Stanza di vetro", 6);
+    comboBox.addItem("Small space", 1);
+    comboBox.addItem("Cavern", 2);
+    comboBox.addItem("Empty room", 3);
+    comboBox.addItem("Furnished room", 4);
+    comboBox.addItem("Rubber room", 5);
+    comboBox.addItem("Glass room", 6);
     comboBox.addItem("None", 7);
 
     comboBox.setText("Select a Preset");
