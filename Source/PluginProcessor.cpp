@@ -130,8 +130,8 @@ void MultiEffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     distortionLowPass.prepare(distorsionSpec);
     distortionHighPass.prepare(distorsionSpec);
 
-    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderLowPass(sampleRate, 10000);
-    *distortionHighPass.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderHighPass(sampleRate, 50);
+    *distortionLowPass.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, 10000,0.6f);
+    *distortionHighPass.state = *juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 50,0.6f);
    
     
     eQSpec.sampleRate = sampleRate;
@@ -284,7 +284,7 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
            
             //RONZA DA MORIRE =(
             //distortionLowPass.process(context1);
-            //distortionHighPass.process(context1);
+           //distortionHighPass.process(context1);
             
            
         }
@@ -359,7 +359,8 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         
     }
 
-   
+   //--------------------------------------EQ----------------------------------------------------------------------
+
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::ProcessContextReplacing<float> context(block);
     lowShelf.process(context);
