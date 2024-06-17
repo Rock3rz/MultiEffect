@@ -15,36 +15,7 @@
 //==============================================================================
 /**
 */
-// Macro per i parametri dei preset
-#define SMALL_SPACE_ROOM_SIZE 0.2f
-#define SMALL_SPACE_DAMPING 0.5f
-#define SMALL_SPACE_WET_LEVEL 0.3f
-#define SMALL_SPACE_WIDTH 0.5f
 
-#define CAVERN_ROOM_SIZE 1.0f
-#define CAVERN_DAMPING 0.8f
-#define CAVERN_WET_LEVEL 0.6f
-#define CAVERN_WIDTH 1.0f
-
-#define EMPTY_ROOM_SIZE 0.6f
-#define EMPTY_ROOM_DAMPING 0.2f
-#define EMPTY_ROOM_WET_LEVEL 0.5f
-#define EMPTY_ROOM_WIDTH 0.8f
-
-#define FURNISHED_ROOM_SIZE 0.6f
-#define FURNISHED_ROOM_DAMPING 0.7f
-#define FURNISHED_ROOM_WET_LEVEL 0.5f
-#define FURNISHED_ROOM_WIDTH 0.7f
-
-#define RUBBER_ROOM_SIZE 0.4f
-#define RUBBER_ROOM_DAMPING 0.9f
-#define RUBBER_ROOM_WET_LEVEL 0.4f
-#define RUBBER_ROOM_WIDTH 0.6f
-
-#define GLASS_ROOM_SIZE 0.5f
-#define GLASS_ROOM_DAMPING 0.1f
-#define GLASS_ROOM_WET_LEVEL 0.4f
-#define GLASS_ROOM_WIDTH 0.9f
 
 struct ReverbPreset{
     const char* name;
@@ -54,6 +25,7 @@ struct ReverbPreset{
     float width;
 
 };
+
 
 class MultiEffectAudioProcessor  : public juce::AudioProcessor
 {
@@ -137,8 +109,9 @@ private:
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> peak;
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> highShelf;
 
-    juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> distortionLowPass;
-    juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> distortionHighPass;
+    //filtri non funzionanti --- 
+    //juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> distortionLowPass;
+    //juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> distortionHighPass;
 
     //albero in che gestisce tutti gli stati del plugin
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
