@@ -27,12 +27,13 @@ MultiEffectAudioProcessor::MultiEffectAudioProcessor()
     waveViewer(1), spectrum()
 #endif
 {
+    waveViewer.setRepaintRate(180);
+    waveViewer.setBufferSize(1000);
 }
 
 MultiEffectAudioProcessor::~MultiEffectAudioProcessor()
 {
-    waveViewer.setRepaintRate(200);
-    waveViewer.setBufferSize(480);
+   
 }
 
 //==============================================================================
