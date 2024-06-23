@@ -114,7 +114,7 @@ private:
 
 
     //--------------------------------------REVERB---------------------------------------------------------------------
-        //Reverb Commands
+    //Reverb Commands
     juce::Slider reverbRoomSizeSlider;
     juce::Slider reverbDampingSlider;
     juce::Slider reverbDryWetLevelSlider;

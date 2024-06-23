@@ -329,22 +329,23 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
    
 
     //----------------------------------------------------RIVERBERO------------------------------------------------------------------
-    if (isReverbActive) {
+    if (isReverbActive) { // Controlla se il riverbero è attivo
 
-        juce::Reverb::Parameters reverbParams;
-        if (presetIndex < 6) {
-            if (tempIndex != presetIndex) {
-                auto& preset = presets[presetIndex];
+        juce::Reverb::Parameters reverbParams; // Crea un oggetto per i parametri del riverbero
+        if (presetIndex < 6) { // Controlla se l'indice del preset è inferiore a 6 
+            if (tempIndex != presetIndex) { // Controlla se l'indice temporaneo è diverso dall'indice del preset
+                auto& preset = presets[presetIndex]; // Ottiene il preset corrispondente all'indice attuale
 
+                // Imposta i parametri del riverbero in base al preset selezionato
                 reverbParams.roomSize = preset.roomSize;
                 reverbParams.damping = preset.damping;
                 reverbParams.wetLevel = preset.wetLevel;
-                reverbParams.dryLevel = 1 - reverbParams.wetLevel;
+                reverbParams.dryLevel = 1 - reverbParams.wetLevel; // Calcola il livello dry come complementare al livello wet
                 reverbParams.width = preset.width;
             }
         }
         else {
-            
+            // Se l'indice del preset è 6 (none) o superiore, ottiene i parametri direttamente dai valori impostati dall'utente
             reverbParams.roomSize = *apvt.getRawParameterValue("RevROOMSIZE");
             reverbParams.damping = *apvt.getRawParameterValue("RevDAMPING");
             reverbParams.wetLevel = *apvt.getRawParameterValue("RevDRYWET");
@@ -353,15 +354,14 @@ void MultiEffectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
             
         }
 
-        
+        // Imposta i parametri del riverbero nell'oggetto reverb
         reverb.setParameters(reverbParams);
 
-
-
-
+        // Ottiene i puntatori ai dati dei canali sinistro e destro del buffer audio
         auto* channelData1 = buffer.getWritePointer(0);
         auto* channelData = buffer.getWritePointer(1);
 
+        // Applica il riverbero ai dati audio dei canali stereo
         reverb.processStereo(channelData, channelData1, buffer.getNumSamples());
         
     }
